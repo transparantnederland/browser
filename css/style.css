@@ -98,6 +98,8 @@ body {
   width: 33%;
   height: 100%;
   float: left;
+  position: relative;
+  overflow-y: auto;
 }
 
 #object1 {
