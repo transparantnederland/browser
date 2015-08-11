@@ -155,6 +155,8 @@ var CreateRelation = React.createClass({displayName: "CreateRelation",
     return {
       from: null,
       to: null,
+      types: [],
+      relation: 'hg:liesIn',
       relations: []
     };
   },
@@ -162,15 +164,15 @@ var CreateRelation = React.createClass({displayName: "CreateRelation",
   render: function() {
     return (
       React.createElement("div", null, 
-        React.createElement("select", {ref: "select", value: "hg:liesIn"}, 
-        this.state.relations.map(function (relation) {
-          return React.createElement("option", {key: relation, value: relation}, 
-            relation
+        React.createElement("select", {ref: "select", value: this.state.relation, onChange: this.setRelation}, 
+        this.state.types.map(function (type) {
+          return React.createElement("option", {key: type, value: type}, 
+            type
           );
         }.bind(this))
         ), 
         React.createElement("button", {className: "btn btn-1 btn-1e", onClick: this.createRelation}, "Create!"), 
-        React.createElement("textarea", {ref: "relations"})
+        React.createElement("textarea", {ref: "relations", value: this.state.relations.join('\n')})
       )
     );
   },
@@ -179,16 +181,23 @@ var CreateRelation = React.createClass({displayName: "CreateRelation",
     d3.json(this.props.apiUrl + 'schemas/relations', function(json) {
       if (json) {
         this.setState({
-          relations: json.properties.type.enum
+          types: json.properties.type.enum
         });
       }
     }.bind(this));
   },
 
+  setRelation: function() {
+    var relation = this.refs.select.getDOMNode().value;
+    this.setState({
+      relation: relation
+    });
+  },
+
   createRelation: function() {
     var from = this.state.from ? (this.state.from.id || this.state.from.uri) : null;
     var to = this.state.to ? (this.state.to.id || this.state.to.uri) : null;
-    var type = this.refs.select.getDOMNode().value;
+    var type = this.state.relation;
 
     var relation = {
       from: from,
@@ -196,9 +205,11 @@ var CreateRelation = React.createClass({displayName: "CreateRelation",
       type: type
     };
 
-    this.refs.relations.getDOMNode().value += '\n' + JSON.stringify(relation);
-
-
+    var relations = this.state.relations
+    relations.push(JSON.stringify(relation));
+    this.setState({
+      relations: relations
+    });
   },
 
   setPitFrom: function(pit) {

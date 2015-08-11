@@ -155,6 +155,8 @@ var CreateRelation = React.createClass({
     return {
       from: null,
       to: null,
+      types: [],
+      relation: 'hg:liesIn',
       relations: []
     };
   },
@@ -162,15 +164,15 @@ var CreateRelation = React.createClass({
   render: function() {
     return (
       <div>
-        <select ref='select' value='hg:liesIn'>
-        {this.state.relations.map(function (relation) {
-          return <option key={relation} value={relation}>
-            {relation}
+        <select ref='select' value={this.state.relation} onChange={this.setRelation}>
+        {this.state.types.map(function (type) {
+          return <option key={type} value={type}>
+            {type}
           </option>;
         }.bind(this))}
         </select>
         <button className="btn btn-1 btn-1e" onClick={this.createRelation}>Create!</button>
-        <textarea ref='relations' />
+        <textarea ref='relations' value={this.state.relations.join('\n')} />
       </div>
     );
   },
@@ -179,16 +181,23 @@ var CreateRelation = React.createClass({
     d3.json(this.props.apiUrl + 'schemas/relations', function(json) {
       if (json) {
         this.setState({
-          relations: json.properties.type.enum
+          types: json.properties.type.enum
         });
       }
     }.bind(this));
   },
 
+  setRelation: function() {
+    var relation = this.refs.select.getDOMNode().value;
+    this.setState({
+      relation: relation
+    });
+  },
+
   createRelation: function() {
     var from = this.state.from ? (this.state.from.id || this.state.from.uri) : null;
     var to = this.state.to ? (this.state.to.id || this.state.to.uri) : null;
-    var type = this.refs.select.getDOMNode().value;
+    var type = this.state.relation;
 
     var relation = {
       from: from,
@@ -196,9 +205,11 @@ var CreateRelation = React.createClass({
       type: type
     };
 
-    this.refs.relations.getDOMNode().value += '\n' + JSON.stringify(relation);
-
-
+    var relations = this.state.relations
+    relations.push(JSON.stringify(relation));
+    this.setState({
+      relations: relations
+    });
   },
 
   setPitFrom: function(pit) {
