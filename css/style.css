@@ -114,4 +114,31 @@ body {
   background-color: #F6AEC8;
 }
 
+li.concept:nth-child(2n) {
+  background-color: rgba(255, 255, 255, 0.4);
+}
 
+ul.concepts, ul.pits {
+  list-style-type: none;
+  margin: 0;
+}
+
+li {
+  margin-bottom: 0;
+  padding: 10px;
+}
+
+h2 {
+  border-bottom-color: rgba(0, 0, 0, 0.2);
+  border-bottom-style: solid;
+  border-bottom-width: 3px;
+  margin-bottom: 1px;
+  padding-bottom: 4px;
+  font-weight: lighter;
+  font-size: 24px;
+}
+
+.type {
+  float: right;
+  opacity: 0.5;
+}
