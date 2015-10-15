@@ -95,11 +95,37 @@ body {
 }
 
 .col {
-  width: 33%;
+  width: 33.333%;
   height: 100%;
   float: left;
   position: relative;
   overflow-y: auto;
+}
+
+input {
+  width: calc(100% - 26px);
+  padding: 0;
+  margin: 0;
+}
+
+input[type="search"]:focus {
+  border: 1px solid rgba(0,0,0,0.5);
+}
+
+.pad-all {
+  padding: 15px;
+}
+
+.pad-top {
+  padding: 15px 15px 0px 15px;
+}
+
+.pad-left-right {
+  padding: 0 15px;
+}
+
+.pad-top-bottom {
+  padding: 15px 0;
 }
 
 #object1 {
@@ -118,27 +144,86 @@ li.concept:nth-child(2n) {
   background-color: rgba(255, 255, 255, 0.4);
 }
 
-ul.concepts, ul.pits {
+li.pit {
+  cursor: pointer;
+}
+
+li.pit:hover {
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+ul.concepts {
   list-style-type: none;
   margin: 0;
 }
 
+ul.pits {
+  list-style-type: square;
+  margin: 0;
+  overflow: hidden;
+}
+
 li {
   margin-bottom: 0;
-  padding: 10px;
 }
 
 h2 {
-  border-bottom-color: rgba(0, 0, 0, 0.2);
-  border-bottom-style: solid;
+  border-bottom-width: 4px;
+  margin-bottom: 1px;
+  padding-bottom: 4px;
+  font-size: 25px;
+}
+
+h3 {
   border-bottom-width: 3px;
   margin-bottom: 1px;
   padding-bottom: 4px;
   font-weight: lighter;
-  font-size: 24px;
+  font-size: 20px;
+}
+
+h2, h3 {
+  border-bottom-color: rgba(0, 0, 0, 0.2);
+  border-bottom-style: solid;
+}
+
+h4 {
+  font-style: italic;
+  font-size: 20px;
+}
+
+h4:before {
+  content: '“';
+}
+
+h4:after {
+  content: "”";
+}
+
+.table-container {
+  margin-left: 40px;
+}
+
+table {
+  width: 100%;
+}
+
+table tr td.label:after {
+  content: ':';
 }
 
 .type {
   float: right;
   opacity: 0.5;
+}
+
+#relations-container {
+  width: 100%;
+}
+
+#relations {
+  position: relative;
+  resize: none;
+  left: 0;
+  right: 0;
 }

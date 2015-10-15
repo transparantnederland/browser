@@ -1,15 +1,22 @@
-var Relationizer = React.createClass({
+// window.React = require('react');
+var React = require('react');
+var d3 = require('d3');
+
+var config = require('./../config.json');
+
+var App = React.createClass({
   render: function() {
+    var apiUrl = this.props.config.api.baseUrl;
     return (
       <div className='container'>
         <div id='object1' className='col'>
-          <ObjectSearch apiUrl={this.props.apiUrl} selectPit={this.selectPitFrom} />
+          <ObjectSearch apiUrl={apiUrl} selectPit={this.selectPitFrom} title='1. Find first PIT' />
         </div>
         <div id='relation' className='col'>
-          <CreateRelation apiUrl={this.props.apiUrl} ref='createRelation' />
+          <CreateRelation apiUrl={apiUrl} ref='createRelation' title='3. Create a relation' />
         </div>
         <div id='object2' className='col'>
-          <ObjectSearch apiUrl={this.props.apiUrl} selectPit={this.selectPitTo} />
+      <ObjectSearch apiUrl={apiUrl} selectPit={this.selectPitTo} title='2. Find second PIT' />
         </div>
       </div>
     );
@@ -41,7 +48,12 @@ var ObjectSearch = React.createClass({
 
     return (
       <div>
-        <input ref='search' />
+        <div className='pad-top'>
+          <h2>{this.props.title}</h2>
+        </div>
+        <div className='pad-all'>
+          <input type='search' ref='search' placeholder='Search by name, URI, or Histograph ID' />
+        </div>
         <ul className='concepts'>
           {features.map(function (feature, index) {
             return <li className='concept' key={this.state.query + index}>
@@ -101,11 +113,13 @@ var Feature = React.createClass({
 
   render: function() {
     return (
-      <div>
-        <h2>
-          <span>{this.state.name}</span>
-          <span className='type'>{this.state.type}</span>
-        </h2>
+      <div className='pad-top-bottom'>
+        <div className='pad-left-right'>
+          <h3>
+            <span>{this.state.name}</span>
+            <span className='type'>{this.state.type}</span>
+          </h3>
+        </div>
         <ul className='pits'>
         {this.props.feature.properties.pits.map(function (pit) {
           return <li className='pit' key={pit.id || pit.uri}>
@@ -141,7 +155,21 @@ var Pit = React.createClass({
 
   render: function() {
     return (
-      <div onClick={this.select}>{this.props.pit.name || this.props.pit.id}</div>
+      <div className='pad-all' onClick={this.select}>
+        <h4>{this.props.pit.name || this.props.pit.id}</h4>
+        <div className='table-container'>
+          <table>
+            <tr>
+              <td className='label'>Dataset</td>
+              <td><code>{this.props.pit.dataset}</code></td>
+            </tr>
+            <tr>
+              <td className='label'>ID</td>
+              <td>{this.props.pit.id || this.props.pit.uri}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
     );
   },
 
@@ -152,27 +180,46 @@ var Pit = React.createClass({
 
 var CreateRelation = React.createClass({
   getInitialState: function() {
+    var relations = [];
+    var relationsStr = localStorage.getItem('relations');
+    if (relationsStr) {
+      try {
+        relations = JSON.parse(relationsStr);
+      } catch (e) {
+        relations = [];
+      }
+    }
+
     return {
       from: null,
       to: null,
       types: [],
       relation: 'hg:liesIn',
-      relations: []
+      relations: relations
     };
   },
 
   render: function() {
     return (
       <div>
-        <select ref='select' value={this.state.relation} onChange={this.setRelation}>
-        {this.state.types.map(function (type) {
-          return <option key={type} value={type}>
-            {type}
-          </option>;
-        }.bind(this))}
-        </select>
+        <div className='pad-all'>
+          <h2>{this.props.title}</h2>
+        </div>
+        <div className='pad-all'>
+          <select ref='select' value={this.state.relation} onChange={this.setRelation}>
+          {this.state.types.map(function (type) {
+            return <option key={type} value={type}>
+              {type}
+            </option>;
+          }.bind(this))}
+          </select>
+        </div>
         <button className="btn btn-1 btn-1e" onClick={this.createRelation}>Create!</button>
-        <textarea ref='relations' value={this.state.relations.join('\n')} />
+        <div className='pad-all'>
+          <div id='relations-container'>
+            <textarea id='relations' ref='relations' value={this.state.relations.join('\n')} />
+          </div>
+        </div>
       </div>
     );
   },
@@ -207,6 +254,9 @@ var CreateRelation = React.createClass({
 
     var relations = this.state.relations
     relations.push(JSON.stringify(relation));
+
+    localStorage.setItem('relations', JSON.stringify(relations));
+
     this.setState({
       relations: relations
     });
@@ -225,10 +275,5 @@ var CreateRelation = React.createClass({
   }
 });
 
-var apiUrl = 'http://localhost:3001/';
-// var apiUrl = 'http://vps662.directvps.nl:3000/';
-
-React.render(
-  <Relationizer apiUrl={apiUrl} />,
-  document.getElementById('relationizer')
-);
+var el = document.getElementById('app');
+React.render(<App config={config} />, el);
