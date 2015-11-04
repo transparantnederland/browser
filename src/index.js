@@ -105,9 +105,21 @@ var Feature = React.createClass({
     var feature = this.props.feature;
     var sortedNames = this.sortNames(feature.properties.pits);
     var selectedName = sortedNames[0].name;
+
+    var types = feature.properties.pits.filter(function(pit) {
+      return pit.type;
+    }).map(function(pit) {
+      return pit.type.replace('hg:', '');
+    });
+
+    var type;
+    if (types.length) {
+      type = types[0];
+    }
+
     return {
       name: selectedName,
-      type: feature.properties.pits[0].type.replace('hg:', '')
+      type: type
     };
   },
 
@@ -202,10 +214,10 @@ var CreateRelation = React.createClass({
   render: function() {
     return (
       <div>
-        <div className='pad-all'>
+        <div className='pad-top'>
           <h2>{this.props.title}</h2>
         </div>
-        <div className='pad-all'>
+        <div className='pad-all input'>
           <select ref='select' value={this.state.relation} onChange={this.setRelation}>
           {this.state.types.map(function (type) {
             return <option key={type} value={type}>
@@ -213,8 +225,8 @@ var CreateRelation = React.createClass({
             </option>;
           }.bind(this))}
           </select>
+          <button className="btn btn-1 btn-1e" onClick={this.createRelation}>Create!</button>
         </div>
-        <button className="btn btn-1 btn-1e" onClick={this.createRelation}>Create!</button>
         <div className='pad-all'>
           <div id='relations-container'>
             <textarea id='relations' ref='relations' value={this.state.relations.join('\n')} />
@@ -232,6 +244,12 @@ var CreateRelation = React.createClass({
         });
       }
     }.bind(this));
+
+    var node = React.findDOMNode(this.refs.relations);
+    var editor = CodeMirror.fromTextArea(node, {
+      lineNumbers: true,
+      mode: 'javascript'
+    });
   },
 
   setRelation: function() {

@@ -227,3 +227,11 @@ table tr td.label:after {
   left: 0;
   right: 0;
 }
+
+.input select {
+  width: calc(100% - 120px);
+}
+
+.input button {
+  width: 120px;
+}
