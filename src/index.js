@@ -3,6 +3,9 @@ var React = require('react');
 var d3 = require('d3');
 
 var config = require('./../config.json');
+// var config = {
+//       api: { baseUrl: '//api.transparantnederland.nl/' }
+//     };
 
 var App = React.createClass({
   render: function() {
@@ -43,7 +46,7 @@ var ObjectSearch = React.createClass({
   render: function() {
     var features = [];
     if (this.state.geojson) {
-      features = this.state.geojson.features;
+      features = this.state.geojson;
     }
 
     return (
@@ -91,7 +94,13 @@ var ObjectSearch = React.createClass({
     var q = this.refs.search.getDOMNode().value;
     d3.json(this.props.apiUrl + 'search?q=' + q, function(geojson) {
       this.setState({
-        geojson: geojson,
+        geojson: geojson && geojson.map(function(pit){
+          return {
+            properties: {
+              pits: [pit]
+            }
+          };
+        }),
         query: q
       });
     }.bind(this));
@@ -206,7 +215,7 @@ var CreateRelation = React.createClass({
       from: null,
       to: null,
       types: [],
-      relation: 'hg:liesIn',
+      relation: 'tnl:related',
       relations: relations
     };
   },
