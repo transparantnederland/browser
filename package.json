@@ -24,12 +24,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/histograph/relationizer.git"
+    "url": "https://github.com/waag/relationizer.git"
   },
   "author": "Bert Spaan",
   "license": "GPL-3.0",
   "bugs": {
-    "url": "https://github.com/histograph/relationizer/issues"
+    "url": "https://github.com/waag/relationizer/issues"
   },
   "homepage": "http://histograph.io/relationizer"
 }
