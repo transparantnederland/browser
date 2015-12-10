@@ -221,6 +221,7 @@ var CreateRelation = React.createClass({
   },
 
   render: function() {
+    var relations = this.state.relations;
     return (
       <div>
         <div className='pad-top'>
@@ -238,7 +239,7 @@ var CreateRelation = React.createClass({
         </div>
         <div className='pad-all'>
           <div id='relations-container'>
-            <textarea id='relations' ref='relations' value={this.state.relations.join('\n')} />
+            <textarea readOnly id='relations' ref='relations' value={relations.join('\n')} />
           </div>
         </div>
       </div>
