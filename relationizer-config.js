@@ -1,6 +1,6 @@
 var viewerConfig = {
   api: {
-    baseUrl: '//api.transparantnederland.nl/'
+    baseUrl: 'https://api.transparantnederland.nl/'
   }
 };
 
