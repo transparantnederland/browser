@@ -6,9 +6,6 @@ require('whatwg-fetch');
 require('codemirror/mode/javascript/javascript');
 
 var config = require('./../config.json');
-// var config = {
-//       api: { baseUrl: '//api.transparantnederland.nl/' }
-//     };
 
 var App = React.createClass({
   render: function() {
