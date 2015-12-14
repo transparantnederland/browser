@@ -1,6 +1,6 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
-var d3 = require('d3');
+require('whatwg-fetch');
 var Codemirror = require('react-codemirror');
 require('codemirror/mode/javascript/javascript');
 
@@ -94,18 +94,22 @@ var ObjectSearch = React.createClass({
 
   search: function() {
     var q = this.refs.search.value;
-    d3.json(this.props.apiUrl + 'search?q=' + q, function(geojson) {
-      this.setState({
-        geojson: geojson && geojson.map(function(concept) {
-          return {
-            properties: {
-              pits: [concept[0].pit]
+
+    fetch(this.props.apiUrl + 'search?q=' + q)
+      .then(function(response) {
+        return response.json();
+      }).then(function(json) {
+        this.setState({
+          geojson: json && json.map(function(concept) {
+            return {
+              properties: {
+                pits: [concept[0].pit]
+              }
             }
-          };
-        }),
-        query: q
-      });
-    }.bind(this));
+          }),
+          query: q
+        });
+      }.bind(this));
   }
 
 });
@@ -249,13 +253,14 @@ var CreateRelation = React.createClass({
   },
 
   componentDidMount: function() {
-    d3.json(this.props.apiUrl + 'schemas/relations', function(json) {
-      if (json) {
+    fetch(this.props.apiUrl + 'schemas/relations')
+      .then(function(response) {
+        return response.json();
+      }).then(function(json) {
         this.setState({
           types: json.properties.type.enum
         });
-      }
-    }.bind(this));
+      }.bind(this));
   },
 
   setRelation: function() {
