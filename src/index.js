@@ -1,6 +1,8 @@
-// window.React = require('react');
 var React = require('react');
+var ReactDOM = require('react-dom');
 var d3 = require('d3');
+var Codemirror = require('react-codemirror');
+require('codemirror/mode/javascript/javascript');
 
 var config = require('./../config.json');
 // var config = {
@@ -69,7 +71,7 @@ var ObjectSearch = React.createClass({
   },
 
   componentDidMount: function() {
-    var node = this.refs.search.getDOMNode();
+    var node = this.refs.search;
 
     node.addEventListener('change', function() {
       if (this.state.timeout) {
@@ -91,7 +93,7 @@ var ObjectSearch = React.createClass({
   },
 
   search: function() {
-    var q = this.refs.search.getDOMNode().value;
+    var q = this.refs.search.value;
     d3.json(this.props.apiUrl + 'search?q=' + q, function(geojson) {
       this.setState({
         geojson: geojson && geojson.map(function(concept) {
@@ -239,19 +241,11 @@ var CreateRelation = React.createClass({
         </div>
         <div className='pad-all'>
           <div id='relations-container'>
-            <textarea readOnly id='relations' ref='relations' value={relations.join('\n')} />
+            <Codemirror value={relations.join('\n')} options={{lineNumbers: true, mode: "javascript"}} />
           </div>
         </div>
       </div>
     );
-  },
-
-  componentDidUpdate: function() {
-    var node = React.findDOMNode(this.refs.relations);
-    var editor = CodeMirror.fromTextArea(node, {
-      lineNumbers: true,
-      mode: 'javascript'
-    });
   },
 
   componentDidMount: function() {
@@ -262,10 +256,21 @@ var CreateRelation = React.createClass({
         });
       }
     }.bind(this));
+
+
+
+    // var node = React.findDOMNode(this.refs.relations);
+    // var editor = CodeMirror.fromTextArea(node, {
+    //   lineNumbers: true,
+    //   mode: 'javascript'
+    // });
+    // this.setState({
+    //   editor: editor
+    // });
   },
 
   setRelation: function() {
-    var relation = this.refs.select.getDOMNode().value;
+    var relation = this.refs.select.value;
     this.setState({
       relation: relation
     });
@@ -306,4 +311,4 @@ var CreateRelation = React.createClass({
 });
 
 var el = document.getElementById('app');
-React.render(<App config={config} />, el);
+ReactDOM.render(<App config={config} />, el);

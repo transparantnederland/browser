@@ -6,7 +6,9 @@
   "dependencies": {
     "d3": "^3.5.5",
     "leaflet": "^0.7.3",
-    "react": "^0.13.3"
+    "react": "0.14.3",
+    "react-codemirror": "0.2.2",
+    "react-dom": "0.14.3"
   },
   "devDependencies": {
     "eslint": "^0.16.2",
