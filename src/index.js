@@ -94,10 +94,10 @@ var ObjectSearch = React.createClass({
     var q = this.refs.search.getDOMNode().value;
     d3.json(this.props.apiUrl + 'search?q=' + q, function(geojson) {
       this.setState({
-        geojson: geojson && geojson.map(function(pit){
+        geojson: geojson && geojson.map(function(concept) {
           return {
             properties: {
-              pits: [pit]
+              pits: [concept[0].pit]
             }
           };
         }),
