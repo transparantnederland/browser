@@ -19,7 +19,7 @@ var App = React.createClass({
           <CreateRelation apiUrl={apiUrl} ref='createRelation' title='3. Create a relation' />
         </div>
         <div id='object2' className='col'>
-      <ObjectSearch apiUrl={apiUrl} selectPit={this.selectPitTo} title='2. Find second PIT' />
+          <ObjectSearch apiUrl={apiUrl} selectPit={this.selectPitTo} title='2. Find second PIT' />
         </div>
       </div>
     );
