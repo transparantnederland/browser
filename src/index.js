@@ -1,7 +1,8 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
-require('whatwg-fetch');
 var Codemirror = require('react-codemirror');
+
+require('whatwg-fetch');
 require('codemirror/mode/javascript/javascript');
 
 var config = require('./../config.json');
