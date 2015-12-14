@@ -4,7 +4,6 @@
   "description": "UI for creating relations between Histograph PITs",
   "main": "",
   "dependencies": {
-    "leaflet": "^0.7.3",
     "react": "0.14.3",
     "react-codemirror": "0.2.2",
     "react-dom": "0.14.3",
