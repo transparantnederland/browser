@@ -256,17 +256,6 @@ var CreateRelation = React.createClass({
         });
       }
     }.bind(this));
-
-
-
-    // var node = React.findDOMNode(this.refs.relations);
-    // var editor = CodeMirror.fromTextArea(node, {
-    //   lineNumbers: true,
-    //   mode: 'javascript'
-    // });
-    // this.setState({
-    //   editor: editor
-    // });
   },
 
   setRelation: function() {
