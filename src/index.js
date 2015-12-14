@@ -246,6 +246,14 @@ var CreateRelation = React.createClass({
     );
   },
 
+  componentDidUpdate: function() {
+    var node = React.findDOMNode(this.refs.relations);
+    var editor = CodeMirror.fromTextArea(node, {
+      lineNumbers: true,
+      mode: 'javascript'
+    });
+  },
+
   componentDidMount: function() {
     d3.json(this.props.apiUrl + 'schemas/relations', function(json) {
       if (json) {
@@ -254,12 +262,6 @@ var CreateRelation = React.createClass({
         });
       }
     }.bind(this));
-
-    var node = React.findDOMNode(this.refs.relations);
-    var editor = CodeMirror.fromTextArea(node, {
-      lineNumbers: true,
-      mode: 'javascript'
-    });
   },
 
   setRelation: function() {
