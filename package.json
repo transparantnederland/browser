@@ -21,7 +21,7 @@
   },
   "scripts": {
     "start": "NODE_ENV=development node relationizer-config.js > config.json && watchify -d -t reactify src/index.js -o src/index.bundle.js & serve",
-    "production": "NODE_ENV=production node relationizer-config.js > config.json && browserify -t reactify -g uglifyify src/index.js -o dist/bundle.js",
+    "production": "NODE_ENV=production node relationizer-config.js > config.json && browserify -t reactify -g uglifyify src/index.js -o src/index.bundle.js",
     "test": "eslint src/*.js src/components/*.js"
   },
   "repository": {
