@@ -3,6 +3,7 @@
   "version": "0.5.0",
   "description": "UI for creating relations between Histograph PITs",
   "main": "",
+  "private": true,
   "dependencies": {
     "react": "0.14.3",
     "react-codemirror": "0.2.2",
