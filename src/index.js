@@ -2,13 +2,12 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var Codemirror = require('react-codemirror');
 
-require('whatwg-fetch');
 require('codemirror/mode/javascript/javascript');
+require('codemirror/lib/codemirror.css');
 
 require('./../css/normalize.css');
 require('./../css/skeleton.css');
 require('./../css/style.css');
-require('./../css/codemirror.css');
 
 var App = React.createClass({
   render() {

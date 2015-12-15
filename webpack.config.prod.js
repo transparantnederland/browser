@@ -5,40 +5,42 @@ var config = require('config');
 module.exports = {
   devtool: 'source-map',
   entry: [
-    './src/index'
+    './src/index',
   ],
   output: {
     path: path.join(__dirname, 'dist'),
     filename: 'bundle.js',
-    publicPath: '/dist/'
+    publicPath: '/dist/',
   },
   plugins: [
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.DefinePlugin({
       'process.env': {
-        'NODE_ENV': JSON.stringify('production')
+        'NODE_ENV': JSON.stringify('production'),
       },
-      __CONFIG__: JSON.stringify(config)
+      __CONFIG__: JSON.stringify(config),
+    }),
+    new webpack.ProvidePlugin({
+      'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch',
     }),
     new webpack.optimize.UglifyJsPlugin({
       compressor: {
-        warnings: false
-      }
-    })
+        warnings: false,
+      },
+    }),
   ],
   module: {
     loaders: [{
       test: /\.js$/,
       loaders: ['babel'],
-      include: path.join(__dirname, 'src')
+      include: path.join(__dirname, 'src'),
     }, {
       test: /\.css$/,
       loader: 'style-loader!css-loader',
-      include: path.join(__dirname, 'css')
     }, {
       test: /\.ttf$/,
       loader: 'url-loader',
-      include: path.join(__dirname, 'fonts')
-    }]
-  }
-}
+      include: path.join(__dirname, 'fonts'),
+    }],
+  },
+};
