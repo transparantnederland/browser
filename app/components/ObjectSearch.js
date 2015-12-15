@@ -28,9 +28,11 @@ export default React.createClass({
         </div>
         <ul className="concepts">
           {features.map(function (feature, index) {
-            return <li className="concept" key={this.state.query + index}>
-              <Feature feature={feature} selectPit={this.props.selectPit} />
-            </li>;
+            return (
+              <li className="concept" key={this.state.query + index}>
+                <Feature feature={feature} selectPit={this.props.selectPit} />
+              </li>
+            );
           }.bind(this))}
         </ul>
       </div>

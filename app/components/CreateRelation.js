@@ -35,9 +35,11 @@ export default React.createClass({
         <div className="pad-all input">
           <select ref="select" value={this.state.relation} onChange={this.setRelation}>
           {this.state.types.map(function (type) {
-            return <option key={type} value={type}>
-              {type}
-            </option>;
+            return (
+              <option key={type} value={type}>
+                {type}
+              </option>
+            );
           }.bind(this))}
           </select>
           <button className="btn btn-1 btn-1e" onClick={this.createRelation}>Create!</button>

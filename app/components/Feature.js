@@ -36,9 +36,11 @@ export default React.createClass({
         </div>
         <ul className="pits">
         {this.props.feature.properties.pits.map(function (pit) {
-          return <li className="pit" key={pit.id || pit.uri}>
-            <Pit pit={pit} selectPit={this.props.selectPit} />
-          </li>;
+          return (
+            <li className="pit" key={pit.id || pit.uri}>
+              <Pit pit={pit} selectPit={this.props.selectPit} />
+            </li>
+          );
         }.bind(this))}
         </ul>
       </div>
