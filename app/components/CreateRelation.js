@@ -40,7 +40,7 @@ export default React.createClass({
                 {type}
               </option>
             );
-          }.bind(this))}
+          })}
           </select>
           <button className="btn btn-1 btn-1e" onClick={this.createRelation}>Create!</button>
         </div>

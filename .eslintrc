@@ -13,7 +13,6 @@
     "func-names": 0,
     "no-var": 0,
     "vars-on-top": 0,
-    "no-extra-bind": 0,
     "react/sort-comp": 0,
     "react/prop-types": 0,
 
