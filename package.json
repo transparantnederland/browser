@@ -3,25 +3,45 @@
   "version": "0.5.0",
   "description": "UI for creating relations between Histograph PITs",
   "main": "",
+  "private": true,
   "dependencies": {
     "react": "0.14.3",
     "react-codemirror": "0.2.2",
     "react-dom": "0.14.3",
-    "whatwg-fetch": "^0.10.1"
+    "whatwg-fetch": "0.10.1"
   },
   "devDependencies": {
-    "eslint": "^0.16.2",
-    "hintify": "^0.1.0",
-    "histograph-config": "histograph/config",
-    "reactify": "^1.1.0",
-    "serve": "^1.4.0",
-    "uglifyify": "^3.0.1",
-    "watchify": "^2.4.0"
+    "babel-core": "6.3.15",
+    "babel-eslint": "5.0.0-beta4",
+    "babel-loader": "6.2.0",
+    "babel-plugin-react-transform": "2.0.0-beta1",
+    "babel-preset-es2015": "6.3.13",
+    "babel-preset-react": "6.3.13",
+    "config": "1.17.1",
+    "css-loader": "0.23.0",
+    "eslint": "1.10.3",
+    "eslint-config-airbnb": "2.1.0",
+    "eslint-plugin-babel": "3.0.0",
+    "eslint-plugin-react": "3.11.3",
+    "exports-loader": "^0.6.2",
+    "express": "4.13.3",
+    "file-loader": "0.8.5",
+    "imports-loader": "0.6.5",
+    "react-transform-catch-errors": "1.0.0",
+    "react-transform-hmr": "1.0.1",
+    "redbox-react": "1.0.1",
+    "rimraf": "2.4.3",
+    "style-loader": "0.13.0",
+    "webpack": "1.12.9",
+    "webpack-dev-middleware": "1.4.0",
+    "webpack-hot-middleware": "2.6.0"
   },
   "scripts": {
-    "start": "NODE_ENV=development node relationizer-config.js > config.json && watchify -d -t reactify src/index.js -o src/index.bundle.js & serve",
-    "production": "NODE_ENV=production node relationizer-config.js > config.json && browserify -t reactify -g uglifyify src/index.js -o src/index.bundle.js",
-    "test": "eslint src/*.js src/components/*.js"
+    "build": "npm run clean && npm run build:webpack",
+    "build:webpack": "webpack --config webpack.config.prod.js",
+    "clean": "rimraf dist",
+    "start": "node server.js",
+    "lint": "eslint app"
   },
   "repository": {
     "type": "git",
