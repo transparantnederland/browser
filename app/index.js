@@ -4,9 +4,9 @@ var ReactDOM = require('react-dom');
 import CreateRelation from './components/CreateRelation';
 import ObjectSearch from './components/ObjectSearch';
 
-require('./../css/normalize.css');
-require('./../css/skeleton.css');
-require('./../css/style.css');
+require('./css/normalize.css');
+require('./css/skeleton.css');
+require('./css/style.css');
 
 const App = React.createClass({
   render() {
