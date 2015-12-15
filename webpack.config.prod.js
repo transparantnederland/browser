@@ -15,9 +15,6 @@ module.exports = {
   plugins: [
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.DefinePlugin({
-      'process.env': {
-        'NODE_ENV': JSON.stringify('production'),
-      },
       __CONFIG__: JSON.stringify(config),
     }),
     new webpack.ProvidePlugin({
@@ -39,8 +36,7 @@ module.exports = {
       loader: 'style-loader!css-loader',
     }, {
       test: /\.ttf$/,
-      loader: 'url-loader',
-      include: path.join(__dirname, 'fonts'),
+      loader: 'file-loader',
     }],
   },
 };
