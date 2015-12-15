@@ -5,45 +5,48 @@ var Codemirror = require('react-codemirror');
 require('whatwg-fetch');
 require('codemirror/mode/javascript/javascript');
 
-var config = require('./../config.json');
+require('./../css/normalize.css');
+require('./../css/skeleton.css');
+require('./../css/style.css');
+require('./../css/codemirror.css');
 
 var App = React.createClass({
-  render: function() {
+  render() {
     var apiUrl = this.props.config.api.baseUrl;
     return (
-      <div className='container'>
-        <div id='object1' className='col'>
-          <ObjectSearch apiUrl={apiUrl} selectPit={this.selectPitFrom} title='1. Find first PIT' />
+      <div className="container">
+        <div id="object1" className="col">
+          <ObjectSearch apiUrl={apiUrl} selectPit={this.selectPitFrom} title="1. Find first PIT" />
         </div>
-        <div id='relation' className='col'>
-          <CreateRelation apiUrl={apiUrl} ref='createRelation' title='3. Create a relation' />
+        <div id="relation" className="col">
+          <CreateRelation apiUrl={apiUrl} ref="createRelation" title="3. Create a relation" />
         </div>
-        <div id='object2' className='col'>
-          <ObjectSearch apiUrl={apiUrl} selectPit={this.selectPitTo} title='2. Find second PIT' />
+        <div id="object2" className="col">
+          <ObjectSearch apiUrl={apiUrl} selectPit={this.selectPitTo} title="2. Find second PIT" />
         </div>
       </div>
     );
   },
 
-  selectPitFrom: function(pit) {
+  selectPitFrom(pit) {
     this.refs.createRelation.setPitFrom(pit);
   },
 
-  selectPitTo: function(pit) {
+  selectPitTo(pit) {
     this.refs.createRelation.setPitTo(pit);
   }
 
 });
 
 var ObjectSearch = React.createClass({
-  getInitialState: function() {
+  getInitialState() {
     return {
       timeout: null,
       query: ''
     };
   },
 
-  render: function() {
+  render() {
     var features = [];
     if (this.state.geojson) {
       features = this.state.geojson;
@@ -68,7 +71,7 @@ var ObjectSearch = React.createClass({
     );
   },
 
-  componentDidMount: function() {
+  componentDidMount() {
     var node = this.refs.search;
 
     node.addEventListener('change', function() {
@@ -90,7 +93,7 @@ var ObjectSearch = React.createClass({
     }.bind(this));
   },
 
-  search: function() {
+  search() {
     var q = this.refs.search.value;
 
     fetch(this.props.apiUrl + 'search?q=' + q)
@@ -114,7 +117,7 @@ var ObjectSearch = React.createClass({
 
 var Feature = React.createClass({
 
-  getInitialState: function() {
+  getInitialState() {
     var feature = this.props.feature;
     var sortedNames = this.sortNames(feature.properties.pits);
     var selectedName = sortedNames[0].name;
@@ -132,11 +135,11 @@ var Feature = React.createClass({
 
     return {
       name: selectedName,
-      type: type
+      type
     };
   },
 
-  render: function() {
+  render() {
     return (
       <div className='pad-top-bottom'>
         <div className='pad-left-right'>
@@ -156,7 +159,7 @@ var Feature = React.createClass({
     );
   },
 
-  sortNames: function(pits) {
+  sortNames(pits) {
     var names = pits.map(function(pit) { return pit.name; });
     var counts = {};
 
@@ -166,7 +169,7 @@ var Feature = React.createClass({
 
     return Object.keys(counts).map(function(name) {
       return {
-        name: name,
+        name,
         count: counts[name]
       };
     }).sort(function(a, b) {
@@ -178,7 +181,7 @@ var Feature = React.createClass({
 
 var Pit = React.createClass({
 
-  render: function() {
+  render() {
     return (
       <div className='pad-all' onClick={this.select}>
         <h4>{this.props.pit.name || this.props.pit.id}</h4>
@@ -198,13 +201,13 @@ var Pit = React.createClass({
     );
   },
 
-  select: function() {
+  select() {
     this.props.selectPit(this.props.pit);
   }
 });
 
 var CreateRelation = React.createClass({
-  getInitialState: function() {
+  getInitialState() {
     var relations = [];
     var relationsStr = localStorage.getItem('relations');
     if (relationsStr) {
@@ -220,11 +223,11 @@ var CreateRelation = React.createClass({
       to: null,
       types: [],
       relation: 'tnl:related',
-      relations: relations
+      relations
     };
   },
 
-  render: function() {
+  render() {
     var relations = this.state.relations;
     return (
       <div>
@@ -243,14 +246,14 @@ var CreateRelation = React.createClass({
         </div>
         <div className='pad-all'>
           <div id='relations-container'>
-            <Codemirror value={relations.join('\n')} options={{lineNumbers: true, mode: "javascript"}} />
+            <Codemirror value={relations.join('\n')} options={{mode: 'javascript'}} />
           </div>
         </div>
       </div>
     );
   },
 
-  componentDidMount: function() {
+  componentDidMount() {
     fetch(this.props.apiUrl + 'schemas/relations')
       .then(function(response) {
         return response.json();
@@ -261,22 +264,22 @@ var CreateRelation = React.createClass({
       }.bind(this));
   },
 
-  setRelation: function() {
+  setRelation() {
     var relation = this.refs.select.value;
     this.setState({
-      relation: relation
+      relation
     });
   },
 
-  createRelation: function() {
+  createRelation() {
     var from = this.state.from ? (this.state.from.id || this.state.from.uri) : null;
     var to = this.state.to ? (this.state.to.id || this.state.to.uri) : null;
     var type = this.state.relation;
 
     var relation = {
-      from: from,
-      to: to,
-      type: type
+      from,
+      to,
+      type
     };
 
     var relations = this.state.relations
@@ -285,17 +288,17 @@ var CreateRelation = React.createClass({
     localStorage.setItem('relations', JSON.stringify(relations));
 
     this.setState({
-      relations: relations
+      relations
     });
   },
 
-  setPitFrom: function(pit) {
+  setPitFrom(pit) {
     this.setState({
       from: pit
     });
   },
 
-  setPitTo: function(pit) {
+  setPitTo(pit) {
     this.setState({
       to: pit
     });
@@ -303,4 +306,4 @@ var CreateRelation = React.createClass({
 });
 
 var el = document.getElementById('app');
-ReactDOM.render(<App config={config} />, el);
+ReactDOM.render(<App config={__CONFIG__} />, el);
