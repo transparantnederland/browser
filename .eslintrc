@@ -8,7 +8,17 @@
     "node": true
   },
   "parser": "babel-eslint",
+  "extends": "airbnb",
   "rules": {
+    "func-names": 0,
+    "no-var": 0,
+    "vars-on-top": 0,
+    "no-extra-bind": 0,
+    "react/sort-comp": 0,
+    "react/prop-types": 0,
+    "react/no-multi-comp": 0,
+    "react/wrap-multilines": 0,
+
     "quotes": [2, "single"],
     "strict": [2, "never"],
     "babel/generator-star-spacing": 1,
@@ -23,5 +33,8 @@
   "plugins": [
     "babel",
     "react"
-  ]
+  ],
+  "globals": {
+    "__CONFIG__": true
+  }
 }

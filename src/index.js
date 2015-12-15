@@ -34,7 +34,7 @@ var App = React.createClass({
 
   selectPitTo(pit) {
     this.refs.createRelation.setPitTo(pit);
-  }
+  },
 
 });
 
@@ -42,7 +42,7 @@ var ObjectSearch = React.createClass({
   getInitialState() {
     return {
       timeout: null,
-      query: ''
+      query: '',
     };
   },
 
@@ -54,15 +54,15 @@ var ObjectSearch = React.createClass({
 
     return (
       <div>
-        <div className='pad-top'>
+        <div className="pad-top">
           <h2>{this.props.title}</h2>
         </div>
-        <div className='pad-all'>
-          <input type='search' ref='search' placeholder='Search by name, URI, or Histograph ID' />
+        <div className="pad-all">
+          <input type="search" ref="search" placeholder="Search by name, URI, or Histograph ID" />
         </div>
-        <ul className='concepts'>
+        <ul className="concepts">
           {features.map(function (feature, index) {
-            return <li className='concept' key={this.state.query + index}>
+            return <li className="concept" key={this.state.query + index}>
               <Feature feature={feature} selectPit={this.props.selectPit} />
             </li>;
           }.bind(this))}
@@ -74,7 +74,7 @@ var ObjectSearch = React.createClass({
   componentDidMount() {
     var node = this.refs.search;
 
-    node.addEventListener('change', function() {
+    node.addEventListener('change', function () {
       if (this.state.timeout) {
         clearTimeout(this.state.timeout);
       }
@@ -82,13 +82,13 @@ var ObjectSearch = React.createClass({
       this.search();
     }.bind(this));
 
-    node.addEventListener('input', function() {
+    node.addEventListener('input', function () {
       if (this.state.timeout) {
         clearTimeout(this.state.timeout);
       }
 
       this.setState({
-        timeout: setTimeout(this.search, 800)
+        timeout: setTimeout(this.search, 800),
       });
     }.bind(this));
   },
@@ -97,22 +97,21 @@ var ObjectSearch = React.createClass({
     var q = this.refs.search.value;
 
     fetch(this.props.apiUrl + 'search?q=' + q)
-      .then(function(response) {
+      .then(function (response) {
         return response.json();
-      }).then(function(json) {
+      }).then(function (json) {
         this.setState({
-          geojson: json && json.map(function(concept) {
+          geojson: json && json.map(function (concept) {
             return {
               properties: {
-                pits: [concept[0].pit]
-              }
-            }
+                pits: [concept[0].pit],
+              },
+            };
           }),
-          query: q
+          query: q,
         });
       }.bind(this));
-  }
-
+  },
 });
 
 var Feature = React.createClass({
@@ -122,9 +121,9 @@ var Feature = React.createClass({
     var sortedNames = this.sortNames(feature.properties.pits);
     var selectedName = sortedNames[0].name;
 
-    var types = feature.properties.pits.filter(function(pit) {
+    var types = feature.properties.pits.filter(function (pit) {
       return pit.type;
-    }).map(function(pit) {
+    }).map(function (pit) {
       return pit.type.replace('hg:', '');
     });
 
@@ -135,22 +134,22 @@ var Feature = React.createClass({
 
     return {
       name: selectedName,
-      type
+      type,
     };
   },
 
   render() {
     return (
-      <div className='pad-top-bottom'>
-        <div className='pad-left-right'>
+      <div className="pad-top-bottom">
+        <div className="pad-left-right">
           <h3>
             <span>{this.state.name}</span>
-            <span className='type'>{this.state.type}</span>
+            <span className="type">{this.state.type}</span>
           </h3>
         </div>
-        <ul className='pits'>
+        <ul className="pits">
         {this.props.feature.properties.pits.map(function (pit) {
-          return <li className='pit' key={pit.id || pit.uri}>
+          return <li className="pit" key={pit.id || pit.uri}>
             <Pit pit={pit} selectPit={this.props.selectPit} />
           </li>;
         }.bind(this))}
@@ -160,22 +159,22 @@ var Feature = React.createClass({
   },
 
   sortNames(pits) {
-    var names = pits.map(function(pit) { return pit.name; });
+    var names = pits.map(function (pit) { return pit.name; });
     var counts = {};
 
     for (var k = 0, j = names.length; k < j; k++) {
       counts[names[k]] = (counts[names[k]] || 0) + 1;
     }
 
-    return Object.keys(counts).map(function(name) {
+    return Object.keys(counts).map(function (name) {
       return {
         name,
-        count: counts[name]
+        count: counts[name],
       };
-    }).sort(function(a, b) {
+    }).sort(function (a, b) {
       return b.count - a.count;
     });
-  }
+  },
 
 });
 
@@ -183,16 +182,16 @@ var Pit = React.createClass({
 
   render() {
     return (
-      <div className='pad-all' onClick={this.select}>
+      <div className="pad-all" onClick={this.select}>
         <h4>{this.props.pit.name || this.props.pit.id}</h4>
-        <div className='table-container'>
+        <div className="table-container">
           <table>
             <tr>
-              <td className='label'>Dataset</td>
+              <td className="label">Dataset</td>
               <td><code>{this.props.pit.dataset}</code></td>
             </tr>
             <tr>
-              <td className='label'>ID</td>
+              <td className="label">ID</td>
               <td>{this.props.pit.id || this.props.pit.uri}</td>
             </tr>
           </table>
@@ -203,7 +202,7 @@ var Pit = React.createClass({
 
   select() {
     this.props.selectPit(this.props.pit);
-  }
+  },
 });
 
 var CreateRelation = React.createClass({
@@ -223,7 +222,7 @@ var CreateRelation = React.createClass({
       to: null,
       types: [],
       relation: 'tnl:related',
-      relations
+      relations,
     };
   },
 
@@ -231,11 +230,11 @@ var CreateRelation = React.createClass({
     var relations = this.state.relations;
     return (
       <div>
-        <div className='pad-top'>
+        <div className="pad-top">
           <h2>{this.props.title}</h2>
         </div>
-        <div className='pad-all input'>
-          <select ref='select' value={this.state.relation} onChange={this.setRelation}>
+        <div className="pad-all input">
+          <select ref="select" value={this.state.relation} onChange={this.setRelation}>
           {this.state.types.map(function (type) {
             return <option key={type} value={type}>
               {type}
@@ -244,9 +243,9 @@ var CreateRelation = React.createClass({
           </select>
           <button className="btn btn-1 btn-1e" onClick={this.createRelation}>Create!</button>
         </div>
-        <div className='pad-all'>
-          <div id='relations-container'>
-            <Codemirror value={relations.join('\n')} options={{mode: 'javascript'}} />
+        <div className="pad-all">
+          <div id="relations-container">
+            <Codemirror value={relations.join('\n')} options={{ mode: 'javascript' }} />
           </div>
         </div>
       </div>
@@ -255,11 +254,11 @@ var CreateRelation = React.createClass({
 
   componentDidMount() {
     fetch(this.props.apiUrl + 'schemas/relations')
-      .then(function(response) {
+      .then(function (response) {
         return response.json();
-      }).then(function(json) {
+      }).then(function (json) {
         this.setState({
-          types: json.properties.type.enum
+          types: json.properties.type.enum,
         });
       }.bind(this));
   },
@@ -267,7 +266,7 @@ var CreateRelation = React.createClass({
   setRelation() {
     var relation = this.refs.select.value;
     this.setState({
-      relation
+      relation,
     });
   },
 
@@ -279,30 +278,30 @@ var CreateRelation = React.createClass({
     var relation = {
       from,
       to,
-      type
+      type,
     };
 
-    var relations = this.state.relations
+    var relations = this.state.relations;
     relations.push(JSON.stringify(relation));
 
     localStorage.setItem('relations', JSON.stringify(relations));
 
     this.setState({
-      relations
+      relations,
     });
   },
 
   setPitFrom(pit) {
     this.setState({
-      from: pit
+      from: pit,
     });
   },
 
   setPitTo(pit) {
     this.setState({
-      to: pit
+      to: pit,
     });
-  }
+  },
 });
 
 var el = document.getElementById('app');

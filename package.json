@@ -20,6 +20,7 @@
     "config": "1.17.1",
     "css-loader": "0.23.0",
     "eslint": "1.10.3",
+    "eslint-config-airbnb": "2.1.0",
     "eslint-plugin-babel": "3.0.0",
     "eslint-plugin-react": "3.11.3",
     "express": "4.13.3",
