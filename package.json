@@ -1,7 +1,7 @@
 {
-  "name": "histograph-relationizer",
-  "version": "0.5.0",
-  "description": "UI for creating relations between Histograph PITs",
+  "name": "tnl-relationizer",
+  "version": "0.1.0",
+  "description": "UI for creating relations between Transparant Nederland PITs",
   "main": "",
   "private": true,
   "dependencies": {
@@ -54,12 +54,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/waag/relationizer.git"
+    "url": "https://github.com/waagsociety/tnl-relationizer.git"
   },
   "author": "Bert Spaan",
   "license": "GPL-3.0",
   "bugs": {
-    "url": "https://github.com/waag/relationizer/issues"
+    "url": "https://github.com/waagsociety/tnl-relationizer/issues"
   },
-  "homepage": "http://histograph.io/relationizer"
+  "homepage": "http://code.waag.org/tnl-relationizer"
 }
