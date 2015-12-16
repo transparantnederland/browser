@@ -1,4 +1,4 @@
-# Transparant Nederland Relationizer
+# Transparant Nederland Relationizer [![Build Status](https://travis-ci.org/waagsociety/tnl-relationizer.svg)](https://travis-ci.org/waagsociety/tnl-relationizer)
 
 http://code.waag.org/tnl-relationizer
 
