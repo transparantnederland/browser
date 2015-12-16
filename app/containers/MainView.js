@@ -71,13 +71,13 @@ const MainView = React.createClass({
   onRelationAdd() {
     const { from, to, type } = this.state;
 
-    if (!from) {
-      return alert('Select first pit');
-    } else if (!to) {
-      return alert('Select second pit');
-    } else if (!type) {
-      return alert('Select relationship type');
-    }
+    // if (!from) {
+    //   return alert('Select first pit');
+    // } else if (!to) {
+    //   return alert('Select second pit');
+    // } else if (!type) {
+    //   return alert('Select relationship type');
+    // }
 
     this.props.dispatch(addRelation({ from, to, type }));
   },
