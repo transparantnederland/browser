@@ -26,4 +26,4 @@ export default reduxApi({
     url: '/schemas/relations',
     transformer: (data) => (data),
   },
-}).init(adapterFetch(fetch), fetch, 'https://api.transparantnederland.nl/');
+}).init(adapterFetch(fetch), fetch, __CONFIG__.api.baseUrl);
