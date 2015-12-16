@@ -5,10 +5,10 @@ import Pit from './Pit';
 export default React.createClass({
   getInitialState() {
     var feature = this.props.feature;
-    var sortedNames = this.sortNames(feature.properties.pits);
+    var sortedNames = this.sortNames(feature.pits);
     var selectedName = sortedNames[0].name;
 
-    var types = feature.properties.pits.filter(function (pit) {
+    var types = feature.pits.filter(function (pit) {
       return pit.type;
     }).map(function (pit) {
       return pit.type.replace('hg:', '');
@@ -35,7 +35,7 @@ export default React.createClass({
           </h3>
         </div>
         <ul className="pits">
-        {this.props.feature.properties.pits.map(function (pit) {
+        {this.props.feature.pits.map(function (pit) {
           return (
             <li className="pit" key={pit.id || pit.uri}>
               <Pit pit={pit} selectPit={this.props.selectPit} />

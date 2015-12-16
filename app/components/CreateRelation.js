@@ -1,106 +1,55 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 
 var Codemirror = require('react-codemirror');
 require('codemirror/mode/javascript/javascript');
 require('codemirror/lib/codemirror.css');
 
 export default React.createClass({
-  getInitialState() {
-    var relations = [];
-    var relationsStr = localStorage.getItem('relations');
-    if (relationsStr) {
-      try {
-        relations = JSON.parse(relationsStr);
-      } catch (e) {
-        relations = [];
-      }
-    }
-
-    return {
-      from: null,
-      to: null,
-      types: [],
-      relation: 'tnl:related',
-      relations,
-    };
+  propTypes: {
+    relations: PropTypes.array.isRequired,
+    schema: PropTypes.object.isRequired,
+    title: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
+    onTypeChange: PropTypes.func.isRequired,
+    onRelationAdd: PropTypes.func.isRequired,
   },
 
   render() {
-    var relations = this.state.relations;
+    const { relations, schema, title, type, onRelationAdd } = this.props;
+    const types = (schema.data && schema.data.properties.type.enum) || [];
+
     return (
       <div>
         <div className="pad-top">
-          <h2>{this.props.title}</h2>
+          <h2>{title}</h2>
         </div>
         <div className="pad-all input">
-          <select ref="select" value={this.state.relation} onChange={this.setRelation}>
-          {this.state.types.map(function (type) {
-            return (
-              <option key={type} value={type}>
-                {type}
-              </option>
-            );
-          })}
+          <select value={type} ref="select" onChange={this.handleChange}>
+            <option value="" key="">-- selecteer --</option>
+            {types.map(function (value) {
+              return (
+                <option value={value} key={value}>
+                  {value}
+                </option>
+              );
+            })}
           </select>
-          <button className="btn btn-1 btn-1e" onClick={this.createRelation}>Create!</button>
+          <button className="btn btn-1 btn-1e" onClick={onRelationAdd}>Create!</button>
         </div>
         <div className="pad-all">
           <div id="relations-container">
-            <Codemirror value={relations.join('\n')} options={{ mode: 'javascript' }} />
+            <Codemirror value={relations.map((value) => JSON.stringify(value)).join('\n')} options={{ mode: 'javascript' }} />
           </div>
         </div>
       </div>
     );
   },
 
-  componentDidMount() {
-    fetch(this.props.apiUrl + 'schemas/relations')
-      .then(function (response) {
-        return response.json();
-      }).then(function (json) {
-        this.setState({
-          types: json.properties.type.enum,
-        });
-      }.bind(this));
-  },
+  handleChange(event) {
+    event.preventDefault();
+    const node = this.refs.select;
+    const value = node.value;
 
-  setRelation() {
-    var relation = this.refs.select.value;
-    this.setState({
-      relation,
-    });
-  },
-
-  createRelation() {
-    var from = this.state.from ? (this.state.from.id || this.state.from.uri) : null;
-    var to = this.state.to ? (this.state.to.id || this.state.to.uri) : null;
-    var type = this.state.relation;
-
-    var relation = {
-      from,
-      to,
-      type,
-    };
-
-    var relations = this.state.relations;
-    relations.push(JSON.stringify(relation));
-
-    localStorage.setItem('relations', JSON.stringify(relations));
-
-    this.setState({
-      relations,
-    });
-  },
-
-  setPitFrom(pit) {
-    this.setState({
-      from: pit,
-    });
-  },
-
-  setPitTo(pit) {
-    this.setState({
-      to: pit,
-    });
+    this.props.onTypeChange(value);
   },
 });

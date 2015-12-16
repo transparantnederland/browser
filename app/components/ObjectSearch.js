@@ -1,22 +1,23 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 
 import Feature from './Feature';
 
 export default React.createClass({
+  propTypes: {
+    onSearch: PropTypes.func.isRequired,
+    onSelect: PropTypes.func.isRequired,
+    results: PropTypes.object,
+  },
+
   getInitialState() {
     return {
       timeout: null,
       query: '',
-      geojson: null,
     };
   },
 
   render() {
-    var features = [];
-
-    if (this.state.geojson) {
-      features = this.state.geojson;
-    }
+    var results = (this.props.results && this.props.results.data) || [];
 
     return (
       <div>
@@ -27,10 +28,10 @@ export default React.createClass({
           <input type="search" ref="search" placeholder="Search by name, URI, or Histograph ID" />
         </div>
         <ul className="concepts">
-          {features.map(function (feature, index) {
+          {results.map(function (feature, index) {
             return (
               <li className="concept" key={this.state.query + index}>
-                <Feature feature={feature} selectPit={this.props.selectPit} />
+                <Feature feature={feature} selectPit={this.props.onSelect} />
               </li>
             );
           }.bind(this))}
@@ -38,6 +39,7 @@ export default React.createClass({
       </div>
     );
   },
+
 
   componentDidMount() {
     var node = this.refs.search;
@@ -62,22 +64,10 @@ export default React.createClass({
   },
 
   search() {
-    var q = this.refs.search.value;
-
-    fetch(this.props.apiUrl + 'search?q=' + q)
-      .then(function (response) {
-        return response.json();
-      }).then(function (json) {
-        this.setState({
-          geojson: json && json.map(function (concept) {
-            return {
-              properties: {
-                pits: [concept[0].pit],
-              },
-            };
-          }),
-          query: q,
-        });
-      }.bind(this));
+    var query = this.refs.search.value;
+    this.setState({
+      query,
+    });
+    this.props.onSearch(query);
   },
 });
