@@ -53,7 +53,8 @@
     "deploy": "npm run build && git-directory-deploy --directory dist/",
     "lint": "eslint app",
     "start": "node server.js",
-    "test": "mocha --compilers js:babel-core/register app/test/**"
+    "test": "mocha --compilers js:babel-core/register app/test/**",
+    "test:watch": "npm test -- --watch"
   },
   "repository": {
     "type": "git",
