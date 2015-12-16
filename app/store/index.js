@@ -6,7 +6,9 @@ import { persistStore } from 'redux-persist';
 import api from './api';
 import relations from './../reducers/relations';
 
-const loggerMiddleware = createLogger();
+const loggerMiddleware = createLogger({
+  predicate: () => __DEV__,
+});
 const createStoreWithMiddleware = applyMiddleware(
   thunkMiddleware,
   loggerMiddleware

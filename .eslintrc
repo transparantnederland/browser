@@ -32,6 +32,7 @@
     "react"
   ],
   "globals": {
-    "__CONFIG__": true
+    "__CONFIG__": true,
+    "__DEV__": true
   }
 }
