@@ -4,16 +4,9 @@ import Feature from './Feature';
 
 export default React.createClass({
   propTypes: {
+    results: PropTypes.object.isRequired,
     onSearch: PropTypes.func.isRequired,
     onSelect: PropTypes.func.isRequired,
-    results: PropTypes.object,
-  },
-
-  getInitialState() {
-    return {
-      timeout: null,
-      query: '',
-    };
   },
 
   render() {
@@ -25,12 +18,16 @@ export default React.createClass({
           <h2>{this.props.title}</h2>
         </div>
         <div className="pad-all">
-          <input type="search" ref="search" placeholder="Search by name, URI, or Histograph ID" />
+          <input
+            type="search"
+            placeholder="Search by name, URI, or TNL ID"
+            onChange={(event) => this.props.onSearch(event.target.value)}
+          />
         </div>
         <ul className="concepts">
-          {results.map(function (feature, index) {
+          {results.map(function (feature) {
             return (
-              <li className="concept" key={this.state.query + index}>
+              <li className="concept" key={feature.pits[0].id}>
                 <Feature feature={feature} selectPit={this.props.onSelect} />
               </li>
             );
@@ -38,36 +35,5 @@ export default React.createClass({
         </ul>
       </div>
     );
-  },
-
-
-  componentDidMount() {
-    var node = this.refs.search;
-
-    node.addEventListener('change', function () {
-      if (this.state.timeout) {
-        clearTimeout(this.state.timeout);
-      }
-
-      this.search();
-    }.bind(this));
-
-    node.addEventListener('input', function () {
-      if (this.state.timeout) {
-        clearTimeout(this.state.timeout);
-      }
-
-      this.setState({
-        timeout: setTimeout(this.search, 800),
-      });
-    }.bind(this));
-  },
-
-  search() {
-    var query = this.refs.search.value;
-    this.setState({
-      query,
-    });
-    this.props.onSearch(query);
   },
 });
