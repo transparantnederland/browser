@@ -83,11 +83,19 @@ const MainView = React.createClass({
   },
 
   onFromSearch(q) {
-    this.props.dispatch(api.actions.from({ q }));
+    if (q) {
+      this.props.dispatch(api.actions.from({ q }));
+    } else {
+      this.props.dispatch(api.actions.from.reset());
+    }
   },
 
   onToSearch(q) {
-    this.props.dispatch(api.actions.to({ q }));
+    if (q) {
+      this.props.dispatch(api.actions.to({ q }));
+    } else {
+      this.props.dispatch(api.actions.to.reset());
+    }
   },
 
   onFromSelect(from) {
