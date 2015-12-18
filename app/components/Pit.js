@@ -6,10 +6,13 @@ export default React.createClass({
   },
 
   render() {
-    const { name, id, uri, dataset } = this.props.pit;
+    const { name, id, uri, dataset, type } = this.props.pit;
     return (
       <div className="pad-all pit">
-        <h4>{name || id}</h4>
+        <h4>
+          <span>{name || id}</span>
+          <span className="type">{type}</span>
+        </h4>
         <table>
           <tbody>
             <tr>

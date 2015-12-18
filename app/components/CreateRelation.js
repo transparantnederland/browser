@@ -26,7 +26,7 @@ export default React.createClass({
         <div className="pad-all">
           {this.props.from ? <Pit pit={this.props.from} /> : null}
         </div>
-        <div className="pad-all input">
+        <div className="pad-top input">
           <select
             value={type}
             onChange={(event) => this.props.onTypeChange(event.target.value)}
@@ -51,7 +51,7 @@ export default React.createClass({
             className="button button-primary u-full-width"
             disabled={!this.canCreateRelation()}
           >
-            Create!
+            Create relation!
         </button>
         </div>
       </div>

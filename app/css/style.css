@@ -85,9 +85,36 @@ body {
   top: 0;
   background-color: #fff;
   width: 100%;
-  height: 79px;
+  height: 80px;
   border-bottom: 1px solid #F5EDF0;
   text-align: center;
+  transition: height 0.3s ease-in-out;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.header.expanded {
+  height: 100%;
+}
+
+.modal {
+  transform: translate3d(0, 100%, 0);
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(38, 70, 83, 0.84);
+  z-index: 2;
+  transition: transform 0.3s ease-in-out;
+}
+
+.modal.visible {
+  transform: translate3d(0, 0, 0);
+}
+
+.modalContent {
+  padding: 100px;
 }
 
 .brand {
@@ -98,6 +125,7 @@ body {
   height: 41px;
   position: relative;
   top: 20px;
+  left: 20px;
 }
 
 .brand span {
@@ -171,10 +199,15 @@ input[type="search"]:focus {
   overflow: hidden;
 }
 
+.close-button,
 .relations-button {
   position: absolute;
   top: 20px;
   right: 10px;
+}
+
+button.close-button {
+  color: #fff;
 }
 
 li.concept:hover {
@@ -227,6 +260,7 @@ h4:after {
 
 table {
   width: 100%;
+  margin-bottom: 0;
 }
 
 table tr td.label:after {

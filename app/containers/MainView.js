@@ -1,11 +1,15 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
+import Codemirror from 'react-codemirror';
 
 import api from './../store/api';
 import { addRelation } from './../actions/relations';
 
 import CreateRelation from './../components/CreateRelation';
 import ObjectSearch from './../components/ObjectSearch';
+
+require('codemirror/mode/javascript/javascript');
+require('codemirror/lib/codemirror.css');
 
 require('./../css/normalize.css');
 require('./../css/skeleton.css');
@@ -23,6 +27,7 @@ const MainView = React.createClass({
       from: null,
       to: null,
       type: '',
+      showModal: false,
     };
   },
 
@@ -35,7 +40,7 @@ const MainView = React.createClass({
               <h1 className="brand">
                 <span>Transparant Nederland</span>
               </h1>
-              <button className="relations-button">
+              <button className="relations-button" onClick={this.handleExportClick}>
                 Export Relations ({this.props.relations.length})
               </button>
             </div>
@@ -75,6 +80,14 @@ const MainView = React.createClass({
             </div>
           </div>
         </div>
+        <div className={this.state.showModal ? 'modal visible' : 'modal'}>
+          <button className="close-button" onClick={this.handleModalCloseClick}>
+            Close
+          </button>
+          <div className="modalContent">
+            <Codemirror value={this.props.relations.map((value) => JSON.stringify(value)).join('\n')} options={{ mode: 'javascript' }} />
+          </div>
+        </div>
       </div>
     );
   },
@@ -88,17 +101,20 @@ const MainView = React.createClass({
     this.setState({ type });
   },
 
+  handleExportClick() {
+    this.setState({
+      showModal: true,
+    });
+  },
+
+  handleModalCloseClick() {
+    this.setState({
+      showModal: false,
+    });
+  },
+
   onRelationAdd() {
     const { from, to, type } = this.state;
-
-    // if (!from) {
-    //   return alert('Select first pit');
-    // } else if (!to) {
-    //   return alert('Select second pit');
-    // } else if (!type) {
-    //   return alert('Select relationship type');
-    // }
-
     this.props.dispatch(addRelation({ from, to, type }));
   },
 
