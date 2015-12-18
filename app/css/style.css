@@ -98,19 +98,20 @@ body {
 }
 
 .modal {
-  transform: translate3d(0, 100%, 0);
+  transform: translate3d(0, -100%, 0);
   position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
   background-color: rgba(38, 70, 83, 0.84);
-  z-index: 2;
+  z-index: -1;
   transition: transform 0.3s ease-in-out;
 }
 
 .modal.visible {
   transform: translate3d(0, 0, 0);
+  z-index: 2;
 }
 
 .modalContent {
@@ -138,6 +139,7 @@ body {
   right: 0;
   bottom: 0;
   left: 0;
+  background-color: #fff;
 }
 
 .button.button-primary,
