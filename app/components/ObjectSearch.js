@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 
-import Feature from './Feature';
+import Concept from './Concept';
 
 export default React.createClass({
   propTypes: {
@@ -10,7 +10,8 @@ export default React.createClass({
   },
 
   render() {
-    var results = (this.props.results && this.props.results.data) || [];
+    const { results } = this.props;
+    const concepts = results && results.data;
 
     return (
       <div>
@@ -26,10 +27,12 @@ export default React.createClass({
           />
         </div>
         <ul className="concepts">
-          {results.map(function (feature) {
+          {concepts && concepts.map(function (concept) {
+            const { pit } = concept[0];
+
             return (
-              <li className="concept" key={feature.pits[0].id}>
-                <Feature feature={feature} selectPit={this.props.onSelect} />
+              <li key={pit.id}>
+                <Concept concept={concept} onSelect={this.props.onSelect} />
               </li>
             );
           }.bind(this))}

@@ -4,23 +4,11 @@ import adapterFetch from 'redux-api/lib/adapters/fetch';
 export default reduxApi({
   from: {
     url: '/search',
-    transformer: (data) => {
-      return data && data.map((concept) => {
-        return {
-          pits: [concept[0].pit],
-        };
-      });
-    },
+    transformer: (data) => (data),
   },
   to: {
     url: '/search',
-    transformer: (data) => {
-      return data && data.map((concept) => {
-        return {
-          pits: [concept[0].pit],
-        };
-      });
-    },
+    transformer: (data) => (data),
   },
   relationSchema: {
     url: '/schemas/relations',

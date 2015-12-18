@@ -24,8 +24,8 @@ const MainView = React.createClass({
 
   getInitialState() {
     return {
-      from: null,
-      to: null,
+      from: [],
+      to: [],
       type: '',
       showModal: false,
     };

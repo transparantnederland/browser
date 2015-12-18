@@ -7,9 +7,9 @@ export default React.createClass({
     relations: PropTypes.array.isRequired,
     schema: PropTypes.object.isRequired,
     title: PropTypes.string.isRequired,
-    from: PropTypes.object.isRequired,
+    from: PropTypes.array.isRequired,
     type: PropTypes.string.isRequired,
-    to: PropTypes.object.isRequired,
+    to: PropTypes.array.isRequired,
     onTypeChange: PropTypes.func.isRequired,
     onRelationAdd: PropTypes.func.isRequired,
   },
@@ -24,7 +24,7 @@ export default React.createClass({
           <h2>{title}</h2>
         </div>
         <div className="pad-all">
-          {this.props.from ? <Pit pit={this.props.from} /> : null}
+          {this.props.from ? <Pit pit={this.props.from[0].pit} /> : null}
         </div>
         <div className="pad-top input">
           <select
@@ -43,7 +43,7 @@ export default React.createClass({
           </select>
         </div>
         <div className="pad-all">
-          {this.props.to ? <Pit pit={this.props.to} /> : null}
+          {this.props.to ? <Pit pit={this.props.to[0].pit} /> : null}
         </div>
         <div className="pad-all input">
           <button
