@@ -19,6 +19,7 @@ const MainView = React.createClass({
   propTypes: {
     from: PropTypes.object.isRequired,
     to: PropTypes.object.isRequired,
+    relations: PropTypes.array.isRequired,
     dispatch: PropTypes.func.isRequired,
   },
 
@@ -85,7 +86,16 @@ const MainView = React.createClass({
             Close
           </button>
           <div className="modalContent">
-            <Codemirror value={this.props.relations.map((value) => JSON.stringify(value)).join('\n')} options={{ mode: 'javascript' }} />
+            <Codemirror
+              value={this.props.relations.map((value) => {
+                const data = Object.assign({}, value, {
+                  from: value.from[0].pit,
+                  to: value.to[0].pit,
+                });
+                return JSON.stringify(data);
+              }).join('\n')}
+              options={{ mode: 'javascript' }}
+            />
           </div>
         </div>
       </div>

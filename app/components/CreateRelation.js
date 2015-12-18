@@ -24,7 +24,7 @@ export default React.createClass({
           <h2>{title}</h2>
         </div>
         <div className="pad-all">
-          {this.props.from ? <Pit pit={this.props.from[0].pit} /> : null}
+          {this.props.from.length ? <Pit pit={this.props.from[0].pit} /> : null}
         </div>
         <div className="pad-top input">
           <select
@@ -43,7 +43,7 @@ export default React.createClass({
           </select>
         </div>
         <div className="pad-all">
-          {this.props.to ? <Pit pit={this.props.to[0].pit} /> : null}
+          {this.props.to.length ? <Pit pit={this.props.to[0].pit} /> : null}
         </div>
         <div className="pad-all input">
           <button
