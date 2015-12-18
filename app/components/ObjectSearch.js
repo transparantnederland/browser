@@ -22,6 +22,7 @@ export default React.createClass({
             type="search"
             placeholder="Search by name, URI, or TNL ID"
             onChange={(event) => this.props.onSearch(event.target.value)}
+            className="u-full-width"
           />
         </div>
         <ul className="concepts">

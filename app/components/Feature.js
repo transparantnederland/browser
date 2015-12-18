@@ -1,7 +1,5 @@
 import React from 'react';
 
-import Pit from './Pit';
-
 export default React.createClass({
   getInitialState() {
     var feature = this.props.feature;
@@ -27,24 +25,17 @@ export default React.createClass({
 
   render() {
     return (
-      <div className="pad-top-bottom">
-        <div className="pad-left-right">
-          <h3>
-            <span>{this.state.name}</span>
-            <span className="type">{this.state.type}</span>
-          </h3>
-        </div>
-        <ul className="pits">
-        {this.props.feature.pits.map(function (pit) {
-          return (
-            <li className="pit" key={pit.id || pit.uri}>
-              <Pit pit={pit} selectPit={this.props.selectPit} />
-            </li>
-          );
-        }.bind(this))}
-        </ul>
+      <div className="pad-all feature" onClick={this.handleClick}>
+        <h3>
+          <span>{this.state.name}</span>
+          <span className="type">{this.state.type}</span>
+        </h3>
       </div>
     );
+  },
+
+  handleClick() {
+    this.props.selectPit(this.props.feature.pits[0]);
   },
 
   sortNames(pits) {

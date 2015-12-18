@@ -28,32 +28,52 @@ const MainView = React.createClass({
 
   render() {
     return (
-      <div className="container">
-        <div id="object1" className="col">
-          <ObjectSearch
-            title="1. Find first PIT"
-            results={this.props.from}
-            onSearch={this.onFromSearch}
-            onSelect={this.onFromSelect}
-          />
+      <div className="content">
+        <div className="header">
+          <div className="container">
+            <div className="row">
+              <h1 className="brand">
+                <span>Transparant Nederland</span>
+              </h1>
+              <button className="relations-button">
+                Export Relations ({this.props.relations.length})
+              </button>
+            </div>
+          </div>
         </div>
-        <div id="relation" className="col">
-          <CreateRelation
-            title="3. Create a relation"
-            schema={this.props.relationSchema}
-            relations={this.props.relations}
-            type={this.state.type}
-            onTypeChange={this.onTypeChange}
-            onRelationAdd={this.onRelationAdd}
-          />
-        </div>
-        <div id="object2" className="col">
-          <ObjectSearch
-            title="2. Find second PIT"
-            results={this.props.to}
-            onSearch={this.onToSearch}
-            onSelect={this.onToSelect}
-          />
+        <div className="section">
+          <div className="container">
+            <div className="row">
+              <div id="object1" className="columns three">
+                <ObjectSearch
+                  title="Find first PIT"
+                  results={this.props.from}
+                  onSearch={this.onFromSearch}
+                  onSelect={this.onFromSelect}
+                />
+              </div>
+              <div id="relation" className="columns six">
+                <CreateRelation
+                  title="Create a relation"
+                  schema={this.props.relationSchema}
+                  relations={this.props.relations}
+                  from={this.state.from}
+                  type={this.state.type}
+                  to={this.state.to}
+                  onTypeChange={this.onTypeChange}
+                  onRelationAdd={this.onRelationAdd}
+                />
+              </div>
+              <div id="object2" className="columns three">
+                <ObjectSearch
+                  title="Find second PIT"
+                  results={this.props.to}
+                  onSearch={this.onToSearch}
+                  onSelect={this.onToSelect}
+                />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     );
