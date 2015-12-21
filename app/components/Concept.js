@@ -8,12 +8,12 @@ export default React.createClass({
   },
 
   render() {
-    const { pit } = this.props.concept[0];
+    const { pit, relations } = this.props.concept[0];
 
     return (
       <div className="pad-all concept" onClick={() => this.props.onSelect(this.props.concept)}>
         <h3>
-          <span>{pit.name}</span>
+          <span>{pit.name} {relations.length ? '(' + relations.length + ')' : ''}</span>
           <span className="type">{pit.type}</span>
         </h3>
       </div>

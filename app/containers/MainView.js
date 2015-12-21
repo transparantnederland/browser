@@ -27,12 +27,29 @@ const MainView = React.createClass({
     return {
       from: [],
       to: [],
+      fromConcepts: [],
+      toConcepts: [],
       type: '',
       showModal: false,
     };
   },
 
   render() {
+    /*
+     * Filter duplicates or already connected nodes
+     */
+    const toConcepts = [...this.state.toConcepts].filter((concept) => {
+      if (this.state.from.length === 0 || this.state.type === '') {
+        return true;
+      }
+      this.state.from[0].relations.forEach((relation) => {
+        if (relation.type !== this.state.type && relation.to !== concept[0].pit.id) {
+          return true;
+        }
+      });
+      return true;
+    });
+
     return (
       <div className="content">
         <div className="header">
@@ -53,7 +70,7 @@ const MainView = React.createClass({
               <div id="object1" className="columns three">
                 <ObjectSearch
                   title="Find first PIT"
-                  results={this.props.from}
+                  concepts={this.state.fromConcepts}
                   onSearch={this.onFromSearch}
                   onSelect={this.onFromSelect}
                 />
@@ -73,7 +90,7 @@ const MainView = React.createClass({
               <div id="object2" className="columns three">
                 <ObjectSearch
                   title="Find second PIT"
-                  results={this.props.to}
+                  concepts={toConcepts}
                   onSearch={this.onToSearch}
                   onSelect={this.onToSelect}
                 />
@@ -100,6 +117,13 @@ const MainView = React.createClass({
         </div>
       </div>
     );
+  },
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      fromConcepts: nextProps.from.data || [],
+      toConcepts: nextProps.to.data || [],
+    });
   },
 
   componentDidMount() {

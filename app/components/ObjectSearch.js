@@ -4,15 +4,12 @@ import Concept from './Concept';
 
 export default React.createClass({
   propTypes: {
-    results: PropTypes.object.isRequired,
+    concepts: PropTypes.array.isRequired,
     onSearch: PropTypes.func.isRequired,
     onSelect: PropTypes.func.isRequired,
   },
 
   render() {
-    const { results } = this.props;
-    const concepts = results && results.data;
-
     return (
       <div>
         <div className="pad-top">
@@ -27,7 +24,7 @@ export default React.createClass({
           />
         </div>
         <ul className="concepts">
-          {concepts && concepts.map(function (concept) {
+          {this.props.concepts.map(function (concept) {
             const { pit } = concept[0];
 
             return (
