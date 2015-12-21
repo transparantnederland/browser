@@ -152,16 +152,18 @@ const MainView = React.createClass({
     this.props.dispatch(addRelation({ from, to, type }));
   },
 
-  onFromSearch(q) {
-    if (q) {
+  onFromSearch(query) {
+    if (query) {
+      const q = query + '*';
       this.props.dispatch(api.actions.from({ q }));
     } else {
       this.props.dispatch(api.actions.from.reset());
     }
   },
 
-  onToSearch(q) {
-    if (q) {
+  onToSearch(query) {
+    if (query) {
+      const q = query + '*';
       this.props.dispatch(api.actions.to({ q }));
     } else {
       this.props.dispatch(api.actions.to.reset());
