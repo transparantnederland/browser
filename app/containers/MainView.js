@@ -69,7 +69,7 @@ const MainView = React.createClass({
             <div className="row">
               <div id="object1" className="columns three">
                 <ObjectSearch
-                  title="Find first PIT"
+                  title="First PIT"
                   concepts={this.state.fromConcepts}
                   onSearch={this.onFromSearch}
                   onSelect={this.onFromSelect}
@@ -89,7 +89,7 @@ const MainView = React.createClass({
               </div>
               <div id="object2" className="columns three">
                 <ObjectSearch
-                  title="Find second PIT"
+                  title="Second PIT"
                   concepts={toConcepts}
                   onSearch={this.onToSearch}
                   onSelect={this.onToSelect}
