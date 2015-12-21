@@ -1,37 +1,54 @@
 import React, { PropTypes } from 'react';
 
-import Feature from './Feature';
+import Concept from './Concept';
 
 export default React.createClass({
   propTypes: {
+    title: PropTypes.string.isRequired,
+    concepts: PropTypes.array.isRequired,
     onSearch: PropTypes.func.isRequired,
     onSelect: PropTypes.func.isRequired,
-    results: PropTypes.object,
   },
 
   getInitialState() {
     return {
-      timeout: null,
-      query: '',
+      typeFilter: '',
     };
   },
 
   render() {
-    var results = (this.props.results && this.props.results.data) || [];
+    const { typeFilter } = this.state;
 
     return (
       <div>
         <div className="pad-top">
+          <select className="u-pull-right" onChange={this.handleFilterChange}>
+            <option value="">All Results</option>
+            <option value="tnl:Person">tnl:Person</option>
+            <option value="tnl:Public">tnl:Public</option>
+            <option value="tnl:Organization">tnl:Organization</option>
+            <option value="tnl:PoliticalParty">tnl:PoliticalParty</option>
+          </select>
           <h2>{this.props.title}</h2>
         </div>
         <div className="pad-all">
-          <input type="search" ref="search" placeholder="Search by name, URI, or Histograph ID" />
+          <input
+            type="search"
+            placeholder="Search by name, URI, or TNL ID"
+            onChange={(event) => this.props.onSearch(event.target.value)}
+            className="u-full-width"
+          />
         </div>
         <ul className="concepts">
-          {results.map(function (feature, index) {
+          {this.props.concepts.filter(function (concept) {
+            const { pit } = concept[0];
+            return typeFilter === '' || typeFilter === pit.type;
+          }).map(function (concept) {
+            const { pit } = concept[0];
+
             return (
-              <li className="concept" key={this.state.query + index}>
-                <Feature feature={feature} selectPit={this.props.onSelect} />
+              <li key={pit.id}>
+                <Concept concept={concept} onSelect={this.props.onSelect} />
               </li>
             );
           }.bind(this))}
@@ -40,34 +57,10 @@ export default React.createClass({
     );
   },
 
-
-  componentDidMount() {
-    var node = this.refs.search;
-
-    node.addEventListener('change', function () {
-      if (this.state.timeout) {
-        clearTimeout(this.state.timeout);
-      }
-
-      this.search();
-    }.bind(this));
-
-    node.addEventListener('input', function () {
-      if (this.state.timeout) {
-        clearTimeout(this.state.timeout);
-      }
-
-      this.setState({
-        timeout: setTimeout(this.search, 800),
-      });
-    }.bind(this));
-  },
-
-  search() {
-    var query = this.refs.search.value;
+  handleFilterChange(event) {
+    const value = event.target.value;
     this.setState({
-      query,
+      typeFilter: value,
     });
-    this.props.onSearch(query);
   },
 });
