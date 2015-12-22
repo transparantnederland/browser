@@ -106,8 +106,8 @@ const MainView = React.createClass({
             <Codemirror
               value={this.props.relations.map((value) => {
                 const data = Object.assign({}, value, {
-                  from: value.from[0].pit,
-                  to: value.to[0].pit,
+                  from: value.from[0].pit.id,
+                  to: value.to[0].pit.id,
                 });
                 return JSON.stringify(data);
               }).join('\n')}
