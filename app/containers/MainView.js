@@ -38,16 +38,20 @@ const MainView = React.createClass({
     /*
      * Filter duplicates or already connected nodes
      */
-    const toConcepts = [...this.state.toConcepts].filter((concept) => {
+    const toConcepts = [...this.state.toConcepts].filter((concepts) => {
+      let noRelation = true;
+      const conceptIds = concepts.map((concept) => {
+        return concept.pit.id;
+      });
       if (this.state.from.length === 0 || this.state.type === '') {
-        return true;
+        return noRelation;
       }
       this.state.from[0].relations.forEach((relation) => {
-        if (relation.type !== this.state.type && relation.to !== concept[0].pit.id) {
-          return true;
+        if (relation.type === this.state.type && conceptIds.indexOf(relation.to) > -1) {
+          noRelation = false;
         }
       });
-      return true;
+      return noRelation;
     });
 
     return (
