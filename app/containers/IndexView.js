@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import Header from '../components/Header';
 
 require('purecss');
-require('../css/new.css');
 
 const IndexView = React.createClass({
   render() {
