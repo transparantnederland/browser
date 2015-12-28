@@ -19,7 +19,11 @@ const SearchResults = React.createClass({
               classNames.push('SearchResults-listItem__active');
             }
             return (
-              <li className={classNames.join(' ')} onClick={() => { onOptionSelected(option); }}>
+              <li
+                className={classNames.join(' ')}
+                key={option.id}
+                onClick={() => { onOptionSelected(option); }}
+              >
                 {option.name}
                 {option.type}
               </li>);
