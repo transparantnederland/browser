@@ -6,11 +6,7 @@ export default reduxApi({
     url: '/search',
     transformer: (data) => (data),
   },
-  from: {
-    url: '/search',
-    transformer: (data) => (data),
-  },
-  to: {
+  pit: {
     url: '/search',
     transformer: (data) => (data),
   },
