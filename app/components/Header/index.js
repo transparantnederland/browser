@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Typeahead } from 'react-typeahead';
+import { Link } from 'react-router';
 import { pushPath } from 'redux-simple-router';
 
 import api from '../../store/api';
@@ -20,7 +21,7 @@ const Header = React.createClass({
 
     return (
       <div className="Header">
-        <a href="/" className="Header-brand">Transparant Nederland</a>
+        <Link className="Header-brand" to="/">Transparant Nederland</Link>
         <form className="Header-form">
           <Typeahead
             placeholder="Search for politicians, organizations, or political parties"
