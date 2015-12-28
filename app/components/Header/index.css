@@ -1,0 +1,16 @@
+.Header {
+  border-bottom: 1px solid grey;
+}
+
+.Header-brand {
+  display: inline-block;
+  background-repeat: no-repeat;
+  background-image: url('../../images/logo.svg');
+  width: 160px;
+  height: 41px;
+  text-indent: -9999px;
+}
+
+.Header-form {
+  display: inline-block;
+}

@@ -1,11 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-const IndexView = React.createClass({
+const PitView = React.createClass({
   render() {
     return (
       <div>
-        <span>hello index</span>
+        <span>hello PIT</span>
       </div>
     );
   },
@@ -13,4 +13,4 @@ const IndexView = React.createClass({
 
 export default connect(
   (state) => (state)
-)(IndexView);
+)(PitView);
