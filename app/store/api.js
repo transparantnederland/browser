@@ -2,6 +2,10 @@ import reduxApi from 'redux-api';
 import adapterFetch from 'redux-api/lib/adapters/fetch';
 
 export default reduxApi({
+  search: {
+    url: '/search',
+    transformer: (data) => (data),
+  },
   from: {
     url: '/search',
     transformer: (data) => (data),
