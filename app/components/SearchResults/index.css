@@ -1,0 +1,12 @@
+.SearchResults {
+  position: absolute;
+  border: 1px solid grey;
+}
+
+.SearchResults-listItem {
+  background-color: white;
+}
+
+.SearchResults-listItem__active {
+  background-color: cyan;
+}

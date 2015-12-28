@@ -1,5 +1,7 @@
 import React, { PropTypes } from 'react';
 
+import './index.css';
+
 const SearchResults = React.createClass({
   propTypes: {
     displayOptions: PropTypes.object.isRequired,
@@ -9,15 +11,15 @@ const SearchResults = React.createClass({
     const { options, selectionIndex, onOptionSelected } = this.props;
 
     return (
-      <div>
-        <ul style={{ position: 'absolute', border: '1px solid grey' }}>
+      <div className="SearchResults">
+        <ul className="SearchResults-list">
           {options.map((option, index) => {
-            const active = selectionIndex === index;
+            const classNames = ['SearchResults-listItem'];
+            if (selectionIndex === index) {
+              classNames.push('SearchResults-listItem__active');
+            }
             return (
-              <li
-                style={{ background: active ? 'cyan' : 'white' }}
-                onClick={() => { onOptionSelected(option); }}
-              >
+              <li className={classNames.join(' ')} onClick={() => { onOptionSelected(option); }}>
                 {option.name}
                 {option.type}
               </li>);

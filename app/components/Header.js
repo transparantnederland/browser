@@ -25,6 +25,7 @@ const Header = React.createClass({
                 placeholder="Search for politicians, organizations, or political parties"
                 options={options}
                 filterOption="name"
+                displayOption="name"
                 onKeyUp={this.handleSearch}
                 maxVisible={20}
                 customListComponent={SearchResults}
