@@ -1,25 +1,23 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import api from './../store/api';
+import api from './../middleware/api';
 
 function loadData(props) {
-  const {
-    params: { dataset, id },
-  } = props;
+  const { dataset, id } = props;
 
-  props.dispatch(api.actions.pit({
+  props.fetchPit({
     id: [dataset, id].join('/'),
-  }));
+  });
 }
 
-const PitView = React.createClass({
+const PitPage = React.createClass({
   componentWillMount() {
     loadData(this.props);
   },
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.path !== nextProps.path) {
+    if (this.props.id !== nextProps.id) {
       loadData(nextProps);
     }
   },
@@ -45,14 +43,18 @@ const PitView = React.createClass({
 
 export default connect(
   (state) => {
+    const { dataset, id } = state.router.params;
     const {
       pit: { data },
-      routing: { path },
     } = state;
 
     return {
       data,
-      path,
+      dataset,
+      id,
     };
+  },
+  {
+    fetchPit: api.actions.pit,
   }
-)(PitView);
+)(PitPage);

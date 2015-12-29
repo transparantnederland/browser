@@ -2,22 +2,16 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Typeahead } from 'react-typeahead';
 import { Link } from 'react-router';
-import { pushPath } from 'redux-simple-router';
+import { pushState } from 'redux-router';
 
-import api from '../../store/api';
-
+import api from '../../middleware/api';
 import SearchResults from './../SearchResults';
 
 import './index.css';
 
 const Header = React.createClass({
   render() {
-    const options = (this.props.search.data || []).map((results) => {
-      const first = results.find((result) => {
-        return result.pit.name;
-      });
-      return first.pit;
-    });
+    const { options } = this.props;
 
     return (
       <div className="Header">
@@ -32,7 +26,7 @@ const Header = React.createClass({
             maxVisible={20}
             customListComponent={SearchResults}
             onOptionSelected={(option) => {
-              this.props.dispatch(pushPath(option.id.replace('urn:hgid:', '/')));
+              this.props.pushState(null, option.id.replace('urn:hgid:', '/'), '');
             }}
           />
         </form>
@@ -44,13 +38,25 @@ const Header = React.createClass({
 
     if (query) {
       const q = query + '*';
-      this.props.dispatch(api.actions.search({ q }));
+      this.props.fetchSearch({ q });
     } else {
-      this.props.dispatch(api.actions.search.reset());
+      this.props.resetSearch();
     }
   },
 });
 
 export default connect(
-  (state) => (state)
+  (state) => ({
+    options: (state.search.data || []).map((results) => {
+      const first = results.find((result) => {
+        return result.pit.name;
+      });
+      return first.pit;
+    }),
+  }),
+  {
+    pushState,
+    fetchSearch: api.actions.search,
+    resetSearch: api.actions.search.reset,
+  }
 )(Header);

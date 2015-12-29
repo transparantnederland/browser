@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-const IndexView = React.createClass({
+const IndexPage = React.createClass({
   render() {
     return (
       <div>
@@ -13,4 +13,4 @@ const IndexView = React.createClass({
 
 export default connect(
   (state) => (state)
-)(IndexView);
+)(IndexPage);

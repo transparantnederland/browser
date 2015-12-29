@@ -1,28 +1,28 @@
-import { createStore, applyMiddleware, combineReducers } from 'redux';
-import thunkMiddleware from 'redux-thunk';
+import { createStore, applyMiddleware, compose } from 'redux';
+import { reduxReactRouter } from 'redux-router';
+import thunk from 'redux-thunk';
 import createLogger from 'redux-logger';
-import { persistStore } from 'redux-persist';
-import { routeReducer } from 'redux-simple-router';
+import createHistory from 'history/lib/createBrowserHistory';
+import routes from '../routes';
+import reducers from '../reducers';
 
-import api from './api';
-import relations from './../reducers/relations';
+const store = compose(
+  applyMiddleware(thunk),
+  reduxReactRouter({
+    routes,
+    createHistory,
+  }),
+  applyMiddleware(createLogger({
+    predicate: () => __DEV__,
+  }))
+)(createStore)(reducers);
 
-const loggerMiddleware = createLogger({
-  predicate: () => __DEV__,
-});
-
-const createStoreWithMiddleware = applyMiddleware(
-  thunkMiddleware,
-  loggerMiddleware
-)(createStore);
-
-const reducer = combineReducers(Object.assign({
-  relations,
-  routing: routeReducer,
-}, api.reducers));
-
-const store = createStoreWithMiddleware(reducer);
-
-persistStore(store);
+if (module.hot) {
+  // Enable Webpack hot module replacement for reducers
+  module.hot.accept('../reducers', () => {
+    const nextRootReducer = require('../reducers/index').default;
+    store.replaceReducer(nextRootReducer);
+  });
+}
 
 export default store;
