@@ -6,9 +6,37 @@ export default reduxApi({
     url: '/search',
     transformer: (data) => (data),
   },
-  pit: {
+  person: {
     url: '/search',
-    transformer: (data) => (data),
+    transformer: (data) => {
+      return data && data.length && data[0].map((concept) => {
+        return concept.pit;
+      }).shift();
+    },
+  },
+  organization: {
+    url: '/search',
+    transformer: (data) => {
+      return data && data.length && data[0].map((concept) => {
+        return concept.pit;
+      }).shift();
+    },
+  },
+  orgsFromPerson: {
+    url: '/orgsFromPerson',
+    transformer: (data) => {
+      return data && data.length && data.map((concept) => {
+        return concept.shift();
+      });
+    },
+  },
+  peopleFromOrg: {
+    url: '/peopleFromOrg',
+    transformer: (data) => {
+      return data && data.length && data.map((concept) => {
+        return concept.shift();
+      });
+    },
   },
   relationSchema: {
     url: '/schemas/relations',

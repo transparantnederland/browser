@@ -25,9 +25,7 @@ const Header = React.createClass({
             onKeyUp={this.handleSearch}
             maxVisible={20}
             customListComponent={SearchResults}
-            onOptionSelected={(option) => {
-              this.props.pushState(null, option.id.replace('urn:hgid:', '/'), '');
-            }}
+            onOptionSelected={this.handleOptionSelect}
           />
         </form>
       </div>
@@ -42,6 +40,14 @@ const Header = React.createClass({
     } else {
       this.props.resetSearch();
     }
+  },
+  handleOptionSelect(option) {
+    const path = [
+      option.type === 'tnl:Person' ? '/person' : '/organization',
+      option.id.replace('urn:hgid:', ''),
+    ].join('/');
+
+    this.props.pushState(null, path, '');
   },
 });
 
