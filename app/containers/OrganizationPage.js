@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 
 import api from './../middleware/api';
 
+import RelationCard from './../components/RelationCard';
+
 function loadData(props) {
   const { id } = props;
 
@@ -35,11 +37,15 @@ const OrganizationPage = React.createClass({
         <div>{organization.type}</div>
         <div>{organization.dataset}</div>
         {peopleFromOrg.map((item) => {
+          const { pit } = item;
+
           return (
-            <div>
-              <h3>{item.relation_type} of {item.pit.name}</h3>
-              <span>{item.pit.dataset}</span>
-            </div>
+            <RelationCard
+              key={pit.id}
+              from={organization}
+              relation={item.relation_type}
+              to={pit}
+            />
           );
         })}
       </div>
