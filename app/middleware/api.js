@@ -38,6 +38,14 @@ export default reduxApi({
       });
     },
   },
+  peopleFromOrgsFromPerson: {
+    url: '/peopleFromOrgsFromPerson',
+    transformer: (data) => {
+      return data && data.length && data.map((concept) => {
+        return concept.shift();
+      });
+    },
+  },
   relationSchema: {
     url: '/schemas/relations',
     transformer: (data) => (data),
