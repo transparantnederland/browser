@@ -24,3 +24,14 @@ export function organizationRelation(relation) {
 
   return relations[relation] || '';
 }
+
+export function typeToText(type) {
+  const types = {
+    'tnl:Public': 'Public Organization',
+    'tnl:Person': 'Person',
+    'tnl:PoliticalParty': 'Political Party',
+    'tnl:Organization': 'Organization',
+  };
+
+  return types[type] || '';
+}

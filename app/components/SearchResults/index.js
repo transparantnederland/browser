@@ -1,5 +1,7 @@
 import React, { PropTypes } from 'react';
 
+import { typeToText } from './../../lib/helpers';
+
 import './index.css';
 
 const SearchResults = React.createClass({
@@ -24,9 +26,10 @@ const SearchResults = React.createClass({
                 key={option.id}
                 onClick={() => { onOptionSelected(option); }}
               >
-                {option.name}
-                {option.type}
-              </li>);
+                <div className="SearchResults-name">{option.name}</div>
+                <div className="SearchResults-type">{typeToText(option.type)}</div>
+              </li>
+            );
           })}
         </ul>
       </div>

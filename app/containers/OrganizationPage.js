@@ -36,6 +36,7 @@ const OrganizationPage = React.createClass({
         <div>{organization.id}</div>
         <div>{organization.type}</div>
         <div>{organization.dataset}</div>
+        <h2>Related politicians</h2>
         {peopleFromOrg.map((item) => {
           const { pit } = item;
 

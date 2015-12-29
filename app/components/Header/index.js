@@ -4,6 +4,7 @@ import { Typeahead } from 'react-typeahead';
 import { Link } from 'react-router';
 import { pushState } from 'redux-router';
 
+import { pitToPath } from '../../lib/helpers';
 import api from '../../middleware/api';
 import SearchResults from './../SearchResults';
 
@@ -42,12 +43,7 @@ const Header = React.createClass({
     }
   },
   handleOptionSelect(option) {
-    const path = [
-      option.type === 'tnl:Person' ? '/person' : '/organization',
-      option.id.replace('urn:hgid:', ''),
-    ].join('/');
-
-    this.props.pushState(null, path, '');
+    this.props.pushState(null, pitToPath(option), '');
   },
 });
 
