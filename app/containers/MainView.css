@@ -1,0 +1,15 @@
+.MainView {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  flex: 1;
+}
+
+.MainView-list {
+  overflow-y: scroll;
+}
+
+.MainView-detail {
+  display: flex;
+  flex: 1;
+}

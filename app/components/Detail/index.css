@@ -1,0 +1,22 @@
+.Detail {
+  flex: 1;
+  display: block;
+  padding: 2em;
+}
+
+.Detail-name {
+  font-size: 2em;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.Detail-type {
+  font-size: 1.4em;
+  color: #999;
+}
+
+.Detail-header {
+  font-size: 1.5em;
+  margin: 0.8em 0;
+  font-weight: bold;
+}

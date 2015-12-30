@@ -1,0 +1,18 @@
+.List {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-right: 1px solid #f5edf0;
+  width: 300px;
+}
+
+.List-item {
+  border-bottom: 1px solid #f5edf0;
+}
+
+.List-item:hover,
+.List-item--active {
+  border-bottom: 1px solid #f5edf0;
+  background-color: #f5edf0;
+  cursor: pointer;
+}

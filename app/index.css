@@ -43,6 +43,18 @@
 /* Base style & classes
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
+html,
 body {
+  height: 100%;
+  color: #333;
   font-family: "Source Sans Pro", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+a {
+  text-decoration: none;
+  color: #6C93AD;
+}
+
+#app {
+  height: 100%;
 }

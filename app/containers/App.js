@@ -1,12 +1,14 @@
 import React from 'react';
 
-import Header from './../components/Header';
+import Nav from './../components/Nav';
+
+import './app.css';
 
 const App = React.createClass({
   render() {
     return (
-      <div>
-        <Header />
+      <div className="App">
+        <Nav/>
         {this.props.children}
       </div>
     );
