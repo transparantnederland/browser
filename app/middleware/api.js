@@ -36,14 +36,12 @@ export default reduxApi({
   //     }).shift();
   //   },
   // },
-  // orgsFromPerson: {
-  //   url: '/orgsFromPerson',
-  //   transformer: (data) => {
-  //     return data && data.length && data.map((concept) => {
-  //       return concept.shift();
-  //     });
-  //   },
-  // },
+  orgsFromPerson: {
+    url: '/orgsFromPerson',
+    transformer: (data) => {
+      return data && data.map((concept) => (concept.shift()));
+    },
+  },
   // peopleFromOrg: {
   //   url: '/peopleFromOrg',
   //   transformer: (data) => {

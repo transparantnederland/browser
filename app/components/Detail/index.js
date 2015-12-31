@@ -8,18 +8,40 @@ const Detail = React.createClass({
   },
 
   render() {
-    const { concept } = this.props;
+    const {
+      concept: {
+        name,
+        type,
+        relations,
+      },
+    } = this.props;
 
     return (
       <div className="Detail">
-        <div className="Detail-name">{concept.name}</div>
-        <div className="Detail-type">{concept.type}</div>
+        <div className="Detail-name">{name}</div>
+        <div className="Detail-type">{type}</div>
 
         <div className="Detail-header">Relations</div>
-        {concept.pits.map((pit) => <div>{pit.name} tnl:same</div>)}
+        <table className="Detail-relations">
+          <thead>
+            <tr>
+              <td>Name</td>
+              <td>Relation Type</td>
+              <td>Dataset</td>
+            </tr>
+          </thead>
+          <tbody>
+            {relations.map((relation) =>
+              <tr>
+                <td>{relation.pit.name}</td>
+                <td>{relation.relation_type}</td>
+                <td>{relation.pit.dataset}</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
       </div>
     );
-    // {Object.keys(pit.data || {}).map((key) => <div>{key}{pit.data[key]}</div>)}
   },
 });
 

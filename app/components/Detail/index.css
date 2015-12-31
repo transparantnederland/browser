@@ -20,3 +20,34 @@
   margin: 0.8em 0;
   font-weight: bold;
 }
+
+.Detail-relations {
+  border: 1px solid #f5edf0;
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 20px;
+}
+
+.Detail-relations {
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 20px;
+}
+.Detail-relations > thead > tr > td,
+.Detail-relations > tbody > tr > td {
+  padding: 5px;
+  line-height: 1.42857143;
+  vertical-align: top;
+  border-top: 1px solid #f5edf0;
+}
+
+.Detail-relations > thead > tr > td {
+  vertical-align: bottom;
+  text-transform: uppercase;
+  font-weight: bold;
+  background-color: #f5edf0;
+}
+
+.Detail-relations > tbody > tr:hover {
+  background-color: #f5edf0;
+}
