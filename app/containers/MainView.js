@@ -6,10 +6,17 @@ import api from './../middleware/api';
 import Detail from './../components/Detail';
 import ConceptList from './../components/ConceptList';
 
+import _ from 'lodash';
+
 import './MainView.css';
 
 function loadData(props) {
-  props.fetchConcepts({ q: '*' });
+  const { query } = props;
+  const params = Object.assign({}, query, {
+    q: '*',
+  });
+
+  props.fetchConcepts(params);
 }
 
 const MainView = React.createClass({
@@ -25,7 +32,11 @@ const MainView = React.createClass({
 
   componentWillReceiveProps(nextProps) {
     const { selectedConcept } = this.state;
-    const { relations } = nextProps;
+    const { relations, query } = nextProps;
+
+    if (!_.isEqual(this.props.query, query)) {
+      loadData(nextProps);
+    }
 
     if (relations && selectedConcept && !selectedConcept.relations.length) {
       this.setState({
@@ -77,7 +88,15 @@ const MainView = React.createClass({
 
 export default connect(
   (state) => {
+    const { type } = state.router.params;
+    const query = {};
+
+    if (type) {
+      query.type = type;
+    }
+
     return {
+      query,
       concepts: state.search.data || [],
       relations: state.orgsFromPerson.data || [],
     };
@@ -87,3 +106,7 @@ export default connect(
     fetchConceptRelations: api.actions.orgsFromPerson,
   }
 )(MainView);
+
+// all
+// types - tnl:Organization etc…
+// datasets - dbpedia_sg

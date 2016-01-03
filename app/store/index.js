@@ -14,6 +14,7 @@ const store = compose(
   }),
   applyMiddleware(createLogger({
     predicate: () => __DEV__,
+    collapsed: true,
   }))
 )(createStore)(reducers);
 

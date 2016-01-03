@@ -6,7 +6,7 @@
 }
 
 .MainView-list {
-  overflow-y: scroll;
+  display: flex;
 }
 
 .MainView-detail {

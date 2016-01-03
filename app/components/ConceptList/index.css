@@ -4,6 +4,7 @@
   list-style: none;
   border-right: 1px solid #f5edf0;
   width: 300px;
+  overflow-y: scroll;
 }
 
 .List-item {

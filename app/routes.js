@@ -7,5 +7,6 @@ import MainView from './containers/MainView';
 export default (
   <Route path="/" component={App}>
     <IndexRoute component={MainView}/>
+    <Route path="/type/:type" component={MainView}/>
   </Route>
 );

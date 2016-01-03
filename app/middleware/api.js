@@ -58,8 +58,8 @@ export default reduxApi({
   //     });
   //   },
   // },
-  // relationSchema: {
-  //   url: '/schemas/relations',
-  //   transformer: (data) => (data),
-  // },
+  types: {
+    url: '/schemas/pits',
+    transformer: (data) => (data && data.properties.type.enum),
+  },
 }).init(adapterFetch(fetch), fetch, __CONFIG__.api.baseUrl);
