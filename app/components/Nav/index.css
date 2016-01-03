@@ -27,6 +27,10 @@
 .Nav-menuItemLink--active,
 .Nav-menuItemLink:hover {
   background: #6c93ad;
+
+}
+
+.Nav-menuItemLink--active {
   opacity: 1;
 }
 
