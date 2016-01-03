@@ -17,7 +17,7 @@ const ConceptList = React.createClass({
       <ul className="List">
         {concepts.map((concept) =>
           <li
-            className={selected && concept.id === selected.id ? 'List-item--active' : 'List-item'}
+            className={['List-item', selected && concept.id === selected.id ? 'List-item--active' : ''].join(' ')}
             key={concept.id}
             onClick={() => this.props.onConceptSelect(concept)}
           >

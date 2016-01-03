@@ -43,10 +43,10 @@ const MainView = React.createClass({
     if (relations && selectedConcept && !selectedConcept.relations.length) {
       this.setState({
         selectedConcept: Object.assign({}, selectedConcept, {
-          relations: [...relations].concat(selectedConcept.pits.map((pit) => ({
+          relations: selectedConcept.pits.map((pit) => ({
             pit,
             relation_type: 'tnl:same',
-          }))),
+          })).concat([...relations]),
         }),
       });
     }

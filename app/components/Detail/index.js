@@ -1,5 +1,7 @@
 import React, { PropTypes } from 'react';
 
+import Pit from '../Pit';
+
 import './index.css';
 
 const Detail = React.createClass({
@@ -27,15 +29,13 @@ const Detail = React.createClass({
             <tr>
               <td>Name</td>
               <td>Relation Type</td>
-              <td>Dataset</td>
             </tr>
           </thead>
           <tbody>
             {relations.map((relation) =>
               <tr key={relation.pit.id}>
-                <td>{relation.pit.name}</td>
+                <td><Pit pit={relation.pit} /></td>
                 <td>{relation.relation_type}</td>
-                <td>{relation.pit.dataset}</td>
               </tr>
             )}
           </tbody>

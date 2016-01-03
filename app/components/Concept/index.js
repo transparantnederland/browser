@@ -14,7 +14,7 @@ const Concept = React.createClass({
       <div className="Concept">
         <div className="Concept-name">{concept.name}</div>
         <div className="Concept-type">{concept.type}</div>
-        <div className="Concept-dataset">Source: {concept.datasets.join(', ')}</div>
+        <div className="Concept-dataset">{concept.datasets.join(', ')}</div>
       </div>
     );
   },
