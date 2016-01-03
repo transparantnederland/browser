@@ -19,11 +19,15 @@
   display: block;
   text-decoration: none;
   white-space: nowrap;
+  font-size: 16px;
+  font-weight: 300;
+  opacity: 0.54;
 }
 
-.Nav-menuItemLink:hover,
-.Nav-menuItemLink:focus {
+.Nav-menuItemLink--active,
+.Nav-menuItemLink:hover {
   background: #6c93ad;
+  opacity: 1;
 }
 
 .Nav-menuHeading {

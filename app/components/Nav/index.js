@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
+import { IndexLink, Link } from 'react-router';
 
 import api from './../../middleware/api';
 
@@ -17,25 +17,43 @@ const Nav = React.createClass({
   },
 
   render() {
-    const { types, datasets } = this.props;
+    const { datasets, types } = this.props;
 
     return (
       <div className="Nav">
         <div className="Nav-brand">Transparant Nederland</div>
         <ul className="Nav-menu">
           <li className="Nav-menuItem">
-            <Link to="/" className="Nav-menuItemLink">All</Link>
+            <IndexLink
+              to="/"
+              className="Nav-menuItemLink"
+              activeClassName="Nav-menuItemLink--active"
+            >
+              All
+            </IndexLink>
           </li>
           <li className="Nav-menuHeading">Types</li>
           {types.map((type) =>
             <li className="Nav-menuItem" key={type}>
-              <Link to={['/type', type].join('/')} className="Nav-menuItemLink">{type}</Link>
+              <Link
+                to={['/type', type].join('/')}
+                className="Nav-menuItemLink"
+                activeClassName="Nav-menuItemLink--active"
+              >
+                {type}
+              </Link>
             </li>
           )}
           <li className="Nav-menuHeading">Datasets</li>
           {datasets.map((dataset) =>
             <li className="Nav-menuItem" key={dataset.id}>
-              <Link to={['/dataset', dataset.id].join('/')} className="Nav-menuItemLink">{dataset.title}</Link>
+              <Link
+                to={['/dataset', dataset.id].join('/')}
+                className="Nav-menuItemLink"
+                activeClassName="Nav-menuItemLink--active"
+              >
+                {dataset.title}
+              </Link>
             </li>
           )}
         </ul>
@@ -46,6 +64,7 @@ const Nav = React.createClass({
 
 export default connect(
   (state) => ({
+    router: state.router,
     types: state.types.data || [],
     datasets: state.datasets.data || [],
   }),
