@@ -32,7 +32,7 @@ const Detail = React.createClass({
           </thead>
           <tbody>
             {relations.map((relation) =>
-              <tr>
+              <tr key={relation.pit.id}>
                 <td>{relation.pit.name}</td>
                 <td>{relation.relation_type}</td>
                 <td>{relation.pit.dataset}</td>
