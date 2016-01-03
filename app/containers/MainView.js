@@ -88,11 +88,15 @@ const MainView = React.createClass({
 
 export default connect(
   (state) => {
-    const { type } = state.router.params;
+    const { type, dataset } = state.router.params;
     const query = {};
 
     if (type) {
       query.type = type;
+    }
+
+    if (dataset) {
+      query.dataset = dataset;
     }
 
     return {
@@ -106,7 +110,3 @@ export default connect(
     fetchConceptRelations: api.actions.orgsFromPerson,
   }
 )(MainView);
-
-// all
-// types - tnl:Organization etc…
-// datasets - dbpedia_sg

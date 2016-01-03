@@ -49,17 +49,12 @@ export default reduxApi({
   //       return concept.shift();
   //     });
   //   },
-  // },
-  // peopleFromOrgsFromPerson: {
-  //   url: '/peopleFromOrgsFromPerson',
-  //   transformer: (data) => {
-  //     return data && data.length && data.map((concept) => {
-  //       return concept.shift();
-  //     });
-  //   },
-  // },
   types: {
     url: '/schemas/pits',
     transformer: (data) => (data && data.properties.type.enum),
+  },
+  datasets: {
+    url: '/datasets',
+    transformer: (data) => (data),
   },
 }).init(adapterFetch(fetch), fetch, __CONFIG__.api.baseUrl);

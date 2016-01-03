@@ -8,6 +8,7 @@ import './index.css';
 
 function loadData(props) {
   props.fetchTypes();
+  props.fetchDatasets();
 }
 
 const Nav = React.createClass({
@@ -16,7 +17,7 @@ const Nav = React.createClass({
   },
 
   render() {
-    const { types } = this.props;
+    const { types, datasets } = this.props;
 
     return (
       <div className="Nav">
@@ -27,8 +28,14 @@ const Nav = React.createClass({
           </li>
           <li className="Nav-menuHeading">Types</li>
           {types.map((type) =>
-            <li className="Nav-menuItem">
+            <li className="Nav-menuItem" key={type}>
               <Link to={['/type', type].join('/')} className="Nav-menuItemLink">{type}</Link>
+            </li>
+          )}
+          <li className="Nav-menuHeading">Datasets</li>
+          {datasets.map((dataset) =>
+            <li className="Nav-menuItem" key={dataset.id}>
+              <Link to={['/dataset', dataset.id].join('/')} className="Nav-menuItemLink">{dataset.title}</Link>
             </li>
           )}
         </ul>
@@ -40,8 +47,10 @@ const Nav = React.createClass({
 export default connect(
   (state) => ({
     types: state.types.data || [],
+    datasets: state.datasets.data || [],
   }),
   {
     fetchTypes: api.actions.types,
+    fetchDatasets: api.actions.datasets,
   }
 )(Nav);
