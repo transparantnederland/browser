@@ -77,11 +77,11 @@ const MainView = React.createClass({
             />
           : null}
         </div>
-        <FlagModal
+        {selectedConcept ? <FlagModal
           concept={selectedConcept}
           isOpen={modalIsOpen}
           onRequestClose={() => this.setState({ modalIsOpen: false })}
-        />
+        /> : null}
       </div>
     );
   },

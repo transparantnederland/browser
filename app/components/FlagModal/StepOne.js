@@ -1,60 +1,42 @@
 import React, { PropTypes } from 'react';
 
 const FLAGS = [
-  { type: 'duplicate', title: 'Duplicate' },
-  { type: 'missing-relation', title: 'Missing relation' },
-  { type: 'invalid-relation', title: 'Bad or wrong relation', disabled: true },
-  { type: 'invalid-type', title: 'Wrong type', disabled: true },
+  { type: 'duplicate', title: 'Mark as duplicate' },
+  { type: 'missing-relation', title: 'Add missing relation' },
 ];
 
 const StepOne = React.createClass({
   propTypes: {
-    show: PropTypes.bool.isRequired,
-    value: PropTypes.string.isRequired,
-    onNextClick: PropTypes.func.isRequired,
-  },
-
-  getInitialState() {
-    return {
-      value: this.props.value || '',
-    };
+    flag: PropTypes.shape({
+      pit: PropTypes.object,
+      type: PropTypes.string,
+      value: PropTypes.object,
+    }).isRequired,
+    onFlagChange: PropTypes.func.isRequired,
   },
 
   render() {
-    const { show, onNextClick } = this.props;
-    const { value } = this.state;
-
-    if (!show) {
-      return null;
-    }
+    const { flag, onFlagChange } = this.props;
 
     return (
       <div>
-        <div className="FlagModal-heading">What is wrong with this PIT?</div>
-        {FLAGS.map((flag) =>
+        <div className="FlagModal-heading">What do you want to do?</div>
+        {FLAGS.map((row) =>
           <div
-            className={['FlagModal-radioGroup', flag.disabled ? 'FlagModal-radioGroup--disabled' : ''].join(' ')}
-            key={flag.type}
+            className="FlagModal-radioGroup"
+            key={row.type}
           >
-            <label onClick={() => this.setState({ value: flag.type })}>
+            <label onClick={() => onFlagChange({ type: row.type })}>
               <input
                 type="radio"
                 name="flag"
-                value={flag.type}
-                defaultChecked={flag.type === value}
-                disabled={flag.disabled}
+                value={row.type}
+                defaultChecked={row.type === flag.type}
               />
-              <span>{flag.title}</span>
+              <span>{row.title}</span>
             </label>
           </div>
         )}
-        <button
-          type="submit"
-          disabled={!value}
-          onClick={() => onNextClick(value)}
-        >
-          Next
-        </button>
       </div>
     );
   },

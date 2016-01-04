@@ -7,25 +7,16 @@ import Pit from '../Pit';
 
 const StepOne = React.createClass({
   propTypes: {
-    show: PropTypes.bool.isRequired,
-    value: PropTypes.string.isRequired,
-    onNextClick: PropTypes.func.isRequired,
-    onPreviousClick: PropTypes.func.isRequired,
-  },
-
-  getInitialState() {
-    return {
-      value: this.props.type || '',
-    };
+    flag: PropTypes.shape({
+      pit: PropTypes.object,
+      type: PropTypes.string,
+      value: PropTypes.object,
+    }).isRequired,
+    onFlagChange: PropTypes.func.isRequired,
   },
 
   render() {
-    const { show, onNextClick, onPreviousClick, results } = this.props;
-    const { value } = this.state;
-
-    if (!show) {
-      return null;
-    }
+    const { flag, results } = this.props;
 
     return (
       <div>
@@ -39,7 +30,7 @@ const StepOne = React.createClass({
         <ul className="FlagModal-list">
           {results.map((pit) =>
             <li
-              className={['FlagModal-listItem', pit.id === value ? 'FlagModal-listItem--active' : ''].join(' ')}
+              className={['FlagModal-listItem', pit.id === (flag.value && flag.value.pit) ? 'FlagModal-listItem--active' : ''].join(' ')}
               key={pit.id}
               onClick={() => this.handlePitClick(pit)}
             >
@@ -47,17 +38,6 @@ const StepOne = React.createClass({
             </li>
           )}
         </ul>
-        <button
-          onClick={() => onPreviousClick()}
-        >
-          Previous
-        </button>
-        <button
-          disabled={!value}
-          onClick={() => onNextClick(value)}
-        >
-          Next
-        </button>
       </div>
     );
   },
@@ -73,8 +53,11 @@ const StepOne = React.createClass({
     }
   },
   handlePitClick(pit) {
-    this.setState({
-      value: pit.id,
+    this.props.onFlagChange({
+      value: {
+        pit,
+        type: 'tnl:same',
+      },
     });
   },
 });
