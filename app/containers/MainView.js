@@ -1,11 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import api from './../middleware/api';
+import api from '../middleware/api';
 
-import Detail from './../components/Detail';
-import ConceptList from './../components/ConceptList';
-import Search from './../components/Search';
+import Detail from '../components/Detail';
+import ConceptList from '../components/ConceptList';
+import FlagModal from '../components/FlagModal';
+import Search from '../components/Search';
 
 import _ from 'lodash';
 
@@ -29,6 +30,7 @@ const MainView = React.createClass({
     return {
       selectedConcept: null,
       q: '*',
+      modalIsOpen: false,
     };
   },
 
@@ -54,7 +56,7 @@ const MainView = React.createClass({
 
   render() {
     const { concepts } = this.props;
-    const { selectedConcept } = this.state;
+    const { selectedConcept, modalIsOpen } = this.state;
 
     return (
       <div className="MainView">
@@ -68,15 +70,24 @@ const MainView = React.createClass({
             onConceptSelect={this._onConceptSelect}
           />
         </div>
-        <div className="MainView-detail">
+        <div className="MainView-detail" onClick={this._onFlag}>
           {selectedConcept ?
             <Detail
               concept={selectedConcept}
             />
           : null}
         </div>
+        <FlagModal
+          concept={selectedConcept}
+          isOpen={modalIsOpen}
+          onRequestClose={() => this.setState({ modalIsOpen: false })}
+        />
       </div>
     );
+  },
+
+  _onFlag() {
+    this.setState({ modalIsOpen: true });
   },
 
   _onSearchChange(text) {
