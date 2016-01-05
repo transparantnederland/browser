@@ -44,7 +44,7 @@ app.post('/_api/flags', function (req, res) {
     db.run('INSERT INTO flags (pit, type, value) VALUES (?, ?, ?)', [
       pit,
       type,
-      value,
+      JSON.stringify(value),
     ]);
   });
   return res.status(201).send({

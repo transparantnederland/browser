@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { IndexLink, Link } from 'react-router';
 
-import api from './../../middleware/api';
+import api from './../../utils/api';
 
 import './index.css';
 

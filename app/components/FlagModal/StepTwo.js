@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 
-import api from '../../middleware/api';
+import api from '../../utils/api';
 
 import Pit from '../Pit';
 
@@ -30,7 +30,7 @@ const StepOne = React.createClass({
         <ul className="FlagModal-list">
           {results.map((pit) =>
             <li
-              className={['FlagModal-listItem', pit.id === (flag.value && flag.value.pit) ? 'FlagModal-listItem--active' : ''].join(' ')}
+              className={['FlagModal-listItem', pit.id === (flag.value && flag.value.pit.id) ? 'FlagModal-listItem--active' : ''].join(' ')}
               key={pit.id}
               onClick={() => this.handlePitClick(pit)}
             >

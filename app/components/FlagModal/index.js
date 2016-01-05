@@ -1,9 +1,12 @@
 import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
 import Modal from 'react-modal';
 
 import StepOne from './StepOne';
 import StepTwo from './StepTwo';
 import StepThree from './StepThree';
+
+import admin from '../../utils/admin';
 
 import './index.css';
 
@@ -33,6 +36,8 @@ function shouldDisableNextButton(step, flag) {
       return !flag.type;
     case 2:
       return !flag.value;
+    case 3:
+      return false;
     default:
       return true;
   }
@@ -75,7 +80,7 @@ const FlagModal = React.createClass({
 
           <div className="FlagModal-actions">
             {showBackButton ? <button onClick={this.handlePrevClick}>Back</button> : null}
-            <button disabled={disableNextButton} onClick={this.handleNextClick}>Next</button>
+            <button disabled={disableNextButton} onClick={this.handleNextClick}>{step === 3 ? 'Done' : 'Next'}</button>
           </div>
         </div>
       </Modal>
@@ -103,6 +108,17 @@ const FlagModal = React.createClass({
     });
   },
   handleNextClick() {
+    if (this.state.step === 3) {
+      this.props.flag({}, {
+        body: JSON.stringify({
+          pit: this.state.flag.pit.id,
+          type: this.state.flag.type,
+          value: this.state.flag.value,
+        }),
+      });
+      return;
+    }
+
     const step = this.state.step + 1;
     const showBackButton = shouldShowBackButton(step);
     const disableNextButton = shouldDisableNextButton(step, this.state.flag);
@@ -115,4 +131,9 @@ const FlagModal = React.createClass({
   },
 });
 
-export default FlagModal;
+export default connect(
+  (state) => (state),
+  {
+    flag: admin.actions.submitFlag,
+  }
+)(FlagModal);

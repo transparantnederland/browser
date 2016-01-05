@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import api from '../middleware/api';
+import api from '../utils/api';
 
 import Detail from '../components/Detail';
 import ConceptList from '../components/ConceptList';
