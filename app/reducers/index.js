@@ -4,8 +4,9 @@ import { routerStateReducer as router } from 'redux-router';
 import api from '../utils/api';
 import admin from '../utils/admin';
 
-const reducers = combineReducers(Object.assign({}, {
-  router,
-}, api.reducers, admin.reducers));
+const data = combineReducers(Object.assign({},
+  api.reducers,
+  admin.reducers
+));
 
-export default reducers;
+export default combineReducers({ router, data });

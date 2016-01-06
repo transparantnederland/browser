@@ -65,8 +65,8 @@ const Nav = React.createClass({
 export default connect(
   (state) => ({
     router: state.router,
-    types: state.types.data,
-    datasets: state.datasets.data,
+    types: state.data.types.data,
+    datasets: state.data.datasets.data,
   }),
   {
     fetchTypes: api.actions.types,

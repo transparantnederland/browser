@@ -110,6 +110,7 @@ const MainView = React.createClass({
 
 export default connect(
   (state) => {
+    const { data: { concepts, orgsFromPerson } } = state;
     const { type, dataset } = state.router.params;
     const query = {};
 
@@ -123,8 +124,8 @@ export default connect(
 
     return {
       query,
-      concepts: state.concepts.data,
-      relations: state.orgsFromPerson.data || [],
+      concepts: concepts.data,
+      relations: orgsFromPerson.data || [],
     };
   },
   {
