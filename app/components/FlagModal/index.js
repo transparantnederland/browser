@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Modal from 'react-modal';
 
-import { setType, setValue } from './../../actions/flag';
+import { setConcept, setType, setValue } from './../../actions/flag';
 
 import SelectTypeStep from './SelectTypeStep';
 import SelectValueStep from './SelectValueStep';
@@ -30,34 +30,33 @@ const styles = {
 
 const FlagModal = React.createClass({
   propTypes: {
-    flag: PropTypes.object.isRequired,
+    concept: PropTypes.object.isRequired,
+    isOpen: PropTypes.bool.isRequired,
   },
 
   getInitialState() {
     return {
-      isOpen: false,
       step: 1,
     };
   },
 
-  componentWillUpdate(nextProps) {
-    const { flag } = nextProps;
+  componentWillReceiveProps(nextProps) {
+    const conceptId = this.props.concept && this.props.concept.id;
+    const nextConceptId = nextProps.concept && nextProps.concept.id;
 
-    if (flag.concept && !this.state.isOpen) {
-      this.setState({
-        isOpen: true,
-      });
+    if (conceptId !== nextConceptId) {
+      this.props.dispatch(setConcept(nextProps.concept));
     }
   },
 
   render() {
-    const { flag } = this.props;
-    const { step, isOpen } = this.state;
+    const { flag, isOpen } = this.props;
+    const { step } = this.state;
 
     return (
       <Modal
         isOpen={isOpen}
-        onRequestClose={() => this.setState({ isOpen: false })}
+        onRequestClose={this.handleClose}
         style={styles}
       >
         <div className="FlagModal-header">
@@ -76,6 +75,10 @@ const FlagModal = React.createClass({
         </div>
       </Modal>
     );
+  },
+
+  handleClose() {
+    debugger;
   },
 
   handleBackClick() {
@@ -108,74 +111,3 @@ const FlagModal = React.createClass({
 export default connect(
   (state) => (state)
 )(FlagModal);
-
-
-// function shouldShowBackButton(step) {
-//   return step !== 1;
-// }
-//
-// function shouldDisableNextButton(step, flag) {
-//   switch (step) {
-//     case 1:
-//       return !flag.type;
-//     case 2:
-//       return !flag.value;
-//     case 3:
-//       return false;
-//     default:
-//       return true;
-//   }
-// }
-//   // <div className="FlagModal">
-  //   {step === 1 ? <StepOne flag={flag} onFlagChange={this._onChange}/> : null}
-  //   {step === 2 ? <StepTwo flag={flag} onFlagChange={this._onChange}/> : null}
-  //   {step === 3 ? <StepThree flag={flag} /> : null}
-  //
-  //   <div className="FlagModal-actions">
-  //     {showBackButton ? <button onClick={this.handlePrevClick}>Back</button> : null}
-  //     <button disabled={disableNextButton} onClick={this.handleNextClick}>{step === 3 ? 'Done' : 'Next'}</button>
-  //   </div>
-  // </div>
-  // _onChange(nextFlag) {
-    // const { flag, step } = this.state;
-    // const updatedFlag = Object.assign({}, flag, nextFlag);
-    //
-    // this.setState({
-    //   flag: updatedFlag,
-    //   showBackButton: shouldShowBackButton(step),
-    //   disableNextButton: shouldDisableNextButton(step, updatedFlag),
-    // });
-  // },
-  // handlePrevClick() {
-    // const step = this.state.step - 1;
-    // const showBackButton = shouldShowBackButton(step);
-    // const disableNextButton = shouldDisableNextButton(step, this.state.flag);
-    //
-    // this.setState({
-    //   step,
-    //   showBackButton,
-    //   disableNextButton,
-    // });
-  // },
-  // handleNextClick() {
-    // if (this.state.step === 3) {
-    //   this.props.flag({}, {
-    //     body: JSON.stringify({
-    //       pit: this.state.flag.pit.id,
-    //       type: this.state.flag.type,
-    //       value: this.state.flag.value,
-    //     }),
-    //   });
-    //   return;
-    // }
-    //
-    // const step = this.state.step + 1;
-    // const showBackButton = shouldShowBackButton(step);
-    // const disableNextButton = shouldDisableNextButton(step, this.state.flag);
-    //
-    // this.setState({
-    //   step,
-    //   showBackButton,
-    //   disableNextButton,
-    // });
-  // },

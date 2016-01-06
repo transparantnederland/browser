@@ -8,8 +8,6 @@ import ConceptList from '../components/ConceptList';
 import FlagModal from '../components/FlagModal';
 import Search from '../components/Search';
 
-import { setConcept as initFlag } from './../actions/flag';
-
 import _ from 'lodash';
 
 import './MainView.css';
@@ -30,9 +28,9 @@ const MainView = React.createClass({
 
   getInitialState() {
     return {
+      flagModalIsOpen: false,
       selectedConcept: null,
       q: '*',
-      modalIsOpen: false,
     };
   },
 
@@ -57,8 +55,8 @@ const MainView = React.createClass({
   },
 
   render() {
-    const { flag, concepts } = this.props;
-    const { selectedConcept, modalIsOpen } = this.state;
+    const { concepts } = this.props;
+    const { flagModalIsOpen, selectedConcept } = this.state;
 
     return (
       <div className="MainView">
@@ -79,13 +77,15 @@ const MainView = React.createClass({
             />
           : null}
         </div>
-        <FlagModal flag={flag} />
+        <FlagModal isOpen={flagModalIsOpen} concept={selectedConcept} />
       </div>
     );
   },
 
   _onFlag() {
-    this.props.initFlag(this.state.selectedConcept);
+    this.setState({
+      flagModalIsOpen: true,
+    });
   },
 
   _onSearchChange(text) {
@@ -125,14 +125,12 @@ export default connect(
     }
 
     return {
-      flag,
       query,
       concepts: concepts.data,
       relations: orgsFromPerson.data || [],
     };
   },
   {
-    initFlag: initFlag,
     fetchConcepts: api.actions.concepts,
     fetchConceptRelations: api.actions.orgsFromPerson,
   }
