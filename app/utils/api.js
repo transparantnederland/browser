@@ -1,12 +1,12 @@
-import reduxApi from 'redux-api';
+import reduxApi, { transformers } from 'redux-api';
 import adapterFetch from 'redux-api/lib/adapters/fetch';
 import _ from 'lodash';
 
 export default reduxApi({
-  search: {
+  concepts: {
     url: '/search',
     transformer: (data) => (
-      data && data.map((concept) => ({
+      transformers.array(data).map((concept) => ({
         // Id of first pit
         id: concept[0].pit.id,
         // Type of first pit
@@ -43,10 +43,10 @@ export default reduxApi({
   },
   types: {
     url: '/schemas/pits',
-    transformer: (data) => (data && data.properties.type.enum),
+    transformer: (data) => (transformers.array(data && data.properties.type.enum)),
   },
   datasets: {
     url: '/datasets',
-    transformer: (data) => (data),
+    transformer: (data) => (transformers.array(data)),
   },
 }).init(adapterFetch(fetch), fetch, __CONFIG__.api.baseUrl);

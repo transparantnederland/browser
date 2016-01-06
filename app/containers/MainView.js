@@ -123,12 +123,12 @@ export default connect(
 
     return {
       query,
-      concepts: state.search.data || [],
+      concepts: state.concepts.data,
       relations: state.orgsFromPerson.data || [],
     };
   },
   {
-    fetchConcepts: api.actions.search,
+    fetchConcepts: api.actions.concepts,
     fetchConceptRelations: api.actions.orgsFromPerson,
   }
 )(MainView);
