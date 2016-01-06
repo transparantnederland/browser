@@ -2,11 +2,11 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Modal from 'react-modal';
 
-import StepOne from './StepOne';
-import StepTwo from './StepTwo';
-import StepThree from './StepThree';
+import { setType, setValue } from './../../actions/flag';
 
-import admin from '../../utils/admin';
+import SelectTypeStep from './SelectTypeStep';
+import SelectValueStep from './SelectValueStep';
+import ConfirmStep from './ConfirmStep';
 
 import './index.css';
 
@@ -16,6 +16,7 @@ const styles = {
   },
   content: {
     position: 'relative',
+    padding: 0,
     border: 0,
     top: '100px',
     marginLeft: 'auto',
@@ -26,114 +27,139 @@ const styles = {
   },
 };
 
-function shouldShowBackButton(step) {
-  return step !== 1;
-}
-
-function shouldDisableNextButton(step, flag) {
-  switch (step) {
-    case 1:
-      return !flag.type;
-    case 2:
-      return !flag.value;
-    case 3:
-      return false;
-    default:
-      return true;
-  }
-}
-
 const FlagModal = React.createClass({
   propTypes: {
-    concept: PropTypes.object.isRequired,
-    isOpen: PropTypes.bool.isRequired,
-    onRequestClose: PropTypes.func.isRequired,
+    flag: PropTypes.object.isRequired,
   },
 
   getInitialState() {
     return {
-      flag: {
-        pit: this.props.concept.pits[0],
-        type: '',
-        value: null,
-      },
+      isOpen: true,
       step: 1,
-      showBackButton: false,
-      disableNextButton: true,
     };
   },
 
   render() {
-    const { isOpen, onRequestClose } = this.props;
-    const { flag, step, showBackButton, disableNextButton } = this.state;
+    const { flag } = this.props;
+    const { step, isOpen } = this.state;
 
     return (
       <Modal
         isOpen={isOpen}
-        onRequestClose={onRequestClose}
+        onRequestClose={() => this.setState({ isOpen: false })}
         style={styles}
       >
-        <div className="FlagModal">
-          {step === 1 ? <StepOne flag={flag} onFlagChange={this._onChange}/> : null}
-          {step === 2 ? <StepTwo flag={flag} onFlagChange={this._onChange}/> : null}
-          {step === 3 ? <StepThree flag={flag} /> : null}
-
-          <div className="FlagModal-actions">
-            {showBackButton ? <button onClick={this.handlePrevClick}>Back</button> : null}
-            <button disabled={disableNextButton} onClick={this.handleNextClick}>{step === 3 ? 'Done' : 'Next'}</button>
-          </div>
+        <div className="FlagModal-header">Flag this concept</div>
+        <div className="FlagModal-content">
+          {{
+            1: <SelectTypeStep flag={flag} onSelect={this._onSelectType}/>,
+            2: <SelectValueStep flag={flag} onSelect={this._onSelectValue}/>,
+            3: <ConfirmStep flag={flag}/>,
+          }[step]}
+        </div>
+        <div className="FlagModal-footer">
+          <button onClick={this.handleBackClick}>Back</button>
+          <button onClick={this.handleNextClick}>Next</button>
         </div>
       </Modal>
     );
   },
-  _onChange(nextFlag) {
-    const { flag, step } = this.state;
-    const updatedFlag = Object.assign({}, flag, nextFlag);
 
+  handleBackClick() {
     this.setState({
-      flag: updatedFlag,
-      showBackButton: shouldShowBackButton(step),
-      disableNextButton: shouldDisableNextButton(step, updatedFlag),
+      step: this.state.step - 1,
     });
   },
-  handlePrevClick() {
-    const step = this.state.step - 1;
-    const showBackButton = shouldShowBackButton(step);
-    const disableNextButton = shouldDisableNextButton(step, this.state.flag);
 
-    this.setState({
-      step,
-      showBackButton,
-      disableNextButton,
-    });
-  },
   handleNextClick() {
-    if (this.state.step === 3) {
-      this.props.flag({}, {
-        body: JSON.stringify({
-          pit: this.state.flag.pit.id,
-          type: this.state.flag.type,
-          value: this.state.flag.value,
-        }),
-      });
-      return;
-    }
-
-    const step = this.state.step + 1;
-    const showBackButton = shouldShowBackButton(step);
-    const disableNextButton = shouldDisableNextButton(step, this.state.flag);
-
     this.setState({
-      step,
-      showBackButton,
-      disableNextButton,
+      step: this.state.step + 1,
     });
+  },
+
+  _onSelectType(type) {
+    this.props.dispatch(setType(type));
+    this.setState({
+      step: 2,
+    });
+  },
+
+  _onSelectValue(value) {
+    this.props.dispatch(setValue(value));
   },
 });
 
 export default connect(
-  (state) => (state),
-  {
-    flag: admin.actions.submitFlag,
-  }
+  (state) => (state)
 )(FlagModal);
+
+
+// function shouldShowBackButton(step) {
+//   return step !== 1;
+// }
+//
+// function shouldDisableNextButton(step, flag) {
+//   switch (step) {
+//     case 1:
+//       return !flag.type;
+//     case 2:
+//       return !flag.value;
+//     case 3:
+//       return false;
+//     default:
+//       return true;
+//   }
+// }
+//   // <div className="FlagModal">
+  //   {step === 1 ? <StepOne flag={flag} onFlagChange={this._onChange}/> : null}
+  //   {step === 2 ? <StepTwo flag={flag} onFlagChange={this._onChange}/> : null}
+  //   {step === 3 ? <StepThree flag={flag} /> : null}
+  //
+  //   <div className="FlagModal-actions">
+  //     {showBackButton ? <button onClick={this.handlePrevClick}>Back</button> : null}
+  //     <button disabled={disableNextButton} onClick={this.handleNextClick}>{step === 3 ? 'Done' : 'Next'}</button>
+  //   </div>
+  // </div>
+  // _onChange(nextFlag) {
+    // const { flag, step } = this.state;
+    // const updatedFlag = Object.assign({}, flag, nextFlag);
+    //
+    // this.setState({
+    //   flag: updatedFlag,
+    //   showBackButton: shouldShowBackButton(step),
+    //   disableNextButton: shouldDisableNextButton(step, updatedFlag),
+    // });
+  // },
+  // handlePrevClick() {
+    // const step = this.state.step - 1;
+    // const showBackButton = shouldShowBackButton(step);
+    // const disableNextButton = shouldDisableNextButton(step, this.state.flag);
+    //
+    // this.setState({
+    //   step,
+    //   showBackButton,
+    //   disableNextButton,
+    // });
+  // },
+  // handleNextClick() {
+    // if (this.state.step === 3) {
+    //   this.props.flag({}, {
+    //     body: JSON.stringify({
+    //       pit: this.state.flag.pit.id,
+    //       type: this.state.flag.type,
+    //       value: this.state.flag.value,
+    //     }),
+    //   });
+    //   return;
+    // }
+    //
+    // const step = this.state.step + 1;
+    // const showBackButton = shouldShowBackButton(step);
+    // const disableNextButton = shouldDisableNextButton(step, this.state.flag);
+    //
+    // this.setState({
+    //   step,
+    //   showBackButton,
+    //   disableNextButton,
+    // });
+  // },

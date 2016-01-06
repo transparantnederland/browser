@@ -55,7 +55,7 @@ const MainView = React.createClass({
   },
 
   render() {
-    const { concepts } = this.props;
+    const { flag, concepts } = this.props;
     const { selectedConcept, modalIsOpen } = this.state;
 
     return (
@@ -77,11 +77,7 @@ const MainView = React.createClass({
             />
           : null}
         </div>
-        {selectedConcept ? <FlagModal
-          concept={selectedConcept}
-          isOpen={modalIsOpen}
-          onRequestClose={() => this.setState({ modalIsOpen: false })}
-        /> : null}
+        <FlagModal flag={flag} />
       </div>
     );
   },
@@ -110,8 +106,12 @@ const MainView = React.createClass({
 
 export default connect(
   (state) => {
-    const { data: { concepts, orgsFromPerson } } = state;
-    const { type, dataset } = state.router.params;
+    const {
+      flag,
+      router,
+      data: { concepts, orgsFromPerson },
+    } = state;
+    const { type, dataset } = router.params;
     const query = {};
 
     if (type) {
@@ -123,6 +123,7 @@ export default connect(
     }
 
     return {
+      flag,
       query,
       concepts: concepts.data,
       relations: orgsFromPerson.data || [],
