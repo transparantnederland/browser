@@ -8,6 +8,8 @@ import ConceptList from '../components/ConceptList';
 import FlagModal from '../components/FlagModal';
 import Search from '../components/Search';
 
+import { setConcept as initFlag } from './../actions/flag';
+
 import _ from 'lodash';
 
 import './MainView.css';
@@ -83,7 +85,7 @@ const MainView = React.createClass({
   },
 
   _onFlag() {
-    this.setState({ modalIsOpen: true });
+    this.props.initFlag(this.state.selectedConcept);
   },
 
   _onSearchChange(text) {
@@ -130,6 +132,7 @@ export default connect(
     };
   },
   {
+    initFlag: initFlag,
     fetchConcepts: api.actions.concepts,
     fetchConceptRelations: api.actions.orgsFromPerson,
   }

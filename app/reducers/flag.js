@@ -6,6 +6,13 @@ const initialState = {
   value: null,
 };
 
+const defaultValues = {
+  'duplicate': {
+    type: 'tnl:same',
+  },
+  'missing-relation': {},
+};
+
 function relations(state = initialState, action) {
   switch (action.type) {
     case actions.SET_CONCEPT:
@@ -15,6 +22,7 @@ function relations(state = initialState, action) {
     case actions.SET_TYPE:
       return Object.assign({}, state, {
         type: action.payload.type,
+        value: defaultValues[action.payload.type],
       });
     case actions.SET_VALUE:
 

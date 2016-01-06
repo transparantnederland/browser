@@ -20,10 +20,10 @@ export default reduxApi({
       })
     )),
   },
-  pitSearch: {
+  search: {
     url: '/search',
     transformer: (data) => (
-      data && data.map((concept) => ({
+      transformers.array(data).map((concept) => ({
         // Id of first pit
         id: concept[0].pit.id,
         // Type of first pit
@@ -31,7 +31,7 @@ export default reduxApi({
         // Name of first valid pit
         name: _.uniq(concept.map((pit) => pit.pit.name)).shift(),
         // Array of datasets
-        dataset: concept[0].pit.dataset,
+        datasets: _.uniq(concept.map((pit) => pit.pit.dataset)),
       })
     )),
   },
@@ -40,6 +40,10 @@ export default reduxApi({
     transformer: (data) => {
       return data && data.map((concept) => (concept.shift()));
     },
+  },
+  relationTypes: {
+    url: '/schemas/relations',
+    transformer: (data) => (transformers.array(data && data.properties.type.enum)),
   },
   types: {
     url: '/schemas/pits',

@@ -1,0 +1,40 @@
+.TypeaheadList {
+  position: absolute;
+  border: 1px solid #ccc;
+  background-color: white;
+}
+
+.TypeaheadList-list {
+  margin: 0;
+  padding-left: 0;
+  list-style: none;
+}
+
+.TypeaheadList-listItem {
+  padding: 0 10px;
+}
+
+.TypeaheadList-listItem:hover {
+  cursor: pointer;
+  background-color: #ccc;
+}
+
+.TypeaheadList-listItem__active {
+  background-color: cyan;
+}
+
+.TypeaheadList-name {
+  font-size: 16px;
+  line-height: 30px;
+  display: inline-block;
+}
+
+.TypeaheadList-type {
+  font-size: 12px;
+  line-height: 30px;
+  display: inline-block;
+  float: right;
+  margin-left: 10px;
+  font-weight: bold;
+  color: rgba(0, 0, 0, 0.54);
+}

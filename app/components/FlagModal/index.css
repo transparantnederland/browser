@@ -1,17 +1,30 @@
 .FlagModal-header {
+  padding: 8px 16px;
   background-color: #264653;
   color: white;
-  padding: 8px 16px;
+  border-radius: 4px 4px 0 0;
 }
 
 .FlagModal-content {
-  padding: 8px 16px;
+  padding: 16px;
+  background-color: white;
+}
+
+.FlagModal-content select,
+.FlagModal-content input[type=text] {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  padding: 5px 10px;
+  border-radius: 3px;
+  margin: 4px 0;
 }
 
 .FlagModal-footer {
-  background-color: #f5edf0;
   padding: 8px 16px;
+  background-color: #f5edf0;
   text-align: right;
+  border-radius: 0 0 4px 4px;
 }
 
 

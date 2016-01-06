@@ -33,13 +33,28 @@ describe('flag reducer', () => {
       flag(undefined, {
         type: types.SET_TYPE,
         payload: {
+          type: 'missing-relation',
+        },
+      })
+    ).toEqual({
+      concept: null,
+      type: 'missing-relation',
+      value: {},
+    });
+
+    expect(
+      flag(undefined, {
+        type: types.SET_TYPE,
+        payload: {
           type: 'duplicate',
         },
       })
     ).toEqual({
       concept: null,
       type: 'duplicate',
-      value: null,
+      value: {
+        type: 'tnl:same',
+      },
     });
   });
 

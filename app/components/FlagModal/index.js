@@ -15,15 +15,16 @@ const styles = {
     backgroundColor: 'rgba(38, 70, 83, 0.54)',
   },
   content: {
+    overflow: 'visible',
     position: 'relative',
     padding: 0,
     border: 0,
     top: '100px',
     marginLeft: 'auto',
     marginRight: 'auto',
-    width: '400px',
-    backgroundColor: 'white',
-    borderRadius: '4px',
+    width: '420px',
+    backgroundColor: 'transparent',
+    borderRadius: '0',
   },
 };
 
@@ -34,9 +35,19 @@ const FlagModal = React.createClass({
 
   getInitialState() {
     return {
-      isOpen: true,
+      isOpen: false,
       step: 1,
     };
+  },
+
+  componentWillUpdate(nextProps) {
+    const { flag } = nextProps;
+
+    if (flag.concept && !this.state.isOpen) {
+      this.setState({
+        isOpen: true,
+      });
+    }
   },
 
   render() {
@@ -49,7 +60,9 @@ const FlagModal = React.createClass({
         onRequestClose={() => this.setState({ isOpen: false })}
         style={styles}
       >
-        <div className="FlagModal-header">Flag this concept</div>
+        <div className="FlagModal-header">
+          Flag this concept
+        </div>
         <div className="FlagModal-content">
           {{
             1: <SelectTypeStep flag={flag} onSelect={this._onSelectType}/>,
@@ -86,6 +99,9 @@ const FlagModal = React.createClass({
 
   _onSelectValue(value) {
     this.props.dispatch(setValue(value));
+    this.setState({
+      step: 3,
+    });
   },
 });
 
