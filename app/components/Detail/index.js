@@ -1,6 +1,9 @@
 import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
 
 import Concept from '../Concept';
+
+import { initFlag } from '../../actions/flag';
 
 import './index.css';
 
@@ -17,6 +20,8 @@ const Detail = React.createClass({
       <div className="Detail">
         <div className="Detail-name">{concept.name}</div>
         <div className="Detail-type">{concept.type}</div>
+
+        <button onClick={this.handleFlag}>Flag</button>
 
         <div className="Detail-header">Relations</div>
         {conceptRelations.length ?
@@ -39,6 +44,11 @@ const Detail = React.createClass({
       </div>
     );
   },
+  handleFlag() {
+    this.props.dispatch(initFlag(this.props.concept));
+  },
 });
 
-export default Detail;
+export default connect(
+  (state) => (state)
+)(Detail);

@@ -64,7 +64,6 @@ const MainView = React.createClass({
 
   _onSearchChange(text) {
     const q = text.trim() + '*';
-
     this.setState({ q }, () => loadData(this.props, this.state));
   },
 
@@ -77,6 +76,7 @@ const MainView = React.createClass({
 export default connect(
   (state) => {
     const {
+      flag,
       router: { params: { type, dataset } },
       data: { concepts, concept, conceptRelations },
     } = state;
@@ -92,6 +92,7 @@ export default connect(
 
     return {
       query,
+      flag,
       concepts: concepts.data,
       concept: concept.data,
       conceptRelations: conceptRelations.data,

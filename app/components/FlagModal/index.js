@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Modal from 'react-modal';
 
-import { setConcept, setType, setValue } from './../../actions/flag';
+import { editFlagType, editFlagValue, resetFlag } from './../../actions/flag';
 
 import SelectTypeStep from './SelectTypeStep';
 import SelectValueStep from './SelectValueStep';
@@ -30,28 +30,19 @@ const styles = {
 
 const FlagModal = React.createClass({
   propTypes: {
-    concept: PropTypes.object.isRequired,
-    isOpen: PropTypes.bool.isRequired,
+    flag: PropTypes.object.isRequired,
   },
 
   getInitialState() {
     return {
       step: 1,
+      isOpen: true,
     };
   },
 
-  componentWillReceiveProps(nextProps) {
-    const conceptId = this.props.concept && this.props.concept.id;
-    const nextConceptId = nextProps.concept && nextProps.concept.id;
-
-    if (conceptId !== nextConceptId) {
-      this.props.dispatch(setConcept(nextProps.concept));
-    }
-  },
-
   render() {
-    const { flag, isOpen } = this.props;
-    const { step } = this.state;
+    const { flag } = this.props;
+    const { step, isOpen } = this.state;
 
     return (
       <Modal
@@ -78,7 +69,7 @@ const FlagModal = React.createClass({
   },
 
   handleClose() {
-    debugger;
+    this.props.dispatch(resetFlag());
   },
 
   handleBackClick() {
@@ -94,14 +85,14 @@ const FlagModal = React.createClass({
   },
 
   _onSelectType(type) {
-    this.props.dispatch(setType(type));
+    this.props.dispatch(editFlagType(type));
     this.setState({
       step: 2,
     });
   },
 
   _onSelectValue(value) {
-    this.props.dispatch(setValue(value));
+    this.props.dispatch(editFlagValue(value));
     this.setState({
       step: 3,
     });
