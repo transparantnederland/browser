@@ -15,10 +15,33 @@ export default reduxApi({
         name: _.uniq(concept.map((pit) => pit.pit.name)).shift(),
         // Array of datasets
         datasets: _.uniq(concept.map((pit) => pit.pit.dataset)),
-        // Array of pits
-        pits: concept.map((pit) => pit.pit),
       })
     )),
+  },
+  concept: {
+    url: '/search',
+    transformer: (data) => (
+      transformers.array(data).map((concept) => ({
+        // Id of first pit
+        id: concept[0].pit.id,
+        // Type of first pit
+        type: concept[0].pit.type,
+        // Name of first valid pit
+        name: _.uniq(concept.map((pit) => pit.pit.name)).shift(),
+        // Array of datasets
+        datasets: _.uniq(concept.map((pit) => pit.pit.dataset)),
+        // Array of pits
+        pits: concept.map((pit) => pit.pit),
+      })).shift() || null
+    ),
+    postfetch: [
+      ({ actions, dispatch, getState }) => {
+        const { data } = getState();
+        const id = data.concept.data.id;
+
+        dispatch(actions.conceptRelations({ id }));
+      },
+    ],
   },
   search: {
     url: '/search',
@@ -35,11 +58,28 @@ export default reduxApi({
       })
     )),
   },
-  orgsFromPerson: {
+  conceptRelations: {
     url: '/orgsFromPerson',
-    transformer: (data) => {
-      return data && data.map((concept) => (concept.shift()));
-    },
+    transformer: (data) => (
+      transformers.array(data).map((concept) => ({
+        // Type of first valid relation
+        // TODO: see if we can move this sanity check to the API
+        type: concept
+          .filter((relation) => relation.relation_type)
+          .map((relation) => relation.relation_type)
+          .shift(),
+        concept: {
+          // Id of first pit
+          id: concept[0].pit.id,
+          // Type of first pit
+          type: concept[0].pit.type,
+          // Name of first valid pit
+          name: _.uniq(concept.map((pit) => pit.pit.name)).shift(),
+          // Array of datasets
+          datasets: _.uniq(concept.map((pit) => pit.pit.dataset)),
+        },
+      })
+    )),
   },
   relationTypes: {
     url: '/schemas/relations',

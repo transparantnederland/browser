@@ -1,4 +1,5 @@
 import React from 'react';
+import _ from 'lodash';
 import { connect } from 'react-redux';
 
 import api from '../utils/api';
@@ -7,8 +8,6 @@ import Detail from '../components/Detail';
 import ConceptList from '../components/ConceptList';
 import FlagModal from '../components/FlagModal';
 import Search from '../components/Search';
-
-import _ from 'lodash';
 
 import './MainView.css';
 
@@ -28,35 +27,20 @@ const MainView = React.createClass({
 
   getInitialState() {
     return {
-      flagModalIsOpen: false,
-      selectedConcept: null,
       q: '*',
     };
   },
 
   componentWillReceiveProps(nextProps) {
-    const { selectedConcept } = this.state;
-    const { relations, query } = nextProps;
+    const { query } = nextProps;
 
     if (!_.isEqual(this.props.query, query)) {
       loadData(nextProps, this.state);
     }
-
-    if (relations && selectedConcept && !selectedConcept.relations.length) {
-      this.setState({
-        selectedConcept: Object.assign({}, selectedConcept, {
-          relations: selectedConcept.pits.map((pit) => ({
-            pit,
-            relation_type: 'tnl:same',
-          })).concat([...relations]),
-        }),
-      });
-    }
   },
 
   render() {
-    const { concepts } = this.props;
-    const { flagModalIsOpen, selectedConcept } = this.state;
+    const { concepts, concept, conceptRelations, flag } = this.props;
 
     return (
       <div className="MainView">
@@ -66,26 +50,16 @@ const MainView = React.createClass({
           </div>
           <ConceptList
             concepts={concepts}
-            selected={selectedConcept}
+            selected={concept}
             onConceptSelect={this._onConceptSelect}
           />
         </div>
-        <div className="MainView-detail" onClick={this._onFlag}>
-          {selectedConcept ?
-            <Detail
-              concept={selectedConcept}
-            />
-          : null}
+        <div className="MainView-detail">
+          {concept ? <Detail concept={concept} conceptRelations={conceptRelations}/> : null}
         </div>
-        <FlagModal isOpen={flagModalIsOpen} concept={selectedConcept} />
+        {flag ? <FlagModal flag={flag} /> : null}
       </div>
     );
-  },
-
-  _onFlag() {
-    this.setState({
-      flagModalIsOpen: true,
-    });
   },
 
   _onSearchChange(text) {
@@ -96,24 +70,16 @@ const MainView = React.createClass({
 
   _onConceptSelect(concept) {
     const { id } = concept;
-
-    this.setState({
-      selectedConcept: Object.assign({}, concept, {
-        relations: [],
-      }),
-    });
-    this.props.fetchConceptRelations({ id });
+    this.props.fetchConcept({ id });
   },
 });
 
 export default connect(
   (state) => {
     const {
-      flag,
-      router,
-      data: { concepts, orgsFromPerson },
+      router: { params: { type, dataset } },
+      data: { concepts, concept, conceptRelations },
     } = state;
-    const { type, dataset } = router.params;
     const query = {};
 
     if (type) {
@@ -127,11 +93,12 @@ export default connect(
     return {
       query,
       concepts: concepts.data,
-      relations: orgsFromPerson.data || [],
+      concept: concept.data,
+      conceptRelations: conceptRelations.data,
     };
   },
   {
     fetchConcepts: api.actions.concepts,
-    fetchConceptRelations: api.actions.orgsFromPerson,
+    fetchConcept: api.actions.concept,
   }
 )(MainView);
