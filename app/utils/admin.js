@@ -2,8 +2,12 @@ import reduxApi from 'redux-api';
 import adapterFetch from 'redux-api/lib/adapters/fetch';
 
 export default reduxApi({
-  submitFlag: {
-    url: '/_api/flags',
+  flag: {
+    url: '/flags',
+    // validation: (data, callback) => {
+    //   // let error;
+    //   debugger;
+    // },
     options: {
       method: 'POST',
       headers: {

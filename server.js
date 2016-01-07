@@ -19,7 +19,7 @@ app.use(require('webpack-hot-middleware')(compiler));
 
 app.use(bodyParser.json());
 
-app.get('/_api/flags', function (req, res) {
+app.get('/flags.json', function (req, res) {
   db.serialize(function () {
     db.all('SELECT * FROM flags', function (err, rows) {
       return res.json(rows);
@@ -27,22 +27,39 @@ app.get('/_api/flags', function (req, res) {
   });
 });
 
-app.post('/_api/flags', function (req, res) {
+app.get('/flags/relations.ndjson', function (req, res) {
+  db.serialize(function () {
+    db.all('SELECT * FROM flags', function (err, rows) {
+      return res.send(rows.map(function (row) {
+        var concept = JSON.parse(row.concept);
+        var value = JSON.parse(row.value);
+
+        return JSON.stringify({
+          from: concept.id,
+          type: value.type,
+          to: value.concept.id,
+        });
+      }).join('\n'));
+    });
+  });
+});
+
+app.post('/flags', function (req, res) {
   var data = req.body;
-  var pit = data.pit;
+  var concept = data.concept;
   var type = data.type;
   var value = data.value;
 
-  if (!pit || !type || !value) {
+  if (!concept || !type || !value) {
     return res.status(400).send({
       invalid: true,
     });
   }
 
   db.serialize(function () {
-    db.run('CREATE TABLE IF NOT EXISTS flags (pit TEXT, type TEXT, value TEXT)');
-    db.run('INSERT INTO flags (pit, type, value) VALUES (?, ?, ?)', [
-      pit,
+    db.run('CREATE TABLE IF NOT EXISTS flags (concept TEXT, type TEXT, value TEXT)');
+    db.run('INSERT INTO flags (concept, type, value) VALUES (?, ?, ?)', [
+      JSON.stringify(concept),
       type,
       JSON.stringify(value),
     ]);

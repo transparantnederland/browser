@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import Modal from 'react-modal';
 
 import { editFlagType, editFlagValue, resetFlag } from './../../actions/flag';
+import admin from '../../utils/admin';
 
 import SelectTypeStep from './SelectTypeStep';
 import SelectValueStep from './SelectValueStep';
@@ -63,6 +64,7 @@ const FlagModal = React.createClass({
         <div className="FlagModal-footer">
           <button onClick={this.handleBackClick}>Back</button>
           <button onClick={this.handleNextClick}>Next</button>
+          <button onClick={this.handleDoneClick}>Done</button>
         </div>
       </Modal>
     );
@@ -82,6 +84,12 @@ const FlagModal = React.createClass({
     this.setState({
       step: this.state.step + 1,
     });
+  },
+
+  handleDoneClick() {
+    this.props.dispatch(admin.actions.flag({}, {
+      body: JSON.stringify(this.props.flag),
+    }));
   },
 
   _onSelectType(type) {
