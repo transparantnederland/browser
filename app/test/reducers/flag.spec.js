@@ -6,17 +6,13 @@ describe('flag reducer', () => {
   it('should handle initial state', () => {
     expect(
       flag(undefined, {})
-    ).toEqual({
-      concept: null,
-      type: null,
-      value: null,
-    });
+    ).toEqual(null);
   });
 
-  it('should handle SET_CONCEPT', () => {
+  it('should handle INIT_FLAG', () => {
     expect(
       flag(undefined, {
-        type: types.SET_CONCEPT,
+        type: types.INIT_FLAG,
         payload: {
           concept: {},
         },
@@ -28,10 +24,23 @@ describe('flag reducer', () => {
     });
   });
 
-  it('should handle SET_TYPE', () => {
+  it('should handle RESET_FLAG', () => {
+    expect(
+      flag({
+        concept: {},
+        type: 'duplicate',
+        value: {},
+      }, {
+        type: types.RESET_FLAG,
+        payload: null,
+      })
+    ).toEqual(null);
+  });
+
+  it('should handle EDIT_FLAG_TYPE', () => {
     expect(
       flag(undefined, {
-        type: types.SET_TYPE,
+        type: types.EDIT_FLAG_TYPE,
         payload: {
           type: 'missing-relation',
         },
@@ -44,7 +53,7 @@ describe('flag reducer', () => {
 
     expect(
       flag(undefined, {
-        type: types.SET_TYPE,
+        type: types.EDIT_FLAG_TYPE,
         payload: {
           type: 'duplicate',
         },
@@ -58,10 +67,10 @@ describe('flag reducer', () => {
     });
   });
 
-  it('should handle SET_VALUE', () => {
+  it('should handle EDIT_FLAG_VALUE', () => {
     expect(
       flag(undefined, {
-        type: types.SET_VALUE,
+        type: types.EDIT_FLAG_VALUE,
         payload: {
           value: {},
         },

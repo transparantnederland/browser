@@ -13,20 +13,21 @@ const defaultValues = {
   'missing-relation': {},
 };
 
-function relations(state = initialState, action) {
+function relations(state = null, action) {
   switch (action.type) {
-    case actions.SET_CONCEPT:
-      return Object.assign({}, state, {
+    case actions.INIT_FLAG:
+      return Object.assign({}, initialState, {
         concept: action.payload.concept,
       });
-    case actions.SET_TYPE:
-      return Object.assign({}, state, {
+    case actions.RESET_FLAG:
+      return null;
+    case actions.EDIT_FLAG_TYPE:
+      return Object.assign({}, initialState, state, {
         type: action.payload.type,
         value: defaultValues[action.payload.type],
       });
-    case actions.SET_VALUE:
-
-      return Object.assign({}, state, {
+    case actions.EDIT_FLAG_VALUE:
+      return Object.assign({}, initialState, state, {
         value: action.payload.value,
       });
     default:

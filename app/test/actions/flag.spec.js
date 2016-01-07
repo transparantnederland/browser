@@ -3,25 +3,31 @@ import expect from 'expect';
 import * as actions from '../../actions/flag';
 
 describe('relations actions', () => {
-  it('setConcept should create SET_CONCEPT action', () => {
-    expect(actions.setConcept({})).toEqual({
-      type: actions.SET_CONCEPT,
+  it('initFlag should create INIT_FLAG action', () => {
+    expect(actions.initFlag({})).toEqual({
+      type: actions.INIT_FLAG,
       payload: {
         concept: {},
       },
     });
   });
-  it('setType should create SET_TYPE action', () => {
-    expect(actions.setType('duplicate')).toEqual({
-      type: actions.SET_TYPE,
+  it('resetFlag should create RESET_FLAG action', () => {
+    expect(actions.resetFlag({})).toEqual({
+      type: actions.RESET_FLAG,
+      payload: null,
+    });
+  });
+  it('editFlagType should create EDIT_FLAG_TYPE action', () => {
+    expect(actions.editFlagType('duplicate')).toEqual({
+      type: actions.EDIT_FLAG_TYPE,
       payload: {
         type: 'duplicate',
       },
     });
   });
-  it('setValue should create SET_VALUE action', () => {
-    expect(actions.setValue({})).toEqual({
-      type: actions.SET_VALUE,
+  it('editFlagValue should create EDIT_FLAG_VALUE action', () => {
+    expect(actions.editFlagValue({})).toEqual({
+      type: actions.EDIT_FLAG_VALUE,
       payload: {
         value: {},
       },
