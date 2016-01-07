@@ -22,7 +22,11 @@ app.use(bodyParser.json());
 app.get('/flags.json', function (req, res) {
   db.serialize(function () {
     db.all('SELECT * FROM flags', function (err, rows) {
-      return res.json(rows);
+      return res.json(rows.map(function (row) {
+        row.concept = JSON.parse(row.concept);
+        row.value = JSON.parse(row.value);
+        return row;
+      }));
     });
   });
 });
