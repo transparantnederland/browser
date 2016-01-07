@@ -1,7 +1,11 @@
 .TypeaheadList {
-  position: absolute;
+  position: relative;
   border: 1px solid #ccc;
+  border-top: 0;
   background-color: white;
+  max-height: 400px;
+  overflow-y: scroll;
+  border-radius: 0 0 3px 3px;
 }
 
 .TypeaheadList-list {
@@ -11,30 +15,16 @@
 }
 
 .TypeaheadList-listItem {
-  padding: 0 10px;
+  padding: 10px;
+  border-bottom: 1px solid #f5edf0;
 }
 
+.TypeaheadList-listItem:last-child {
+  border-bottom: 0;
+}
+
+.TypeaheadList-listItem__active,
 .TypeaheadList-listItem:hover {
   cursor: pointer;
-  background-color: #ccc;
-}
-
-.TypeaheadList-listItem__active {
-  background-color: cyan;
-}
-
-.TypeaheadList-name {
-  font-size: 16px;
-  line-height: 30px;
-  display: inline-block;
-}
-
-.TypeaheadList-type {
-  font-size: 12px;
-  line-height: 30px;
-  display: inline-block;
-  float: right;
-  margin-left: 10px;
-  font-weight: bold;
-  color: rgba(0, 0, 0, 0.54);
+  background-color: #f5edf0;
 }

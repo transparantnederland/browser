@@ -35,26 +35,30 @@ const SelectValueStep = React.createClass({
 
     return (
       <div>
-        <select
-          value={flag.value.type}
-          disabled={!canEditType}
-          onChange={this.handleTypeChange}
-        >
-          <option key="">-- select a relation type --</option>
-          {relationTypes.map((relationType) =>
-            <option key={relationType} value={relationType}>{relationType}</option>
-          )}
-        </select>
-        <Typeahead
-          placeholder="Search for a politician"
-          options={options}
-          filterOption="name"
-          displayOption="name"
-          onKeyUp={this.handleKeyUp}
-          maxVisible={20}
-          customListComponent={TypeaheadList}
-          onOptionSelected={this.handleConceptSelect}
-        />
+        <label>
+          <select
+            value={flag.value.type}
+            disabled={!canEditType}
+            onChange={this.handleTypeChange}
+          >
+            <option key="">-- select a relation type --</option>
+            {relationTypes.map((relationType) =>
+              <option key={relationType} value={relationType}>{relationType}</option>
+            )}
+          </select>
+        </label>
+        <label>
+          <Typeahead
+            placeholder="Search for a politician"
+            options={options}
+            filterOption="name"
+            displayOption="name"
+            onKeyUp={this.handleKeyUp}
+            maxVisible={20}
+            customListComponent={TypeaheadList}
+            onOptionSelected={this.handleConceptSelect}
+          />
+        </label>
       </div>
     );
   },

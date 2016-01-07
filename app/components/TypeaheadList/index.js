@@ -1,5 +1,7 @@
 import React from 'react';
 
+import Concept from '../Concept';
+
 import './index.css';
 
 const TypeaheadList = React.createClass({
@@ -20,8 +22,7 @@ const TypeaheadList = React.createClass({
                 key={option.id}
                 onClick={() => { onOptionSelected(option); }}
               >
-                <div className="TypeaheadList-name">{option.name}</div>
-                <div className="TypeaheadList-type">{option.type}</div>
+                <Concept concept={option}/>
               </li>
             );
           })}
