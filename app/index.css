@@ -55,6 +55,45 @@ a {
   color: #6C93AD;
 }
 
+.button {
+  padding: 4px 8px;
+  font-size: 14px;
+  color: #333;
+  border: 1px solid #999;
+  border-radius: 3px;
+  background-color: white;
+}
+
+.button:hover,
+.button:focus {
+  border-color: #264653;
+}
+
+.button:focus {
+  outline: 0;
+}
+
+.button[disabled] {
+  cursor: not-allowed;
+  opacity: 0.54;
+}
+
+.button-primary {
+  border-color: #6c93ad;
+  background-color: #6c93ad;
+  color: white;
+}
+
+.button-primary:hover,
+.button-primary:focus {
+  border-color: #264653;
+  background-color: #264653;
+}
+
+.button + .button {
+  margin-left: 4px;
+}
+
 #app {
   height: 100%;
 }

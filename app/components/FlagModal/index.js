@@ -70,9 +70,9 @@ const FlagModal = React.createClass({
           }[step]}
         </div>
         <div className="FlagModal-footer">
-          {buttons.showPrev ? <button onClick={this.handleBackClick}>Back</button> : null}
-          {buttons.showNext ? <button onClick={this.handleNextClick} disabled={buttons.disableNext}>Next</button> : null}
-          {buttons.showDone ? <button onClick={this.handleDoneClick}>Done</button> : null}
+          {buttons.showPrev ? <button className="button" onClick={this.handleBackClick}>Back</button> : null}
+          {buttons.showNext ? <button className="button" onClick={this.handleNextClick} disabled={buttons.disableNext}>Next</button> : null}
+          {buttons.showDone ? <button className="button button-primary" onClick={this.handleDoneClick}>Done</button> : null}
         </div>
       </Modal>
     );
