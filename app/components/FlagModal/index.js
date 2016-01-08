@@ -44,6 +44,14 @@ const FlagModal = React.createClass({
   render() {
     const { flag } = this.props;
     const { step, isOpen } = this.state;
+    const hasValidFlagType = !!flag.type;
+    const hasValidFlagValue = !!(flag.value && (flag.value.type || flag.value.concept));
+    const buttons = {
+      showPrev: step !== 1,
+      showNext: step !== 3,
+      disableNext: (step === 1 && !hasValidFlagType) || (step === 2 && !hasValidFlagValue),
+      showDone: step === 3,
+    };
 
     return (
       <Modal
@@ -62,9 +70,9 @@ const FlagModal = React.createClass({
           }[step]}
         </div>
         <div className="FlagModal-footer">
-          <button onClick={this.handleBackClick}>Back</button>
-          <button onClick={this.handleNextClick}>Next</button>
-          <button onClick={this.handleDoneClick}>Done</button>
+          {buttons.showPrev ? <button onClick={this.handleBackClick}>Back</button> : null}
+          {buttons.showNext ? <button onClick={this.handleNextClick} disabled={buttons.disableNext}>Next</button> : null}
+          {buttons.showDone ? <button onClick={this.handleDoneClick}>Done</button> : null}
         </div>
       </Modal>
     );
@@ -89,6 +97,12 @@ const FlagModal = React.createClass({
   handleDoneClick() {
     this.props.dispatch(admin.actions.flag({}, {
       body: JSON.stringify(this.props.flag),
+    }, (err) => {
+      if (err) {
+        window.alert('Something went wrong');
+      } else {
+        this.props.dispatch(resetFlag());
+      }
     }));
   },
 
