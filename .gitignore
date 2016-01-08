@@ -1,5 +1,5 @@
-node_modules/
-dist/
+.DS_Store
+*.log
+node_modules
 config/local.yml
 database.db
-npm-debug.log
