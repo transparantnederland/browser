@@ -18,18 +18,33 @@ var Concept = sequelize.define('concept', {
   id: { type: Sequelize.STRING, primaryKey: true },
   type: { type: Sequelize.STRING },
   name: { type: Sequelize.STRING },
+  datasets: { type: Sequelize.STRING },
 });
 
-// this will add the attribute OriginId to Flag
-var Origin = Flag.belongsTo(Concept, { as: 'Origin' });
-// this will add the attribute TargetId to Flag
-var Target = Flag.belongsTo(Concept, { as: 'Target' });
+var Origin = Flag.belongsTo(Concept, { as: 'origin' });
+var Target = Flag.belongsTo(Concept, { as: 'target' });
 
-app.get('/flags.json', function (req, res) {
+sequelize.sync({ force: false }).then(function () {});
+
+app.get('/flags', function (req, res) {
   Flag.findAll({
     include: [Origin, Target],
   }).then(function (rows) {
     res.json(rows);
+  });
+});
+
+app.get('/flags/relations.ndjson', function (req, res) {
+  Flag.findAll({
+    include: [Origin, Target],
+  }).then(function (rows) {
+    res.send(rows.map(function (row) {
+      return JSON.stringify({
+        from: row.originId,
+        type: row.value,
+        to: row.targetId,
+      });
+    }).join('\n'));
   });
 });
 
@@ -51,8 +66,8 @@ app.post('/flags', function (req, res) {
       return Flag.create({
         type: data.type,
         value: data.value,
-        OriginId: data.origin.id,
-        TargetId: data.target.id,
+        originId: data.origin.id,
+        targetId: data.target.id,
       });
     })
     .then(function (flag) {
@@ -60,15 +75,4 @@ app.post('/flags', function (req, res) {
     });
 });
 
-// sequelize.sync({ force: true }).then(function () {
-//
-// });
-
-app.listen(3000, 'localhost', function (err) {
-  if (err) {
-    console.log(err);
-    return;
-  }
-
-  console.log('Listening at http://localhost:3000');
-});
+module.exports = app;
