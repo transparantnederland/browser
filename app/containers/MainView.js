@@ -1,179 +1,105 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import _ from 'lodash';
 import { connect } from 'react-redux';
-import Codemirror from 'react-codemirror';
 
-import api from './../store/api';
-import { addRelation } from './../actions/relations';
+import api from '../utils/api';
 
-import CreateRelation from './../components/CreateRelation';
-import ObjectSearch from './../components/ObjectSearch';
+import Detail from '../components/Detail';
+import ConceptList from '../components/ConceptList';
+import FlagModal from '../components/FlagModal';
+import Search from '../components/Search';
 
-require('codemirror/mode/javascript/javascript');
-require('codemirror/lib/codemirror.css');
+import './MainView.css';
 
-require('./../css/normalize.css');
-require('./../css/skeleton.css');
-require('./../css/style.css');
+function loadData(props, state) {
+  const { query } = props;
+  const { q } = state;
+
+  const params = Object.assign({}, query, { q });
+
+  props.fetchConcepts(params);
+}
 
 const MainView = React.createClass({
-  propTypes: {
-    from: PropTypes.object.isRequired,
-    to: PropTypes.object.isRequired,
-    relations: PropTypes.array.isRequired,
-    dispatch: PropTypes.func.isRequired,
+  componentWillMount() {
+    loadData(this.props, this.state);
   },
 
   getInitialState() {
     return {
-      from: [],
-      to: [],
-      fromConcepts: [],
-      toConcepts: [],
-      type: '',
-      showModal: false,
+      q: '*',
     };
   },
 
+  componentWillReceiveProps(nextProps) {
+    const { query } = nextProps;
+
+    if (!_.isEqual(this.props.query, query)) {
+      loadData(nextProps, this.state);
+    }
+  },
+
   render() {
-    /*
-     * Filter duplicates or already connected nodes
-     */
-    const fromIds = [...this.state.from].map((pit) => {
-      return pit.pit.id;
-    });
-    const toConcepts = [...this.state.toConcepts].filter((concept) => {
-      return fromIds.indexOf(concept[0].pit.id) === -1;
-    });
+    const { concepts, concept, conceptRelations, flag } = this.props;
 
     return (
-      <div className="content">
-        <div className="header">
-          <div className="container">
-            <div className="row">
-              <h1 className="brand">
-                <span>Transparant Nederland</span>
-              </h1>
-              <button className="relations-button" onClick={this.handleExportClick}>
-                Export Relations ({this.props.relations.length})
-              </button>
-            </div>
+      <div className="MainView">
+        <div className="MainView-list">
+          <div className="MainView-listSearch">
+            <Search onChangeQuery={this._onSearchChange} />
           </div>
+          <ConceptList
+            concepts={concepts}
+            selected={concept}
+            onConceptSelect={this._onConceptSelect}
+          />
         </div>
-        <div className="section">
-          <div className="container">
-            <div className="row">
-              <div id="object1" className="columns three">
-                <ObjectSearch
-                  title="First PIT"
-                  concepts={this.state.fromConcepts}
-                  onSearch={this.onFromSearch}
-                  onSelect={this.onFromSelect}
-                />
-              </div>
-              <div id="relation" className="columns six">
-                <CreateRelation
-                  title="Create a relation"
-                  schema={this.props.relationSchema}
-                  relations={this.props.relations}
-                  from={this.state.from}
-                  type={this.state.type}
-                  to={this.state.to}
-                  onTypeChange={this.onTypeChange}
-                  onRelationAdd={this.onRelationAdd}
-                />
-              </div>
-              <div id="object2" className="columns three">
-                <ObjectSearch
-                  title="Second PIT"
-                  concepts={toConcepts}
-                  onSearch={this.onToSearch}
-                  onSelect={this.onToSelect}
-                />
-              </div>
-            </div>
-          </div>
+        <div className="MainView-detail">
+          {concept ? <Detail concept={concept} conceptRelations={conceptRelations}/> : null}
         </div>
-        <div className={this.state.showModal ? 'modal visible' : 'modal'}>
-          <button className="close-button" onClick={this.handleModalCloseClick}>
-            Close
-          </button>
-          <div className="modalContent">
-            <Codemirror
-              value={this.props.relations.map((value) => {
-                const data = Object.assign({}, value, {
-                  from: value.from[0].pit.id,
-                  to: value.to[0].pit.id,
-                });
-                return JSON.stringify(data);
-              }).join('\n')}
-              options={{ mode: 'javascript' }}
-            />
-          </div>
-        </div>
+        {flag ? <FlagModal flag={flag} /> : null}
       </div>
     );
   },
 
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      fromConcepts: nextProps.from.data || [],
-      toConcepts: nextProps.to.data || [],
-    });
+  _onSearchChange(text) {
+    const q = text.trim() + '*';
+    this.setState({ q }, () => loadData(this.props, this.state));
   },
 
-  componentDidMount() {
-    // Fetch relation types
-    this.props.dispatch(api.actions.relationSchema());
-  },
-
-  onTypeChange(type) {
-    this.setState({ type });
-  },
-
-  handleExportClick() {
-    this.setState({
-      showModal: true,
-    });
-  },
-
-  handleModalCloseClick() {
-    this.setState({
-      showModal: false,
-    });
-  },
-
-  onRelationAdd() {
-    const { from, to, type } = this.state;
-    this.props.dispatch(addRelation({ from, to, type }));
-  },
-
-  onFromSearch(query) {
-    if (query) {
-      const q = query + '*';
-      this.props.dispatch(api.actions.from({ q }));
-    } else {
-      this.props.dispatch(api.actions.from.reset());
-    }
-  },
-
-  onToSearch(query) {
-    if (query) {
-      const q = query + '*';
-      this.props.dispatch(api.actions.to({ q }));
-    } else {
-      this.props.dispatch(api.actions.to.reset());
-    }
-  },
-
-  onFromSelect(from) {
-    this.setState({ from });
-  },
-
-  onToSelect(to) {
-    this.setState({ to });
+  _onConceptSelect(concept) {
+    const { id } = concept;
+    this.props.fetchConcept({ id });
   },
 });
 
 export default connect(
-  (state) => (state)
+  (state) => {
+    const {
+      flag,
+      router: { params: { type, dataset } },
+      data: { concepts, concept, conceptRelations },
+    } = state;
+    const query = {};
+
+    if (type) {
+      query.type = type;
+    }
+
+    if (dataset) {
+      query.dataset = dataset;
+    }
+
+    return {
+      query,
+      flag,
+      concepts: concepts.data,
+      concept: concept.data,
+      conceptRelations: conceptRelations.data,
+    };
+  },
+  {
+    fetchConcepts: api.actions.concepts,
+    fetchConcept: api.actions.concept,
+  }
 )(MainView);

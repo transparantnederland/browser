@@ -1,14 +1,14 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { render } from 'react-dom';
 import { Provider } from 'react-redux';
-
+import { ReduxRouter } from 'redux-router';
 import store from './store';
-import MainView from './containers/MainView';
 
-var el = document.getElementById('app');
-ReactDOM.render(
+import './index.css';
+
+render(
   <Provider store={store}>
-    <MainView />
+    <ReduxRouter />
   </Provider>,
-  el
+  document.getElementById('app')
 );

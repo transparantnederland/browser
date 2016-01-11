@@ -5,6 +5,7 @@ var config = require('config');
 module.exports = {
   devtool: 'source-map',
   entry: [
+    'normalize-css',
     './app/index',
   ],
   output: {
