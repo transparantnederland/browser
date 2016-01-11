@@ -5,7 +5,7 @@ var webpack = require('webpack');
 var sqlite3 = require('sqlite3');
 var config = require('./webpack.config.dev');
 
-var db = new sqlite3.Database('database.db');
+var db = new sqlite3.Database('database.sqlite');
 
 var app = express();
 var compiler = webpack(config);
