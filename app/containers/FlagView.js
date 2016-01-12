@@ -17,9 +17,9 @@ const FlagView = React.createClass({
       <div className="FlagView">
         {flags.map((flag) =>
           <div style={{ borderBottom: '1px solid #ccc' }}>
-            <Concept concept={flag.concept}/>
-            {flag.type} ({flag.value.type})
-            <Concept concept={flag.value.concept}/>
+            <Concept concept={flag.origin}/>
+            {flag.type} ({flag.value})
+            <Concept concept={flag.target}/>
           </div>
         )}
       </div>
@@ -32,7 +32,7 @@ export default connect(
     const { data: { flags } } = state;
 
     return {
-      flags: flags.data
+      flags: flags.data,
     };
   },
   {
