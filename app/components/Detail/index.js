@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 import Concept from '../Concept';
+import Pit from '../Pit';
 
 import { initFlag } from '../../actions/flag';
 
@@ -13,8 +14,15 @@ const Detail = React.createClass({
     conceptRelations: PropTypes.array.isRequired,
   },
 
+  getInitialState() {
+    return {
+      showPits: false,
+    };
+  },
+
   render() {
     const { concept, conceptRelations } = this.props;
+    const { showPits } = this.state;
 
     return (
       <div className="Detail">
@@ -22,6 +30,16 @@ const Detail = React.createClass({
         <div className="Detail-type">{concept.type}</div>
 
         <button onClick={this.handleFlag}>Flag</button>
+
+        <button onClick={this.handlePitsToggle}>{showPits ? 'Hide' : 'Show'} pit details</button>
+
+        {showPits ?
+          <div>
+            {concept.pits.map((pit) =>
+              <Pit pit={pit}/>
+            )}
+          </div> : null
+        }
 
         <div className="Detail-header">Relations</div>
         {conceptRelations.length ?
@@ -43,6 +61,11 @@ const Detail = React.createClass({
           </table> : null}
       </div>
     );
+  },
+  handlePitsToggle() {
+    this.setState({
+      showPits: !this.state.showPits,
+    });
   },
   handleFlag() {
     this.props.dispatch(initFlag(this.props.concept));
