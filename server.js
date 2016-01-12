@@ -32,5 +32,5 @@ app.listen(config.port, 'localhost', function (err) {
     debug(err);
     return;
   }
-  debug(`Listening at http://localhost:${config.port}`);
+  debug('Listening at http://localhost:' + config.port);
 });
