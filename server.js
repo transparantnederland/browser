@@ -1,3 +1,4 @@
+var path = require('path');
 var express = require('express');
 var webpack = require('webpack');
 var config = require('config');
@@ -19,7 +20,12 @@ if (__DEV__) {
 }
 
 app.use('/api', api);
+
 app.use(express.static(__DEV__ ? 'app' : 'dist'));
+
+app.get('*', function (req, res) {
+  res.sendFile(path.join(__dirname, __DEV__ ? 'app' : 'dist', 'index.html'));
+});
 
 app.listen(config.port, 'localhost', function (err) {
   if (err) {

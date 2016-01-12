@@ -96,7 +96,12 @@ const FlagModal = React.createClass({
 
   handleDoneClick() {
     this.props.dispatch(admin.actions.flag({}, {
-      body: JSON.stringify(this.props.flag),
+      body: JSON.stringify({
+        origin: this.props.flag.concept,
+        type: this.props.flag.type,
+        value: this.props.flag.value.type,
+        target: this.props.flag.value.concept,
+      }),
     }, (err) => {
       if (err) {
         window.alert('Something went wrong');

@@ -3,7 +3,7 @@ import adapterFetch from 'redux-api/lib/adapters/fetch';
 
 export default reduxApi({
   flag: {
-    url: '/flags',
+    url: '/api/flags',
     // validation: (data, callback) => {
     //   debugger;
     // },
@@ -16,7 +16,7 @@ export default reduxApi({
     },
   },
   flags: {
-    url: '/flags.json',
+    url: '/api/flags',
     transformer: transformers.array,
   },
 }).init(adapterFetch(fetch), fetch);
