@@ -100,8 +100,12 @@ const SelectValueStep = React.createClass({
 
 export default connect(
   (state) => {
-    const { concept } = state.data;
-    const relationIds = ((concept.data && concept.data.pits) || []).map((pit) => pit.id);
+    const { concept, conceptRelations } = state.data;
+
+    // Extract relation ids from concept pits and relations
+    const relationIds = ((concept.data && concept.data.pits) || [])
+      .concat((conceptRelations.data || []).map((relation) => relation.concept))
+      .map((pit) => pit.id);
 
     return {
       options: state.data.search.data.filter((option) => {
