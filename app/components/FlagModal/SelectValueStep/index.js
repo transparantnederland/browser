@@ -99,8 +99,15 @@ const SelectValueStep = React.createClass({
 });
 
 export default connect(
-  (state) => ({
-    options: state.data.search.data,
-    relationTypes: state.data.relationTypes.data,
-  })
+  (state) => {
+    const { concept } = state.data;
+    const relationIds = ((concept.data && concept.data.pits) || []).map((pit) => pit.id);
+
+    return {
+      options: state.data.search.data.filter((option) => {
+        return relationIds.indexOf(option.id) === -1;
+      }),
+      relationTypes: state.data.relationTypes.data,
+    };
+  }
 )(SelectValueStep);
