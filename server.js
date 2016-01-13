@@ -27,10 +27,10 @@ app.get('*', function (req, res) {
   res.sendFile(path.join(__dirname, __DEV__ ? 'app' : 'dist', 'index.html'));
 });
 
-app.listen(config.port, 'localhost', function (err) {
+app.listen(config.port, '0.0.0.0', function (err) {
   if (err) {
     debug(err);
     return;
   }
-  debug('Listening at http://localhost:' + config.port);
+  debug('Listening at http://0.0.0.0:' + config.port);
 });
