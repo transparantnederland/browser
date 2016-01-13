@@ -32,10 +32,18 @@ const MainView = React.createClass({
   },
 
   componentWillReceiveProps(nextProps) {
-    const { query } = nextProps;
+    const { concept, query } = nextProps;
 
     if (!_.isEqual(this.props.query, query)) {
       loadData(nextProps, this.state);
+    }
+
+    if ((this.props.concept && this.props.concept.id) !== (concept && concept.id)) {
+      if (concept.type === 'tnl:Person') {
+        this.props.fetchOrgsFromPerson({ id: concept.id });
+      } else {
+        this.props.fetchPeopleFromOrg({ id: concept.id });
+      }
     }
   },
 
@@ -78,8 +86,9 @@ export default connect(
     const {
       flag,
       router: { params: { type, dataset } },
-      data: { concepts, concept, conceptRelations },
+      data: { concepts, concept, orgsFromPerson, peopleFromOrg },
     } = state;
+    const conceptRelations = (concept.data && concept.data.type) === 'tnl:Person' ? orgsFromPerson : peopleFromOrg;
     const query = {};
 
     if (type) {
@@ -101,5 +110,7 @@ export default connect(
   {
     fetchConcepts: api.actions.concepts,
     fetchConcept: api.actions.concept,
+    fetchOrgsFromPerson: api.actions.orgsFromPerson,
+    fetchPeopleFromOrg: api.actions.peopleFromOrg,
   }
 )(MainView);

@@ -104,7 +104,7 @@ export default connect(
 
     // Extract relation ids from concept pits and relations
     const relationIds = ((concept.data && concept.data.pits) || [])
-      .concat((conceptRelations.data || []).map((relation) => relation.concept))
+      // .concat((conceptRelations.data || []).map((relation) => relation.concept))
       .map((pit) => pit.id);
 
     return {
