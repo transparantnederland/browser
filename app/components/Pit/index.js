@@ -17,12 +17,14 @@ const Pit = React.createClass({
         <div className="Pit-dataset">{pit.dataset}</div>
         <div className="Pit-id">{pit.id}</div>
         <table>
-        {Object.keys(pit.data).map((key) =>
-          <tr>
-            <td>{key}</td>
-            <td>{pit.data[key]}</td>
-          </tr>
-        )}
+          <tbody>
+          {Object.keys(pit.data).map((key) =>
+            <tr key={key}>
+              <td>{key}</td>
+              <td>{pit.data[key]}</td>
+            </tr>
+          )}
+          </tbody>
         </table>
       </div>
     );
