@@ -16,7 +16,7 @@ const FlagView = React.createClass({
     return (
       <div className="FlagView">
         {flags.map((flag) =>
-          <div style={{ borderBottom: '1px solid #ccc' }}>
+          <div style={{ borderBottom: '1px solid #ccc' }} key={flag.id}>
             <Concept concept={flag.origin}/>
             {flag.type} ({flag.value})
             <Concept concept={flag.target}/>
