@@ -13,7 +13,7 @@ const Pit = React.createClass({
     return (
       <div className="Pit">
         <div className="Pit-name">{pit.name}</div>
-        <div className="Pit-type">{pit.type}</div>
+        <div className="Pit-type">{(pit.type || '').replace('tnl:', '')}</div>
         <div className="Pit-dataset">{pit.dataset}</div>
         {pit.data ?
           <table>

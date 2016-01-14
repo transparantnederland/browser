@@ -47,7 +47,7 @@ const Nav = React.createClass({
                 className="Nav-menuItemLink"
                 activeClassName="Nav-menuItemLink--active"
               >
-                {type}
+                {type.replace('tnl:', '')}
               </Link>
             </li>
           )}
