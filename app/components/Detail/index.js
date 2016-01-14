@@ -27,7 +27,8 @@ const Detail = React.createClass({
     return (
       <div className="Detail">
         <div className="Detail-name">{concept.name}</div>
-        <div className="Detail-type">{concept.type}</div>
+        <div className="Detail-type">{concept.type.replace('tnl:', '')}</div>
+
 
         <button onClick={this.handleFlag}>Flag</button>
 
