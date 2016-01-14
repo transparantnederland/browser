@@ -51,7 +51,7 @@ const Nav = React.createClass({
               </Link>
             </li>
           )}
-          <li className="Nav-menuHeading">Datasets</li>
+          <li className="Nav-menuHeading">Sources</li>
           {datasets.map((dataset) =>
             <li className="Nav-menuItem" key={dataset.id}>
               <Link
