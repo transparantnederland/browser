@@ -28,7 +28,7 @@ const Detail = React.createClass({
       <div className="Detail">
         <div className="Detail-name">{concept.name}</div>
         <div className="Detail-type">{concept.type.replace('tnl:', '')}</div>
-
+        <div className="Detail-dataset">{concept.datasets.join(', ')}</div>
 
         <button onClick={this.handleFlag}>Flag</button>
 
