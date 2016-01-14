@@ -1,7 +1,7 @@
 import reduxApi, { transformers } from 'redux-api';
 import adapterFetch from 'redux-api/lib/adapters/fetch';
 
-export default reduxApi({
+const admin = reduxApi({
   flag: {
     url: '/api/flags',
     // validation: (data, callback) => {
@@ -19,4 +19,7 @@ export default reduxApi({
     url: '/api/flags',
     transformer: transformers.array,
   },
-}).init(adapterFetch(fetch), fetch);
+});
+admin.use('fetch', adapterFetch(fetch));
+
+export default admin;

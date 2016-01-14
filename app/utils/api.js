@@ -59,7 +59,7 @@ const apiTransformers = {
   )),
 };
 
-export default reduxApi({
+const api = reduxApi({
   concepts: {
     url: '/search',
     transformer: apiTransformers.conceptArray,
@@ -92,4 +92,8 @@ export default reduxApi({
     url: '/datasets',
     transformer: (data) => (transformers.array(data)),
   },
-}).init(adapterFetch(fetch), fetch, __CONFIG__.api.baseUrl);
+});
+api.use('fetch', adapterFetch(fetch));
+api.use('rootUrl', __CONFIG__.api.baseUrl);
+
+export default api;
