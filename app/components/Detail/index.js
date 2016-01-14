@@ -36,7 +36,9 @@ const Detail = React.createClass({
         {showPits ?
           <div>
             {concept.pits.map((pit) =>
-              <Pit pit={pit}/>
+              <div key={pit.id}>
+                <Pit pit={pit}/>
+              </div>
             )}
           </div> : null
         }
