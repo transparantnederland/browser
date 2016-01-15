@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 
-import Concept from '../../Concept';
+import ConceptTile from '../../ConceptTile';
 
 const ConfirmStep = React.createClass({
   propTypes: {
@@ -12,9 +12,9 @@ const ConfirmStep = React.createClass({
 
     return (
       <div>
-        <Concept concept={flag.concept}/>
+        <ConceptTile concept={flag.concept}/>
         {flag.type} ({flag.value.type})
-        <Concept concept={flag.value.concept}/>
+        <ConceptTile concept={flag.value.concept}/>
       </div>
     );
   },

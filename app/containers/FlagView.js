@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import admin from '../utils/admin';
 
-import Concept from '../components/Concept';
+import ConceptTile from '../components/ConceptTile';
 
 const FlagView = React.createClass({
   componentWillMount() {
@@ -17,9 +17,9 @@ const FlagView = React.createClass({
       <div className="FlagView">
         {flags.map((flag) =>
           <div style={{ borderBottom: '1px solid #ccc' }} key={flag.id}>
-            <Concept concept={flag.origin}/>
+            <ConceptTile concept={flag.origin}/>
             {flag.type} ({flag.value})
-            <Concept concept={flag.target}/>
+            <ConceptTile concept={flag.target}/>
           </div>
         )}
       </div>

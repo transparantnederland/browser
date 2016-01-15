@@ -11,7 +11,7 @@ import Search from '../components/Search';
 
 import './MainView.css';
 
-function loadData(props, state) {
+function loadConcepts(props, state) {
   const { query } = props;
   const { q } = state;
 
@@ -20,9 +20,16 @@ function loadData(props, state) {
   props.fetchConcepts(params);
 }
 
+function loadConcept(props) {
+  props.fetchConcept({
+    id: props.hash,
+  });
+}
+
 const MainView = React.createClass({
   componentWillMount() {
-    loadData(this.props, this.state);
+    loadConcepts(this.props, this.state);
+    loadConcept(this.props);
   },
 
   getInitialState() {
@@ -35,7 +42,7 @@ const MainView = React.createClass({
     const { concept, query } = nextProps;
 
     if (!_.isEqual(this.props.query, query)) {
-      loadData(nextProps, this.state);
+      loadConcepts(nextProps, this.state);
     }
 
     if ((this.props.concept && this.props.concept.id) !== (concept && concept.id)) {
@@ -44,6 +51,10 @@ const MainView = React.createClass({
       } else {
         this.props.fetchPeopleFromOrg({ id: concept.id });
       }
+    }
+
+    if (this.props.hash !== nextProps.hash) {
+      loadConcept(nextProps);
     }
   },
 
@@ -59,7 +70,6 @@ const MainView = React.createClass({
           <ConceptList
             concepts={concepts}
             selected={concept}
-            onConceptSelect={this._onConceptSelect}
           />
         </div>
         <div className="MainView-detail">
@@ -72,12 +82,7 @@ const MainView = React.createClass({
 
   _onSearchChange(text) {
     const q = text.trim() + '*';
-    this.setState({ q }, () => loadData(this.props, this.state));
-  },
-
-  _onConceptSelect(concept) {
-    const { id } = concept;
-    this.props.fetchConcept({ id });
+    this.setState({ q }, () => loadConcepts(this.props, this.state));
   },
 });
 
@@ -85,11 +90,15 @@ export default connect(
   (state) => {
     const {
       flag,
-      router: { params: { type, dataset } },
+      router: {
+        params: { type, dataset }, location,
+      },
       data: { concepts, concept, orgsFromPerson, peopleFromOrg },
     } = state;
     const conceptRelations = (concept.data && concept.data.type) === 'tnl:Person' ? orgsFromPerson : peopleFromOrg;
     const query = {};
+
+    const hash = location.state && location.state.hash;
 
     if (type) {
       query.type = type;
@@ -100,6 +109,7 @@ export default connect(
     }
 
     return {
+      hash,
       query,
       flag,
       concepts: concepts.data,

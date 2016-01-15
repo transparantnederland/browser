@@ -1,7 +1,10 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 
-import Concept from '../Concept';
+import Name from '../Name';
+import Type from '../Type';
+import Dataset from '../Dataset';
+import RelationTile from '../RelationTile';
 import Pit from '../Pit';
 
 import { initFlag } from '../../actions/flag';
@@ -26,9 +29,13 @@ const Detail = React.createClass({
 
     return (
       <div className="Detail">
-        <div className="Detail-name">{concept.name}</div>
-        <div className="Detail-type">{concept.type.replace('tnl:', '')}</div>
-        <div className="Detail-dataset">{concept.datasets.join(', ')}</div>
+        <div className="Detail-heading">
+          <Name name={concept.name}/>
+        </div>
+        <div className="Detail-subheading">
+          <Type type={concept.type}/>
+          <Dataset dataset={concept.datasets}/>
+        </div>
 
         <button onClick={this.handleFlag}>Flag</button>
 
@@ -46,22 +53,13 @@ const Detail = React.createClass({
 
         <div className="Detail-header">Relations</div>
         {conceptRelations.length ?
-          <table className="Detail-relations">
-            <thead>
-              <tr>
-                <td>Name</td>
-                <td>Relation Type</td>
-              </tr>
-            </thead>
-            <tbody>
-              {conceptRelations.map((relation) =>
-                <tr key={relation.concept.id}>
-                  <td><Concept concept={relation.concept}/></td>
-                  <td>{relation.type}</td>
-                </tr>
-              )}
-            </tbody>
-          </table> : null}
+          <ul>
+            {conceptRelations.map((relation) =>
+              <li key={relation.concept.id}>
+                <RelationTile relation={relation} />
+              </li>
+            )}
+          </ul> : null}
       </div>
     );
   },

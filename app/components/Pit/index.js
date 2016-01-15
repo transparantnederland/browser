@@ -1,35 +1,34 @@
+import './index.css';
 import React, { PropTypes } from 'react';
 
-import './index.css';
+import Name from './../Name';
+import Type from './../Type';
+import Dataset from './../Dataset';
 
-const Pit = React.createClass({
-  propTypes: {
-    pit: PropTypes.object.isRequired,
-  },
+const PitCard = ({ pit }) =>
+  <div className="PitCard">
+    <div className="PitCard-heading">
+      <Name name={pit.name}/>
+    </div>
+    <div className="PitCard-body">
+      <Type type={pit.type}/>
+      <Dataset dataset={pit.dataset}/>
 
-  render() {
-    const { pit } = this.props;
+      {pit.data ?
+        <dl className="PitCard-data">
+          {Object.keys(pit.data).map((key) =>
+            [
+              <dt>{key}</dt>,
+              <dd>{pit.data[key]}</dd>,
+            ]
+          )}
+        </dl> : null
+      }
+    </div>
+  </div>;
 
-    return (
-      <div className="Pit">
-        <div className="Pit-name">{pit.name}</div>
-        <div className="Pit-type">{(pit.type || '').replace('tnl:', '')}</div>
-        <div className="Pit-dataset">{pit.dataset}</div>
-        {pit.data ?
-          <table>
-            <tbody>
-            {Object.keys(pit.data).map((key) =>
-              <tr key={key}>
-                <td>{key}</td>
-                <td>{pit.data[key]}</td>
-              </tr>
-            )}
-            </tbody>
-          </table> : null
-        }
-      </div>
-    );
-  },
-});
+PitCard.propTypes = {
+  pit: PropTypes.object.isRequired,
+};
 
-export default Pit;
+export default PitCard;

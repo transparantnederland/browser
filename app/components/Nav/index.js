@@ -2,7 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { IndexLink, Link } from 'react-router';
 
-import api from './../../utils/api';
+import api from '../../utils/api';
+
+import Type from '../Type';
 
 import './index.css';
 
@@ -47,7 +49,7 @@ const Nav = React.createClass({
                 className="Nav-menuItemLink"
                 activeClassName="Nav-menuItemLink--active"
               >
-                {type.replace('tnl:', '')}
+                <Type type={type}/>
               </Link>
             </li>
           )}
