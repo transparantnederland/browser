@@ -11,8 +11,6 @@
   border-bottom: 1px solid #f5edf0;
 }
 
-.List-item--active,
 .List-item:hover {
   background-color: #f5edf0;
-  cursor: pointer;
 }

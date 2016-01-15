@@ -45,6 +45,12 @@ const MainView = React.createClass({
         this.props.fetchPeopleFromOrg({ id: concept.id });
       }
     }
+
+    if (this.props.hash !== nextProps.hash) {
+      this.props.fetchConcept({
+        id: nextProps.hash,
+      });
+    }
   },
 
   render() {
@@ -59,7 +65,6 @@ const MainView = React.createClass({
           <ConceptList
             concepts={concepts}
             selected={concept}
-            onConceptSelect={this._onConceptSelect}
           />
         </div>
         <div className="MainView-detail">
@@ -74,22 +79,21 @@ const MainView = React.createClass({
     const q = text.trim() + '*';
     this.setState({ q }, () => loadData(this.props, this.state));
   },
-
-  _onConceptSelect(concept) {
-    const { id } = concept;
-    this.props.fetchConcept({ id });
-  },
 });
 
 export default connect(
   (state) => {
     const {
       flag,
-      router: { params: { type, dataset } },
+      router: {
+        params: { type, dataset }, location,
+      },
       data: { concepts, concept, orgsFromPerson, peopleFromOrg },
     } = state;
     const conceptRelations = (concept.data && concept.data.type) === 'tnl:Person' ? orgsFromPerson : peopleFromOrg;
     const query = {};
+
+    const hash = location.state && location.state.hash;
 
     if (type) {
       query.type = type;
@@ -100,6 +104,7 @@ export default connect(
     }
 
     return {
+      hash,
       query,
       flag,
       concepts: concepts.data,
