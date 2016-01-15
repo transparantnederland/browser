@@ -11,7 +11,7 @@ import Search from '../components/Search';
 
 import './MainView.css';
 
-function loadData(props, state) {
+function loadConcepts(props, state) {
   const { query } = props;
   const { q } = state;
 
@@ -20,9 +20,16 @@ function loadData(props, state) {
   props.fetchConcepts(params);
 }
 
+function loadConcept(props) {
+  props.fetchConcept({
+    id: props.hash,
+  });
+}
+
 const MainView = React.createClass({
   componentWillMount() {
-    loadData(this.props, this.state);
+    loadConcepts(this.props, this.state);
+    loadConcept(this.props);
   },
 
   getInitialState() {
@@ -35,7 +42,7 @@ const MainView = React.createClass({
     const { concept, query } = nextProps;
 
     if (!_.isEqual(this.props.query, query)) {
-      loadData(nextProps, this.state);
+      loadConcepts(nextProps, this.state);
     }
 
     if ((this.props.concept && this.props.concept.id) !== (concept && concept.id)) {
@@ -47,9 +54,7 @@ const MainView = React.createClass({
     }
 
     if (this.props.hash !== nextProps.hash) {
-      this.props.fetchConcept({
-        id: nextProps.hash,
-      });
+      loadConcept(nextProps);
     }
   },
 
@@ -77,7 +82,7 @@ const MainView = React.createClass({
 
   _onSearchChange(text) {
     const q = text.trim() + '*';
-    this.setState({ q }, () => loadData(this.props, this.state));
+    this.setState({ q }, () => loadConcepts(this.props, this.state));
   },
 });
 
