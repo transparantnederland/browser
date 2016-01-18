@@ -14,7 +14,7 @@ function loadData(props) {
   }
 }
 
-const DetailContainer = React.createClass({
+const DetailPanel = React.createClass({
 
   componentWillMount() {
     loadData(this.props);
@@ -71,4 +71,4 @@ export default connect(
       conceptRelations: conceptRelations.data,
     };
   }
-)(DetailContainer);
+)(DetailPanel);

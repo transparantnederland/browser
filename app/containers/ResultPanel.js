@@ -15,7 +15,7 @@ function loadData(props, state) {
   fetchResults(Object.assign({}, query, { q }));
 }
 
-const ResultContainer = React.createClass({
+const ResultPanel = React.createClass({
 
   getInitialState() {
     return {
@@ -68,4 +68,4 @@ export default connect(
   {
     fetchResults: api.actions.concepts,
   }
-)(ResultContainer);
+)(ResultPanel);

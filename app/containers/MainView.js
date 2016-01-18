@@ -1,8 +1,8 @@
 import React from 'react';
 
 import TwoColumnLayout from '../layouts/TwoColumnLayout';
-import ResultContainer from './ResultContainer';
-import DetailContainer from './DetailContainer';
+import ResultPanel from './ResultPanel';
+import DetailPanel from './DetailPanel';
 
 const MainView = React.createClass({
 
@@ -13,8 +13,8 @@ const MainView = React.createClass({
   render() {
     return (
       <TwoColumnLayout>
-        <ResultContainer />
-        <DetailContainer />
+        <ResultPanel />
+        <DetailPanel />
       </TwoColumnLayout>
     );
   },
