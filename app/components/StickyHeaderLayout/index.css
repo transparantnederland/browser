@@ -1,0 +1,16 @@
+.StickyHeaderLayout {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  flex: 1;
+}
+
+.StickyHeaderLayout-header {
+  display: flex;
+}
+
+.StickyHeaderLayout-body {
+  display: flex;
+  flex: 1;
+  overflow-y: scroll;
+}

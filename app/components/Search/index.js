@@ -4,7 +4,7 @@ import './index.css';
 
 const Search = React.createClass({
   propTypes: {
-    onChangeQuery: PropTypes.func.isRequired,
+    onChange: PropTypes.func.isRequired,
   },
 
   render() {
@@ -14,7 +14,7 @@ const Search = React.createClass({
           type="search"
           placeholder="Search"
           className="Search-input"
-          onChange={(event) => this.props.onChangeQuery(event.target.value)}
+          onChange={(event) => this.props.onChange(event.target.value)}
         />
       </div>
     );
