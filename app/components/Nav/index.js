@@ -33,13 +33,6 @@ const Nav = React.createClass({
             >
               All
             </IndexLink>
-            <Link
-              to="/flags"
-              className="Nav-menuItemLink"
-              activeClassName="Nav-menuItemLink--active"
-            >
-              Flags
-            </Link>
           </li>
           <li className="Nav-menuHeading">Types</li>
           {types.map((type) =>
