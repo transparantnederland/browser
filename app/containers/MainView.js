@@ -1,6 +1,6 @@
 import React from 'react';
 
-import TwoColumnLayout from '../components/TwoColumnLayout';
+import TwoColumnLayout from '../layouts/TwoColumnLayout';
 import ResultContainer from './ResultContainer';
 import DetailContainer from './DetailContainer';
 

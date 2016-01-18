@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import api from '../utils/api';
 
-import StickyHeaderLayout from '../components/StickyHeaderLayout';
+import StickyHeaderLayout from '../layouts/StickyHeaderLayout';
 import ConceptList from '../components/ConceptList';
 import Search from '../components/Search';
 
