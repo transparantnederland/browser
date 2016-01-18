@@ -44,7 +44,7 @@ const DetailContainer = React.createClass({
     }
 
     return (
-      <div style={{ flex: 1 }}>
+      <div style={{ display: 'flex', flex: 1 }}>
         <Detail concept={concept} conceptRelations={conceptRelations} dispatch={dispatch} />
         {flag ? <FlagModal flag={flag} /> : null}
       </div>
