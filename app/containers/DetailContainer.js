@@ -10,7 +10,7 @@ function loadData(props) {
   const { id } = props;
 
   if (id) {
-    props.fetchConcept({ id });
+    props.dispatch(api.actions.concept({ id }));
   }
 }
 
@@ -29,15 +29,15 @@ const DetailContainer = React.createClass({
 
     if ((this.props.concept && this.props.concept.id) !== (concept && concept.id)) {
       if (concept.type === 'tnl:Person') {
-        this.props.fetchOrgsFromPerson({ id: concept.id });
+        this.props.dispatch(api.actions.orgsFromPerson({ id: concept.id }));
       } else {
-        this.props.fetchPeopleFromOrg({ id: concept.id });
+        this.props.dispatch(api.actions.peopleFromOrg({ id: concept.id }));
       }
     }
   },
 
   render() {
-    const { concept, conceptRelations, flag } = this.props;
+    const { concept, conceptRelations, dispatch, flag } = this.props;
 
     if (!concept) {
       return null;
@@ -45,7 +45,7 @@ const DetailContainer = React.createClass({
 
     return (
       <div style={{ flex: 1 }}>
-        <Detail concept={concept} conceptRelations={conceptRelations} />
+        <Detail concept={concept} conceptRelations={conceptRelations} dispatch={dispatch} />
         {flag ? <FlagModal flag={flag} /> : null}
       </div>
     );
@@ -70,10 +70,5 @@ export default connect(
       concept: concept.data,
       conceptRelations: conceptRelations.data,
     };
-  },
-  {
-    fetchConcept: api.actions.concept,
-    fetchOrgsFromPerson: api.actions.orgsFromPerson,
-    fetchPeopleFromOrg: api.actions.peopleFromOrg,
   }
 )(DetailContainer);

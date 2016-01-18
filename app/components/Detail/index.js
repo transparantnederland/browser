@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react';
-import { connect } from 'react-redux';
 
 import Name from '../Name';
 import Type from '../Type';
@@ -15,6 +14,7 @@ const Detail = React.createClass({
   propTypes: {
     concept: PropTypes.object.isRequired,
     conceptRelations: PropTypes.array.isRequired,
+    dispatch: PropTypes.func.isRequired,
   },
 
   getInitialState() {
@@ -73,6 +73,4 @@ const Detail = React.createClass({
   },
 });
 
-export default connect(
-  (state) => (state)
-)(Detail);
+export default Detail;
