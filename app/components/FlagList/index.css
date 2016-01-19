@@ -1,0 +1,14 @@
+.FlagList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.FlagList-item {
+  padding: 1em;
+  border-bottom: 1px solid #f5edf0;
+}
+
+.FlagList-item:hover {
+  background-color: #f5edf0;
+}

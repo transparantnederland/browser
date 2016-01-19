@@ -1,0 +1,27 @@
+.FlagTile {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.FlagTile-from,
+.FlagTile-to {
+  flex: 1;
+}
+
+.FlagTile-from {
+  text-align: right;
+}
+
+.FlagTile-type {
+  width: 120px;
+  margin: 0 2em;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 2px 4px;
+  color: #264653;
+  background-color: #f5edf0;
+  border-radius: 20px;
+}

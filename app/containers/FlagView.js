@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 
 import admin from '../utils/admin';
 
-import ConceptTile from '../components/ConceptTile';
+import SingleColumnLayout from '../layouts/SingleColumnLayout';
+import FlagList from '../components/FlagList';
 
 const FlagView = React.createClass({
   componentWillMount() {
@@ -14,15 +15,9 @@ const FlagView = React.createClass({
     const { flags } = this.props;
 
     return (
-      <div className="FlagView">
-        {flags.map((flag) =>
-          <div style={{ borderBottom: '1px solid #ccc' }} key={flag.id}>
-            <ConceptTile concept={flag.origin}/>
-            {flag.type} ({flag.value})
-            <ConceptTile concept={flag.target}/>
-          </div>
-        )}
-      </div>
+      <SingleColumnLayout>
+        <FlagList flags={flags} />
+      </SingleColumnLayout>
     );
   },
 });
