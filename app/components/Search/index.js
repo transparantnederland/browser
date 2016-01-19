@@ -15,6 +15,7 @@ const Search = React.createClass({
           placeholder="Search"
           className="Search-input"
           onChange={(event) => this.props.onChange(event.target.value)}
+          autoFocus
         />
       </div>
     );
