@@ -1,8 +1,15 @@
 var express = require('express');
 var Sequelize = require('sequelize');
 var bodyParser = require('body-parser');
+var auth = require('http-auth');
+
 var app = express();
 app.use(bodyParser.json());
+
+var basic = auth.basic({
+  realm: 'Flags',
+  file: __dirname + '/.htpasswd',
+});
 
 // NOTE: there is a bug in the Sequelize library where it doesn’t
 // support absolute sqlite URIs, which is why it’s stored in the root directory
@@ -39,7 +46,7 @@ var Target = Flag.belongsTo(Concept, { as: 'target' });
 
 sequelize.sync({ force: false }).then(function () {});
 
-app.get('/flags', function (req, res) {
+app.get('/flags', auth.connect(basic), function (req, res) {
   Flag.findAll({
     include: [Origin, Target],
   }).then(function (rows) {

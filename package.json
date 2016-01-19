@@ -8,6 +8,7 @@
     "body-parser": "1.14.2",
     "express": "4.13.3",
     "history": "1.17.0",
+    "http-auth": "2.2.8",
     "js-yaml": "3.5.2",
     "lodash": "3.10.1",
     "normalize-css": "2.3.1",

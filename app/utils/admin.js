@@ -18,6 +18,9 @@ const admin = reduxApi({
   flags: {
     url: '/api/flags',
     transformer: transformers.array,
+    options: {
+      credentials: 'same-origin',
+    },
   },
 });
 admin.use('fetch', adapterFetch(fetch));
