@@ -3,7 +3,8 @@ import React, { PropTypes } from 'react';
 import Name from '../Name';
 import Type from '../Type';
 import Dataset from '../Dataset';
-import RelationTile from '../RelationTile';
+import OrganizationRelationTile from '../OrganizationRelationTile';
+import PersonRelationTile from '../PersonRelationTile';
 import Pit from '../Pit';
 
 import { initFlag } from '../../actions/flag';
@@ -56,7 +57,10 @@ const Detail = React.createClass({
           <ul>
             {conceptRelations.map((relation) =>
               <li key={relation.concept.id}>
-                <RelationTile relation={relation} />
+                {concept.type === 'tnl:Person'
+                  ? <PersonRelationTile relation={relation} />
+                  : <OrganizationRelationTile relation={relation} />
+                }
               </li>
             )}
           </ul> : null}
