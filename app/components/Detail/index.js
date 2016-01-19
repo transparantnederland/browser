@@ -3,6 +3,7 @@ import React, { PropTypes } from 'react';
 import Name from '../Name';
 import Type from '../Type';
 import Dataset from '../Dataset';
+import Button from '../Button';
 import OrganizationRelationTile from '../OrganizationRelationTile';
 import PersonRelationTile from '../PersonRelationTile';
 import Pit from '../Pit';
@@ -30,17 +31,22 @@ const Detail = React.createClass({
 
     return (
       <div className="Detail">
+        <div className="Detail-actions">
+          <Button onClick={this.handleFlag}>Flag</Button>
+        </div>
         <div className="Detail-heading">
           <Name name={concept.name}/>
         </div>
         <div className="Detail-subheading">
           <Type type={concept.type}/>
           <Dataset dataset={concept.datasets}/>
+          <Button
+            onClick={this.handlePitsToggle}
+            type="link"
+          >
+            {showPits ? 'Hide details ▴' : 'Show details ▾'}
+          </Button>
         </div>
-
-        <button onClick={this.handleFlag}>Flag</button>
-
-        <button onClick={this.handlePitsToggle}>{showPits ? 'Hide' : 'Show'} pit details</button>
 
         {showPits ?
           <div>

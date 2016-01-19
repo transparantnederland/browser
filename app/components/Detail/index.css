@@ -5,6 +5,10 @@
   overflow-y: scroll;
 }
 
+.Detail-actions {
+  float: right;
+}
+
 .Detail-heading {
   font-size: 32px;
 }

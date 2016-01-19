@@ -1,0 +1,26 @@
+.Button {
+  font-family: inherit;
+  font-size: 14px;
+  background: none;
+  cursor: pointer;
+  padding: 5px 10px;
+  display: inline-block;
+  text-transform: uppercase;
+  outline: none;
+  position: relative;
+  border: 2px solid #ccc;
+  color: #999;
+  overflow: hidden;
+  border-radius: 50px;
+}
+
+.Button-link {
+  border: 0;
+  padding: 0;
+  text-transform: none;
+  color: #6C93AD;
+}
+
+.Button-link:hover {
+  color: #264653;
+}
