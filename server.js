@@ -2,7 +2,6 @@ var path = require('path');
 var express = require('express');
 var webpack = require('webpack');
 var config = require('config');
-var debug = require('debug')('server');
 
 var api = require('./api');
 var __DEV__ = process.env.NODE_ENV === 'development';
@@ -29,8 +28,8 @@ app.get('*', function (req, res) {
 
 app.listen(config.port, '0.0.0.0', function (err) {
   if (err) {
-    debug(err);
+    console.error(err);
     return;
   }
-  debug('Listening at http://0.0.0.0:' + config.port);
+  console.info('==> 🌍  Listening on port ' + config.port + '. Open http://0.0.0.0:' + config.port + ' in your browser');
 });

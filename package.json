@@ -36,7 +36,6 @@
     "babel-preset-react": "6.3.13",
     "config": "1.17.1",
     "css-loader": "0.23.0",
-    "debug": "2.2.0",
     "eslint": "1.10.3",
     "eslint-config-airbnb": "2.1.0",
     "eslint-plugin-babel": "3.0.0",
@@ -61,7 +60,7 @@
     "build:webpack": "NODE_ENV=production webpack --config webpack.config.prod.js",
     "clean": "rimraf dist",
     "lint": "eslint app",
-    "start": "DEBUG=server node server.js",
+    "start": "node server.js",
     "start:production": "NODE_ENV=production node server.js",
     "test": "mocha --compilers js:babel-core/register app/test/**",
     "test:watch": "npm test -- --watch"
