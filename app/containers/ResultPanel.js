@@ -35,7 +35,9 @@ const ResultPanel = React.createClass({
 
   onSearchChange(text) {
     const q = text.trim() + '*';
-    this.setState({ q }, loadData(this.props, this.state));
+    this.setState({ q }, () => {
+      loadData(this.props, this.state);
+    });
   },
 
   render() {
