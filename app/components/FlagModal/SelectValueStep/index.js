@@ -15,11 +15,12 @@ const SelectValueStep = React.createClass({
   },
 
   componentWillMount() {
-    this.props.dispatch(actions.relationTypes());
-  },
-
-  componentWillUnmount() {
-    this.props.dispatch(actions.relationTypes.reset());
+    if (!this.props.relationTypes.length) {
+      this.props.dispatch(actions.relationTypes());
+    }
+    if (!this.props.pitTypes.length) {
+      this.props.dispatch(actions.pitTypes());
+    }
   },
 
   getInitialState() {
@@ -30,37 +31,59 @@ const SelectValueStep = React.createClass({
   },
 
   render() {
-    const { flag, options, relationTypes } = this.props;
+    const { flag, options, relationTypes, pitTypes } = this.props;
     const { canEditType } = this.state;
 
-    return (
-      <div>
-        <label>
+    if (flag.type === 'wrong-type') {
+      return (
+        <div>
+          <label>New type:</label>
+
           <select
-            value={flag.value.type}
-            disabled={!canEditType}
-            onChange={this.handleTypeChange}
+            value={flag.concept.type}
+            onChange={this.handlePitTypeChange}
           >
-            <option key="">-- select a relation type --</option>
-            {relationTypes.map((relationType) =>
-              <option key={relationType} value={relationType}>{relationType}</option>
+            {pitTypes.map((pitType) =>
+              <option key={pitType} value={pitType}>{pitType}</option>
             )}
           </select>
-        </label>
-        <label>
-          <Typeahead
-            placeholder="Search for a politician"
-            options={options}
-            filterOption="name"
-            displayOption="name"
-            onKeyUp={this.handleKeyUp}
-            maxVisible={20}
-            customListComponent={TypeaheadList}
-            onOptionSelected={this.handleConceptSelect}
-          />
-        </label>
-      </div>
-    );
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <label>
+            <select
+              value={flag.value.type}
+              disabled={!canEditType}
+              onChange={this.handleTypeChange}
+              >
+              <option key="">-- select a relation type --</option>
+              {relationTypes.map((relationType) =>
+                <option key={relationType} value={relationType}>{relationType}</option>
+              )}
+            </select>
+          </label>
+          <label>
+            <Typeahead
+              placeholder="Search for a politician"
+              options={options}
+              filterOption="name"
+              displayOption="name"
+              onKeyUp={this.handleKeyUp}
+              maxVisible={20}
+              customListComponent={TypeaheadList}
+              onOptionSelected={this.handleConceptSelect}
+            />
+          </label>
+        </div>
+      );
+    }
+  },
+  handlePitTypeChange(event) {
+    const pitType = event.target.value;
+
+    this.props.onSelect(pitType);
   },
   handleTypeChange(event) {
     const type = event.target.value;
@@ -112,6 +135,7 @@ export default connect(
         return relationIds.indexOf(option.id) === -1;
       }),
       relationTypes: state.data.relationTypes.data,
+      pitTypes: state.data.types.data,
     };
   }
 )(SelectValueStep);

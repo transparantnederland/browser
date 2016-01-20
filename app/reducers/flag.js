@@ -11,6 +11,7 @@ const defaultValues = {
     type: 'tnl:same',
   },
   'missing-relation': {},
+  'wrong-type': '',
 };
 
 function relations(state = null, action) {

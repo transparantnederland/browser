@@ -60,7 +60,7 @@ const FlagModal = React.createClass({
         style={styles}
       >
         <div className="FlagModal-header">
-          Flag this concept
+          Flag
         </div>
         <div className="FlagModal-content">
           {{
@@ -95,12 +95,14 @@ const FlagModal = React.createClass({
   },
 
   handleDoneClick() {
+    const { flag } = this.props;
+
     this.props.dispatch(admin.actions.flag({}, {
       body: JSON.stringify({
-        origin: this.props.flag.concept,
-        type: this.props.flag.type,
-        value: this.props.flag.value.type,
-        target: this.props.flag.value.concept,
+        origin: flag.concept,
+        type: flag.type,
+        value: (flag.type === 'wrong-type' ? flag.value : flag.value.type),
+        target: (flag.type === 'wrong-type' ? flag.concept : flag.value.concept),
       }),
     }, (err) => {
       if (err) {

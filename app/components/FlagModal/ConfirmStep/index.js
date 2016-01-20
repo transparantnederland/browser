@@ -10,13 +10,22 @@ const ConfirmStep = React.createClass({
   render() {
     const { flag } = this.props;
 
-    return (
-      <div>
-        <ConceptTile concept={flag.concept}/>
-        {flag.type} ({flag.value.type})
-        <ConceptTile concept={flag.value.concept}/>
-      </div>
-    );
+    if (flag.type === 'wrong-type') {
+      return (
+        <div>
+          <ConceptTile concept={flag.concept} />
+          <span>{flag.type} ==> {flag.value}</span>
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          <ConceptTile concept={flag.concept}/>
+          {flag.type} ({flag.value.type})
+          <ConceptTile concept={flag.value.concept}/>
+        </div>
+      );
+    }
   },
 });
 

@@ -1,9 +1,12 @@
 import React, { PropTypes } from 'react';
 
 const FLAGS = [
-  { type: 'duplicate', title: 'Mark as duplicate' },
-  { type: 'missing-relation', title: 'Add missing relation' },
+  { type: 'duplicate', title: 'is a duplicate' },
+  { type: 'missing-relation', title: 'is missing a relation' },
+  { type: 'wrong-type', title: 'has the wrong type' },
 ];
+
+import Type from '../../Type';
 
 const SelectTypeStep = React.createClass({
   propTypes: {
@@ -16,6 +19,7 @@ const SelectTypeStep = React.createClass({
 
     return (
       <div>
+        <span>This <Type type={flag.concept.type} />&hellip;</span>
         {FLAGS.map((row) =>
           <div key={row.type}>
             <label>
@@ -25,7 +29,7 @@ const SelectTypeStep = React.createClass({
                 value={row.type}
                 onChange={() => onSelect(row.type)}
                 defaultChecked={row.type === flag.type}
-              />
+              />&nbsp;
               <span>{row.title}</span>
             </label>
           </div>
