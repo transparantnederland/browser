@@ -20,7 +20,7 @@ if (__DEV__) {
 
 app.use('/api', api);
 
-app.use(express.static(__DEV__ ? 'app' : 'dist'));
+app.use(express.static(path.join(__dirname, __DEV__ ? 'app' : 'dist')));
 
 app.get('*', function (req, res) {
   res.sendFile(path.join(__dirname, __DEV__ ? 'app' : 'dist', 'index.html'));
