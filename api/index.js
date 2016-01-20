@@ -46,7 +46,18 @@ var Target = Flag.belongsTo(Concept, { as: 'target' });
 sequelize.sync({ force: false }).then(function () {});
 
 app.get('/flags', auth.connect(basic), function (req, res) {
+  var query = req.query;
+  var params = {};
+
+  if (query.concept) {
+    params.$or = [
+      { originId: decodeURIComponent(query.concept) },
+      { targetId: decodeURIComponent(query.concept) },
+    ];
+  }
+
   Flag.findAll({
+    where: params,
     include: [Origin, Target],
   }).then(function (rows) {
     res.json(rows);
