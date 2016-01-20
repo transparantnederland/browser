@@ -8,9 +8,9 @@ const apiTransformers = {
       // Id of first pit
       id: concept[0].pit.id,
       // Type of first pit
-      type: concept[0].pit.type,
+      type: concept[0].pit.type || '',
       // Name of first valid pit
-      name: _.uniq(concept.map((pit) => pit.pit.name)).shift(),
+      name: _.uniq(concept.map((pit) => pit.pit.name)).shift() || '',
       // Array of datasets
       datasets: _.uniq(concept.map((pit) => pit.pit.dataset)),
       // NOTE: This logic should probably happen on the API
@@ -30,9 +30,9 @@ const apiTransformers = {
       // Id of first pit
       id: concept[0].pit.id,
       // Type of first pit
-      type: concept[0].pit.type,
+      type: concept[0].pit.type || '',
       // Name of first valid pit
-      name: _.uniq(concept.map((pit) => pit.pit.name)).shift(),
+      name: _.uniq(concept.map((pit) => pit.pit.name)).shift() || '',
       // Array of datasets
       datasets: _.uniq(concept.map((pit) => pit.pit.dataset)),
     })
