@@ -1,3 +1,4 @@
+var path = require('path');
 var express = require('express');
 var Sequelize = require('sequelize');
 var bodyParser = require('body-parser');
@@ -11,11 +12,9 @@ var basic = auth.basic({
   file: __dirname + '/.htpasswd',
 });
 
-// NOTE: there is a bug in the Sequelize library where it doesn’t
-// support absolute sqlite URIs, which is why it’s stored in the root directory
-// @see: https://github.com/sequelize/sequelize/issues/4721
-var sequelize = new Sequelize('sqlite:database.sqlite', {
+var sequelize = new Sequelize('sqlite://database', {
   logging: false,
+  storage: path.join(__dirname, 'database.sqlite'),
 });
 
 var Flag = sequelize.define('flag', {

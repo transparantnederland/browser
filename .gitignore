@@ -2,7 +2,7 @@
 .htpasswd
 *.log
 node_modules
-*.sqlite
+api/*.sqlite
 config/*.yml
 !config/default.yml
 dist
