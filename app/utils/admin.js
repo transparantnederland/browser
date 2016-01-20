@@ -9,6 +9,7 @@ const admin = reduxApi({
     // },
     options: {
       method: 'POST',
+      credentials: 'same-origin',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',

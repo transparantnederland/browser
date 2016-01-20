@@ -53,7 +53,7 @@ app.get('/flags', auth.connect(basic), function (req, res) {
   });
 });
 
-app.get('/flags/relations.ndjson', function (req, res) {
+app.get('/flags/relations.ndjson', auth.connect(basic), function (req, res) {
   Flag.findAll({
     include: [Origin, Target],
   }).then(function (rows) {
@@ -67,7 +67,7 @@ app.get('/flags/relations.ndjson', function (req, res) {
   });
 });
 
-app.post('/flags', function (req, res) {
+app.post('/flags', auth.connect(basic), function (req, res) {
   var data = req.body;
 
   Concept
