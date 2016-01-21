@@ -46,6 +46,7 @@
     "file-loader": "0.8.5",
     "imports-loader": "0.6.5",
     "mocha": "2.3.4",
+    "nodemon": "1.8.1",
     "react-transform-catch-errors": "1.0.0",
     "react-transform-hmr": "1.0.1",
     "redbox-react": "1.0.1",
@@ -62,7 +63,7 @@
     "postbuild": "cp app/index.html dist",
     "clean": "rimraf dist && mkdir dist",
     "lint": "eslint app",
-    "start": "node server.js",
+    "start": "nodemon server.js --ignore 'app/*.js'",
     "test": "mocha --compilers js:babel-core/register app/test/**",
     "test:watch": "npm test -- --watch"
   },
