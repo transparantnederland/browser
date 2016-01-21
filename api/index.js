@@ -67,6 +67,9 @@ app.get('/flags', auth.connect(basic), function (req, res) {
 
 app.get('/flags/relations.ndjson', auth.connect(basic), function (req, res) {
   Flag.findAll({
+    where: {
+      $or: [{ type: 'duplicate' }, { type: 'missing-relation' }],
+    },
     include: [Origin, Target],
   }).then(function (rows) {
     res.send(rows.map(function (row) {
@@ -74,6 +77,24 @@ app.get('/flags/relations.ndjson', auth.connect(basic), function (req, res) {
         from: row.originId,
         type: row.value,
         to: row.targetId,
+      });
+    }).join('\n'));
+  });
+});
+
+app.get('/flags/pits.ndjson', auth.connect(basic), function (req, res) {
+  Flag.findAll({
+    where: {
+      $or: [{ type: 'wrong-type' }],
+    },
+    include: [Origin, Target],
+  }).then(function (rows) {
+    res.send(rows.map(function (row) {
+      return JSON.stringify({
+        id: row.origin.id,
+        type: row.value,
+        name: row.origin.name,
+        dataset: row.origin.datasets.shift(),
       });
     }).join('\n'));
   });
