@@ -29,14 +29,6 @@ npm run test:watch
 ```
 Run a handful of unit tests.
 
-## Deploy
-
-```shell
-npm run deploy
-```
-
-This will push a deploy to  [http://code.waag.org/tnl-relationizer](http://code.waag.org/tnl-relationizer).
-
 [![ZenHub] (https://raw.githubusercontent.com/ZenHubIO/support/master/zenhub-badge.png)] (https://zenhub.io)
 
 Copyright (C) 2015 [Waag Society](http://waag.org).
