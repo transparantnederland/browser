@@ -1,8 +1,6 @@
-# Transparant Nederland Relationizer [![Build Status](https://travis-ci.org/waagsociety/tnl-relationizer.svg)](https://travis-ci.org/waagsociety/tnl-relationizer)
+# Transparant Nederland Relationizer [![Build Status](https://travis-ci.org/waagsociety/tnl-relationizer.svg)](https://travis-ci.org/waagsociety/tnl-relationizer) [![Zenhub](https://raw.githubusercontent.com/ZenHubIO/support/master/zenhub-badge.svg)](https://zenhub.io)
 
-http://code.waag.org/tnl-relationizer
-
-Find a PIT, find another PIT, create a relation. Outputs NDJSON files.
+A browser for [Transparant Nederland](https://transparantnederland.nl/) data. Option to flag wrong or incomplete data.
 
 ## Install
 
@@ -29,6 +27,4 @@ npm run test:watch
 ```
 Run a handful of unit tests.
 
-[![ZenHub] (https://raw.githubusercontent.com/ZenHubIO/support/master/zenhub-badge.png)] (https://zenhub.io)
-
-Copyright (C) 2015 [Waag Society](http://waag.org).
+Copyright (C) 2016 [Waag Society](http://waag.org).

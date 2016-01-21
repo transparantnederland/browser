@@ -71,7 +71,7 @@
     "type": "git",
     "url": "https://github.com/waagsociety/tnl-relationizer.git"
   },
-  "author": "Bert Spaan",
+  "author": "Waag Society",
   "license": "GPL-3.0",
   "bugs": {
     "url": "https://github.com/waagsociety/tnl-relationizer/issues"
