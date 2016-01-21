@@ -1,13 +1,17 @@
 .FlagTile {
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   padding: 1em;
 }
 
 .FlagTile--add {
   background-color: #dff0d8;
+}
+
+.FlagTile--edit {
+  background-color: #faebcc;
 }
 
 .FlagTile-from,
@@ -19,13 +23,28 @@
   text-align: right;
 }
 
-.FlagTile-type {
-  width: 120px;
-  margin: 0 2em;
-  text-align: center;
+.FlagTile-type > dl {
+  margin: 0;
+  width: 200px;
   font-size: 14px;
-  font-weight: 500;
-  padding: 2px 4px;
-  background-color: rgba(0, 0, 0, 0.14);
-  border-radius: 20px;
+}
+
+.FlagTile-type > dl > dt {
+  float: left;
+  clear: left;
+  width: 60px;
+  text-align: right;
+}
+
+.FlagTile-type > dl > dt:after {
+  content: ":";
+}
+
+.FlagTile-type > dl > dd {
+  margin: 0 0 0 70px;
+  padding: 0 0;
+}
+
+.FlagTile-type > dl > dd:last-child {
+  padding-bottom: 0;
 }
