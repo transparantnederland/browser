@@ -63,7 +63,7 @@
     "postbuild": "cp app/index.html dist",
     "clean": "rimraf dist && mkdir dist",
     "lint": "eslint app",
-    "start": "nodemon server.js --ignore 'app/*.js'",
+    "start": "nodemon server.js --ignore 'app'",
     "test": "mocha --compilers js:babel-core/register app/test/**",
     "test:watch": "npm test -- --watch"
   },
