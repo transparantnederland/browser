@@ -59,6 +59,7 @@ app.get('/flags', auth.connect(basic), function (req, res) {
   Flag.findAll({
     where: params,
     include: [Origin, Target],
+    order: [['createdAt', 'DESC']],
   }).then(function (rows) {
     res.json(rows);
   });
