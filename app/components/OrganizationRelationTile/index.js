@@ -13,15 +13,18 @@ const RELATIONS = {
   'tnl:lobbyist': 'Lobbyist',
 };
 
-const RelationTile = ({ relation: { concept, type } }) =>
-  <div>
-    <HashLink hash={concept.id}>
-      <Name name={concept.name}/>
-    </HashLink>
+const RelationTile = ({ relation: { concept, relation: { type } } }) => {
+  return (
     <div>
-      {RELATIONS[type]}
+      <HashLink hash={concept.id}>
+        <Name name={concept.name}/>
+      </HashLink>
+      <div>
+        {RELATIONS[type]}
+      </div>
     </div>
-  </div>;
+  );
+};
 
 RelationTile.propTypes = {
   relation: PropTypes.object.isRequired,

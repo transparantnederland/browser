@@ -41,9 +41,9 @@ const apiTransformers = {
     transformers.array(data).map((concept) => ({
       // Type of first valid relation
       // TODO: see if we can move this sanity check to the API
-      type: concept
-        .filter((relation) => relation.relation_type)
-        .map((relation) => relation.relation_type)
+      relation: concept
+        .filter((relation) => relation.relation && relation.relation.type)
+        .map((relation) => relation.relation)
         .shift(),
       concept: {
         // Id of first pit
