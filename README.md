@@ -27,4 +27,20 @@ npm run test:watch
 ```
 Run a handful of unit tests.
 
+## Deploy
+
+First, add a remote to your git config. You only need to do this once.
+
+```shell
+git remote add production ssh://transparantnederland.nl/var/repo/browser.git
+```
+
+Then push your latest commits to the production remote.
+
+```shell
+git push production master
+```
+
+This will automatically update the files on the production server, install any dependencies, and make a new build. Currently the instance still needs to be manually restarted on the server after this process is complete.
+
 Copyright (C) 2016 [Waag Society](http://waag.org).
