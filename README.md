@@ -1,4 +1,4 @@
-# Transparant Nederland Relationizer [![Build Status](https://travis-ci.org/waagsociety/tnl-relationizer.svg)](https://travis-ci.org/waagsociety/tnl-relationizer) [![Zenhub](https://raw.githubusercontent.com/ZenHubIO/support/master/zenhub-badge.png)](https://zenhub.io)
+# Transparant Nederland Relationizer [![Build Status](https://travis-ci.org/transparantnederland/browser.svg)](https://travis-ci.org/transparantnederland/browser) [![Zenhub](https://raw.githubusercontent.com/ZenHubIO/support/master/zenhub-badge.png)](https://zenhub.io)
 
 A browser for [Transparant Nederland](https://transparantnederland.nl/) data. Option to flag wrong or incomplete data.
 

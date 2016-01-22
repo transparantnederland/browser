@@ -69,12 +69,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/waagsociety/tnl-relationizer.git"
+    "url": "https://github.com/transparantnederland/browser.git"
   },
   "author": "Waag Society",
   "license": "GPL-3.0",
   "bugs": {
-    "url": "https://github.com/waagsociety/tnl-relationizer/issues"
+    "url": "https://github.com/transparantnederland/browser/issues"
   },
-  "homepage": "http://code.waag.org/tnl-relationizer"
+  "homepage": "https://browser.transparantnederland.nl"
 }
