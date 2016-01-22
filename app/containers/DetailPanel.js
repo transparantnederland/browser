@@ -61,7 +61,8 @@ export default connect(
       data: { concept, orgsFromPerson, peopleFromOrg },
     } = state;
 
-    const id = location.state && location.state.hash;
+    // Fetch #hash id from location.state OR fall back on location.hash (on initial pageload)
+    const id = (location.state && location.state.hash) || (!!location.hash && location.hash.substring(1));
     const conceptRelations = (concept.data && concept.data.type) === 'tnl:Person' ? orgsFromPerson : peopleFromOrg;
 
     return {
