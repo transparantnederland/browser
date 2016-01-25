@@ -23,7 +23,12 @@ app.use('/api', api);
 app.use(express.static(path.join(__dirname, __DEV__ ? 'app' : 'dist')));
 
 app.get('*', function (req, res) {
-  res.sendFile(path.join(__dirname, __DEV__ ? 'app' : 'dist', 'index.html'));
+  res.sendFile(path.join(__dirname, __DEV__ ? 'app' : 'dist', 'index.html'), null, function (err) {
+    if (err) {
+      console.log(err);
+      res.status(err.status).end();
+    }
+  });
 });
 
 app.listen(config.port, '0.0.0.0', function (err) {

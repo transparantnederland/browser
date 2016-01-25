@@ -1,8 +1,8 @@
 {
-  "name": "tnl-relationizer",
+  "name": "transparantnederland-browser",
   "version": "0.1.0",
-  "description": "UI for creating relations between Transparant Nederland PITs",
-  "main": "",
+  "description": "Browser for transparantnederland.nl data",
+  "main": "server.js",
   "private": true,
   "dependencies": {
     "body-parser": "1.14.2",
@@ -64,7 +64,7 @@
     "postbuild": "cp app/index.html dist",
     "clean": "rimraf dist && mkdir dist",
     "lint": "eslint app",
-    "start": "nodemon server.js --ignore 'app'",
+    "start": "NODE_ENV=development nodemon server.js --ignore 'app'",
     "test": "mocha --compilers js:babel-core/register app/test/**",
     "test:watch": "npm test -- --watch"
   },
