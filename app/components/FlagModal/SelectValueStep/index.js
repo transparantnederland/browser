@@ -66,7 +66,7 @@ const SelectValueStep = React.createClass({
           </label>
           <label>
             <Typeahead
-              placeholder="Search for a politician"
+              placeholder="Search"
               options={options}
               filterOption="name"
               displayOption="name"
@@ -109,7 +109,8 @@ const SelectValueStep = React.createClass({
     const params = {
       q: [value, '*'].join(''),
     };
-    if (this.state.value.type === 'tnl:same') {
+
+    if (this.state.value.type === 'tnl:same' && this.props.flag.concept.type === 'tnl:Person') {
       params.type = this.props.flag.concept.type;
     }
 
