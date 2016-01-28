@@ -15,14 +15,16 @@ const PitCard = ({ pit }) =>
       <Dataset dataset={pit.dataset}/>
 
       {pit.data ?
-        <dl className="PitCard-data">
-          {Object.keys(pit.data).map((key) =>
-            [
-              <dt>{key}</dt>,
-              <dd>{pit.data[key]}</dd>,
-            ]
-          )}
-        </dl> : null
+        <table className="PitCard-data">
+          <tbody>
+            {Object.keys(pit.data).map((key) =>
+              <tr key={key}>
+                <td>{key}</td>
+                <td>{pit.data[key]}</td>
+              </tr>
+            )}
+          </tbody>
+        </table> : null
       }
     </div>
   </div>;
