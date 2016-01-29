@@ -5,21 +5,29 @@ import { connect } from 'react-redux';
 import api from '../utils/api';
 
 import StickyHeaderLayout from '../layouts/StickyHeaderLayout';
-import ConceptList from '../components/ConceptList';
+import Results from '../components/Results';
 import Search from '../components/Search';
 
+const WILDCARD = '*';
+
 function loadData(props, state) {
-  const { fetchResults, query } = props;
+  const { dispatch, query } = props;
   const { q } = state;
 
-  fetchResults(Object.assign({}, query, { q }));
+  if (q !== '') {
+    dispatch(api.actions.concepts(Object.assign({}, query, {
+      q: q + WILDCARD,
+    })));
+  } else {
+    dispatch(api.actions.concepts.reset());
+  }
 }
 
 const ResultPanel = React.createClass({
 
   getInitialState() {
     return {
-      q: '*',
+      q: this.props.q,
     };
   },
 
@@ -34,7 +42,7 @@ const ResultPanel = React.createClass({
   },
 
   onSearchChange(text) {
-    const q = text.trim() + '*';
+    const q = text.trim();
     this.setState({ q }, () => {
       loadData(this.props, this.state);
     });
@@ -42,11 +50,12 @@ const ResultPanel = React.createClass({
 
   render() {
     const { concepts } = this.props;
+    const { q } = this.state;
 
     return (
       <StickyHeaderLayout>
-        <Search onChange={this.onSearchChange} />
-        <ConceptList concepts={concepts} />
+        <Search onChange={this.onSearchChange} value={q} />
+        <Results concepts={concepts} query={q} />
       </StickyHeaderLayout>
     );
   },
@@ -56,18 +65,17 @@ const ResultPanel = React.createClass({
 export default connect(
   (state) => {
     const {
-      router: { params: { type, dataset } },
+      router: { params: { type, dataset }, location },
       data: { concepts },
     } = state;
 
     const query = _.omit({ type, dataset }, _.isUndefined);
+    const q = location.query.q || '';
 
     return {
+      q,
       query,
       concepts: concepts.data,
     };
-  },
-  {
-    fetchResults: api.actions.concepts,
   }
 )(ResultPanel);

@@ -4,17 +4,21 @@ import './index.css';
 
 const Search = React.createClass({
   propTypes: {
+    value: PropTypes.string.isRequired,
     onChange: PropTypes.func.isRequired,
   },
 
   render() {
+    const { value, onChange } = this.props;
+
     return (
       <div className="Search">
         <input
           type="search"
           placeholder="Search"
           className="Search-input"
-          onChange={(event) => this.props.onChange(event.target.value)}
+          onChange={(event) => onChange(event.target.value)}
+          value={value}
           autoFocus
         />
       </div>

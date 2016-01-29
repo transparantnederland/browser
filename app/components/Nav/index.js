@@ -9,7 +9,9 @@ import Type from '../Type';
 const Nav = ({ datasets, types }) =>
   <div className="Nav">
     <div className="Nav-brand">
-      <Logo />
+      <IndexLink to="/">
+        <Logo />
+      </IndexLink>
     </div>
 
     <ul className="Nav-menu">
