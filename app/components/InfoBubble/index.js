@@ -6,7 +6,7 @@ const InfoBubble = ({ info }) =>
   <div className="InfoBubble">
     <Tooltip
       placement="right"
-      trigger="hover"
+      trigger="click"
       animation="zoom"
       overlayClassName="InfoBubble-bubble"
       overlay={<span>{info}</span>}
