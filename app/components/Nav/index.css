@@ -48,3 +48,9 @@
 .Nav-brand {
   margin: 1em;
 }
+
+.Nav-menuItemInfoBubble {
+  display: inline-block;
+  float: right;
+  margin-left: 0.5em;
+}
