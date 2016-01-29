@@ -1,0 +1,8 @@
+.Logo {
+  display: block;
+  background-repeat: no-repeat;
+  background-image: url('../../images/logo.svg');
+  width: 160px;
+  height: 41px;
+  text-indent: -9999px;
+}

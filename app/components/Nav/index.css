@@ -46,11 +46,11 @@
 }
 
 .Nav-brand {
-  display: block;
-  background-repeat: no-repeat;
-  background-image: url('../../images/logo.svg');
-  width: 160px;
-  height: 41px;
-  text-indent: -9999px;
   margin: 1em;
+}
+
+.Nav-menuItemInfoBubble {
+  display: inline-block;
+  float: right;
+  margin-left: 0.5em;
 }
