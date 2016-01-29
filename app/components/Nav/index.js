@@ -1,77 +1,58 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import './index.css';
+import React, { PropTypes } from 'react';
 import { IndexLink, Link } from 'react-router';
 
-import api from '../../utils/api';
-
+import Logo from '../Logo';
 import Type from '../Type';
 
-import './index.css';
+const Nav = ({ datasets, types }) =>
+  <div className="Nav">
+    <div className="Nav-brand">
+      <Logo />
+    </div>
 
-function loadData(props) {
-  props.fetchTypes();
-  props.fetchDatasets();
-}
+    <ul className="Nav-menu">
+      <li className="Nav-menuItem">
+        <IndexLink
+          to="/"
+          className="Nav-menuItemLink"
+          activeClassName="Nav-menuItemLink--active"
+        >
+          All
+        </IndexLink>
+      </li>
 
-const Nav = React.createClass({
-  componentWillMount() {
-    loadData(this.props);
-  },
+      {types.length ? <li className="Nav-menuHeading">Types</li> : null}
+      {types.map((type) =>
+        <li className="Nav-menuItem" key={type}>
+          <Link
+            to={['/type', type].join('/')}
+            className="Nav-menuItemLink"
+            activeClassName="Nav-menuItemLink--active"
+          >
+            <Type type={type}/>
+          </Link>
+        </li>
+      )}
 
-  render() {
-    const { datasets, types } = this.props;
+      {types.length ? <li className="Nav-menuHeading">Sources</li> : null}
+      {datasets.map((dataset) =>
+        <li className="Nav-menuItem" key={dataset.id}>
+          <Link
+            to={['/dataset', dataset.id].join('/')}
+            className="Nav-menuItemLink"
+            activeClassName="Nav-menuItemLink--active"
+          >
+            {dataset.title}
+          </Link>
+        </li>
+      )}
+    </ul>
+  </div>;
 
-    return (
-      <div className="Nav">
-        <div className="Nav-brand">Transparant Nederland</div>
-        <ul className="Nav-menu">
-          <li className="Nav-menuItem">
-            <IndexLink
-              to="/"
-              className="Nav-menuItemLink"
-              activeClassName="Nav-menuItemLink--active"
-            >
-              All
-            </IndexLink>
-          </li>
-          <li className="Nav-menuHeading">Types</li>
-          {types.map((type) =>
-            <li className="Nav-menuItem" key={type}>
-              <Link
-                to={['/type', type].join('/')}
-                className="Nav-menuItemLink"
-                activeClassName="Nav-menuItemLink--active"
-              >
-                <Type type={type}/>
-              </Link>
-            </li>
-          )}
-          <li className="Nav-menuHeading">Sources</li>
-          {datasets.map((dataset) =>
-            <li className="Nav-menuItem" key={dataset.id}>
-              <Link
-                to={['/dataset', dataset.id].join('/')}
-                className="Nav-menuItemLink"
-                activeClassName="Nav-menuItemLink--active"
-              >
-                {dataset.title}
-              </Link>
-            </li>
-          )}
-        </ul>
-      </div>
-    );
-  },
-});
+Nav.propTypes = {
+  datasets: PropTypes.array.isRequired,
+  types: PropTypes.array.isRequired,
+};
 
-export default connect(
-  (state) => ({
-    router: state.router,
-    types: state.data.types.data,
-    datasets: state.data.datasets.data,
-  }),
-  {
-    fetchTypes: api.actions.types,
-    fetchDatasets: api.actions.datasets,
-  }
-)(Nav);
+export default Nav;

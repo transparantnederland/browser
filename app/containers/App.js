@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Nav from './../components/Nav';
+import NavContainer from './NavContainer';
 
 import './app.css';
 
@@ -8,7 +8,7 @@ const App = React.createClass({
   render() {
     return (
       <div className="App">
-        <Nav/>
+        <NavContainer />
         {this.props.children}
       </div>
     );
