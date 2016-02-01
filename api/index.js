@@ -45,7 +45,7 @@ var Target = Flag.belongsTo(Concept, { as: 'target' });
 
 sequelize.sync({ force: false }).then(function () {});
 
-app.get('/flags', auth.connect(basic), function (req, res) {
+app.get('/flags', function (req, res) {
   var query = req.query;
   var params = {};
 
