@@ -42,7 +42,7 @@ const ResultPanel = React.createClass({
   },
 
   onSearchChange(text) {
-    const q = text.trim();
+    const q = text;
     this.setState({ q }, () => {
       loadData(this.props, this.state);
     });
