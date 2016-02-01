@@ -6,6 +6,7 @@ import Dataset from '../Dataset';
 import Button from '../Button';
 import OrganizationRelationTile from '../OrganizationRelationTile';
 import PersonRelationTile from '../PersonRelationTile';
+import NetworkRelationTile from '../NetworkRelationTile';
 import Pit from '../Pit';
 
 import { initFlag } from '../../actions/flag';
@@ -26,7 +27,7 @@ const Detail = React.createClass({
   },
 
   render() {
-    const { concept, conceptRelations } = this.props;
+    const { concept, conceptRelations, conceptNetwork } = this.props;
     const { showPits } = this.state;
 
     return (
@@ -69,7 +70,24 @@ const Detail = React.createClass({
                 }
               </li>
             )}
-          </ul> : null}
+          </ul> : <span>No relations found</span>
+        }
+
+        {conceptNetwork ?
+          <div>
+            <div className="Detail-header">Network</div>
+            {conceptNetwork.length ?
+              <ul>
+                {conceptNetwork.map((relation) =>
+                  <li key={relation.concept.id}>
+                    <NetworkRelationTile relation={relation} />
+                  </li>
+                )}
+              </ul> : <span>No network found</span>
+            }
+          </div> : null
+        }
+
       </div>
     );
   },

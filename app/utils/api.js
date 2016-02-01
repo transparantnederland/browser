@@ -43,7 +43,9 @@ const apiTransformers = {
       // TODO: see if we can move this sanity check to the API
       relation: concept
         .filter((relation) => relation.relation && relation.relation.type)
-        .map((relation) => relation.relation)
+        .map((relation) => Object.assign(relation.relation, {
+          to: relation.relation_org,
+        }))
         .shift(),
       concept: {
         // Id of first pit
@@ -78,6 +80,10 @@ const api = reduxApi({
   },
   peopleFromOrg: {
     url: '/peopleFromOrg',
+    transformer: apiTransformers.relationArray,
+  },
+  peopleFromOrgsFromPerson: {
+    url: 'peopleFromOrgsFromPerson',
     transformer: apiTransformers.relationArray,
   },
   relationTypes: {
