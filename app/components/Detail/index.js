@@ -7,6 +7,7 @@ import Button from '../Button';
 import OrganizationRelationTile from '../OrganizationRelationTile';
 import PersonRelationTile from '../PersonRelationTile';
 import NetworkRelationTile from '../NetworkRelationTile';
+import FlagList from '../FlagList';
 import Pit from '../Pit';
 
 import { initFlag } from '../../actions/flag';
@@ -27,7 +28,7 @@ const Detail = React.createClass({
   },
 
   render() {
-    const { concept, conceptRelations, conceptNetwork } = this.props;
+    const { concept, conceptRelations, conceptNetwork, flags } = this.props;
     const { showPits } = this.state;
 
     return (
@@ -56,6 +57,13 @@ const Detail = React.createClass({
                 <Pit pit={pit}/>
               </div>
             )}
+          </div> : null
+        }
+
+        {flags.length ?
+          <div>
+            <div className="Detail-header">Flags</div>
+            <FlagList flags={flags} />
           </div> : null
         }
 

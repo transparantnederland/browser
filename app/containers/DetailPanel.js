@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import api from '../utils/api';
+import admin from '../utils/admin';
 
 import Detail from '../components/Detail';
 import FlagModal from '../components/FlagModal';
@@ -11,6 +12,7 @@ function loadData(props) {
 
   if (id) {
     props.dispatch(api.actions.concept({ id }));
+    props.dispatch(admin.actions.flags({ concept: id }));
   }
 }
 
@@ -38,7 +40,7 @@ const DetailPanel = React.createClass({
   },
 
   render() {
-    const { concept, conceptRelations, conceptNetwork, dispatch, flag } = this.props;
+    const { concept, conceptRelations, conceptNetwork, dispatch, flag, flags } = this.props;
 
     if (!concept) {
       return null;
@@ -50,6 +52,7 @@ const DetailPanel = React.createClass({
           concept={concept}
           conceptRelations={conceptRelations}
           conceptNetwork={conceptNetwork}
+          flags={flags}
           dispatch={dispatch}
         />
         {flag ? <FlagModal flag={flag} /> : null}
@@ -64,7 +67,7 @@ export default connect(
     const {
       flag,
       router: { location },
-      data: { concept, orgsFromPerson, peopleFromOrg, peopleFromOrgsFromPerson },
+      data: { concept, orgsFromPerson, peopleFromOrg, peopleFromOrgsFromPerson, flags },
     } = state;
 
     // Fetch #hash id from location.state OR fall back on location.hash (on initial pageload)
@@ -75,6 +78,7 @@ export default connect(
     return {
       flag,
       id,
+      flags: flags.data,
       concept: concept.data,
       conceptRelations: conceptRelations.data,
       conceptNetwork,
