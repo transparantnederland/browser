@@ -1,6 +1,5 @@
 import './index.css';
 import React, { PropTypes } from 'react';
-import { DropTarget } from 'react-dnd';
 
 import Name from '../Name';
 import Type from '../Type';
@@ -11,20 +10,6 @@ import PersonRelationTile from '../PersonRelationTile';
 import NetworkRelationTile from '../NetworkRelationTile';
 import FlagList from '../FlagList';
 import Pit from '../Pit';
-
-const boxTarget = {
-  drop(props) {
-    return { concept: props.concept };
-  },
-};
-
-function collect(connect, monitor) {
-  return {
-    connectDropTarget: connect.dropTarget(),
-    isOver: monitor.isOver(),
-    canDrop: monitor.canDrop(),
-  };
-}
 
 const Detail = React.createClass({
   propTypes: {
@@ -40,10 +25,10 @@ const Detail = React.createClass({
   },
 
   render() {
-    const { concept, conceptRelations, conceptNetwork, connectDropTarget, isOver, flags } = this.props;
+    const { concept, conceptRelations, conceptNetwork, flags } = this.props;
     const { showPits } = this.state;
 
-    return (connectDropTarget(
+    return (
       <div className="Detail">
         <div className="Detail-heading">
           <Name name={concept.name}/>
@@ -106,7 +91,7 @@ const Detail = React.createClass({
         }
 
       </div>
-    ));
+    );
   },
   handlePitsToggle() {
     this.setState({
@@ -118,4 +103,4 @@ const Detail = React.createClass({
   // },
 });
 
-export default DropTarget('CONCEPT', boxTarget, collect)(Detail);
+export default Detail;
