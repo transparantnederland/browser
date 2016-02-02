@@ -1,4 +1,6 @@
+import './index.css';
 import React, { PropTypes } from 'react';
+import { DropTarget } from 'react-dnd';
 
 import Name from '../Name';
 import Type from '../Type';
@@ -10,9 +12,19 @@ import NetworkRelationTile from '../NetworkRelationTile';
 import FlagList from '../FlagList';
 import Pit from '../Pit';
 
-import { initFlag } from '../../actions/flag';
+const boxTarget = {
+  drop(props) {
+    return { concept: props.concept };
+  },
+};
 
-import './index.css';
+function collect(connect, monitor) {
+  return {
+    connectDropTarget: connect.dropTarget(),
+    isOver: monitor.isOver(),
+    canDrop: monitor.canDrop(),
+  };
+}
 
 const Detail = React.createClass({
   propTypes: {
@@ -28,14 +40,11 @@ const Detail = React.createClass({
   },
 
   render() {
-    const { concept, conceptRelations, conceptNetwork, flags } = this.props;
+    const { concept, conceptRelations, conceptNetwork, connectDropTarget, isOver, flags } = this.props;
     const { showPits } = this.state;
 
-    return (
+    return (connectDropTarget(
       <div className="Detail">
-        <div className="Detail-actions">
-          <Button onClick={this.handleFlag}>Flag</Button>
-        </div>
         <div className="Detail-heading">
           <Name name={concept.name}/>
         </div>
@@ -97,16 +106,16 @@ const Detail = React.createClass({
         }
 
       </div>
-    );
+    ));
   },
   handlePitsToggle() {
     this.setState({
       showPits: !this.state.showPits,
     });
   },
-  handleFlag() {
-    this.props.dispatch(initFlag(this.props.concept));
-  },
+  // handleFlag() {
+  //   this.props.dispatch(initFlag(this.props.concept));
+  // },
 });
 
-export default Detail;
+export default DropTarget('CONCEPT', boxTarget, collect)(Detail);

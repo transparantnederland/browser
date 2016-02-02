@@ -5,7 +5,6 @@ import api from '../utils/api';
 import admin from '../utils/admin';
 
 import Detail from '../components/Detail';
-import FlagModal from '../components/FlagModal';
 
 function loadData(props) {
   const { id } = props;
@@ -40,7 +39,7 @@ const DetailPanel = React.createClass({
   },
 
   render() {
-    const { concept, conceptRelations, conceptNetwork, dispatch, flag, flags } = this.props;
+    const { concept, conceptRelations, conceptNetwork, dispatch, flags } = this.props;
 
     if (!concept) {
       return null;
@@ -55,7 +54,6 @@ const DetailPanel = React.createClass({
           flags={flags}
           dispatch={dispatch}
         />
-        {flag ? <FlagModal flag={flag} /> : null}
       </div>
     );
   },
@@ -65,7 +63,6 @@ const DetailPanel = React.createClass({
 export default connect(
   (state) => {
     const {
-      flag,
       router: { location },
       data: { concept, orgsFromPerson, peopleFromOrg, peopleFromOrgsFromPerson, flags },
     } = state;
@@ -76,7 +73,6 @@ export default connect(
     const conceptNetwork = (concept.data && concept.data.type) === 'tnl:Person' ? peopleFromOrgsFromPerson.data : null;
 
     return {
-      flag,
       id,
       flags: flags.data,
       concept: concept.data,
