@@ -1,4 +1,4 @@
-.InfoBubble-info {
+.InfoButton-info {
   width: 14px;
   height: 14px;
   display: inline-block;
@@ -9,7 +9,7 @@
   line-height: 14px;
 }
 
-.InfoBubble-bubble {
+.InfoButton-bubble {
   max-width: 300px;
   font-size: 14px;
 }

@@ -2,7 +2,7 @@ import './index.css';
 import React, { PropTypes } from 'react';
 import { IndexLink, Link } from 'react-router';
 
-import InfoBubble from '../InfoBubble';
+import InfoButton from '../InfoButton';
 import Logo from '../Logo';
 import Type from '../Type';
 
@@ -47,8 +47,8 @@ const Nav = ({ datasets, types }) =>
             activeClassName="Nav-menuItemLink--active"
           >
             {dataset.title}
-            <div className="Nav-menuItemInfoBubble">
-              <InfoBubble info={dataset.description} />
+            <div className="Nav-menuItemInfoButton">
+              <InfoButton info={dataset.description} />
             </div>
           </Link>
         </li>
