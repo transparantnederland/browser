@@ -6,11 +6,13 @@ const ConceptDropTarget = ({ connectDropTarget, isOver, children }) =>
   connectDropTarget(
     <div className="ConceptDropTarget">
       {isOver ? <div className="ConceptDropTarget-overlay">
-        <div className="ConceptDropTarget-body">
+        <div className="ConceptDropTarget-message">
           Drop here to create a relation.
         </div>
       </div> : null}
-      {children}
+      <div className="ConceptDropTarget-content">
+        {children}
+      </div>
     </div>
   );
 

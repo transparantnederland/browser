@@ -10,7 +10,6 @@ import PersonRelationTile from '../PersonRelationTile';
 import NetworkRelationTile from '../NetworkRelationTile';
 import FlagList from '../FlagList';
 import Pit from '../Pit';
-import ConceptDropTarget from '../ConceptDropTarget';
 
 const Detail = React.createClass({
   propTypes: {
@@ -31,67 +30,65 @@ const Detail = React.createClass({
 
     return (
       <div className="Detail">
-        <ConceptDropTarget concept={concept}>
-          <div className="Detail-heading">
-            <Name name={concept.name}/>
-          </div>
-          <div className="Detail-subheading">
-            <Type type={concept.type}/>
-            <Dataset dataset={concept.datasets}/>
-            <Button
-              onClick={this.handlePitsToggle}
-              type="link"
-            >
-              {showPits ? 'Hide details ▴' : 'Show details ▾'}
-            </Button>
-          </div>
+        <div className="Detail-heading">
+          <Name name={concept.name}/>
+        </div>
+        <div className="Detail-subheading">
+          <Type type={concept.type}/>
+          <Dataset dataset={concept.datasets}/>
+          <Button
+            onClick={this.handlePitsToggle}
+            type="link"
+          >
+            {showPits ? 'Hide details ▴' : 'Show details ▾'}
+          </Button>
+        </div>
 
-          {showPits ?
-            <div>
-              {concept.pits.map((pit) =>
-                <div key={pit.id}>
-                  <Pit pit={pit}/>
-                </div>
-              )}
-            </div> : null
-          }
+        {showPits ?
+          <div>
+            {concept.pits.map((pit) =>
+              <div key={pit.id}>
+                <Pit pit={pit}/>
+              </div>
+            )}
+          </div> : null
+        }
 
-          {flags.length ?
-            <div>
-              <div className="Detail-header">Flags</div>
-              <FlagList flags={flags} />
-            </div> : null
-          }
+        {flags.length ?
+          <div>
+            <div className="Detail-header">Flags</div>
+            <FlagList flags={flags} />
+          </div> : null
+        }
 
-          <div className="Detail-header">Relations</div>
-          {conceptRelations.length ?
-            <ul>
-              {conceptRelations.map((relation) =>
-                <li key={relation.concept.id}>
-                  {concept.type === 'tnl:Person'
-                    ? <PersonRelationTile relation={relation} />
-                    : <OrganizationRelationTile relation={relation} />
-                  }
-                </li>
-              )}
-            </ul> : <span>No relations found</span>
-          }
+        <div className="Detail-header">Relations</div>
+        {conceptRelations.length ?
+          <ul>
+            {conceptRelations.map((relation) =>
+              <li key={relation.concept.id}>
+                {concept.type === 'tnl:Person'
+                  ? <PersonRelationTile relation={relation} />
+                  : <OrganizationRelationTile relation={relation} />
+                }
+              </li>
+            )}
+          </ul> : <span>No relations found</span>
+        }
 
-          {conceptNetwork ?
-            <div>
-              <div className="Detail-header">Network</div>
-              {conceptNetwork.length ?
-                <ul>
-                  {conceptNetwork.map((relation) =>
-                    <li key={relation.concept.id}>
-                      <NetworkRelationTile relation={relation} />
-                    </li>
-                  )}
-                </ul> : <span>No network found</span>
-              }
-            </div> : null
-          }
-        </ConceptDropTarget>
+        {conceptNetwork ?
+          <div>
+            <div className="Detail-header">Network</div>
+            {conceptNetwork.length ?
+              <ul>
+                {conceptNetwork.map((relation) =>
+                  <li key={relation.concept.id}>
+                    <NetworkRelationTile relation={relation} />
+                  </li>
+                )}
+              </ul> : <span>No network found</span>
+            }
+          </div> : null
+        }
       </div>
     );
   },
