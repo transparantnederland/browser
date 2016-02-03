@@ -31,6 +31,7 @@
 
 .ReactModal__Overlay--before-close {
   opacity: 0;
+  transition: opacity 100ms ease-out;
 }
 
 .ReactModal__Content--before-close {
