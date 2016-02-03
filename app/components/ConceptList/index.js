@@ -10,7 +10,7 @@ const ConceptList = ({ concepts, concept, dispatch }) =>
   <ul className="List">
     {concepts.map((item) =>
       <li
-        className={['List-item', item.id === concept.id ? 'List-item--active' : ''].join(' ')}
+        className={['List-item', item.id === concept && concept.id ? 'List-item--active' : ''].join(' ')}
         key={item.id}
       >
         <HashLink hash={item.id}>
@@ -26,7 +26,7 @@ const ConceptList = ({ concepts, concept, dispatch }) =>
 
 ConceptList.propTypes = {
   concepts: PropTypes.array.isRequired,
-  concept: PropTypes.object.isRequired,
+  concept: PropTypes.object,
   dispatch: PropTypes.func.isRequired,
 };
 
