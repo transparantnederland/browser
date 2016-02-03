@@ -27,6 +27,8 @@ const FlagModalContainer = React.createClass({
       if (err) {
         window.alert('Something went wrong');
       } else {
+        // FIXME this works, but is a hacky way to show new flags on concept
+        this.props.dispatch(admin.actions.flags({ concept: this.props.flag.concept.id }));
         this.handleClose();
       }
     }));
