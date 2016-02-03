@@ -16,6 +16,10 @@
   background-color: rgba(255, 255, 255, 0.84);
 }
 
+.ConceptDropTarget-overlay--disabled {
+  background-color: rgba(200, 0, 0, 0.54);
+}
+
 .ConceptDropTarget-message {
   font-size: 16px;
   background-color: #264653;
