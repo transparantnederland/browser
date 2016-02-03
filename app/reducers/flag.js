@@ -6,31 +6,25 @@ const initialState = {
   value: null,
 };
 
-const defaultValues = {
-  'duplicate': {
-    type: 'tnl:same',
-  },
-  'missing-relation': {},
-  'wrong-type': '',
-};
-
 function relations(state = null, action) {
   switch (action.type) {
-    case actions.INIT_FLAG:
+    case actions.ADD_RELATION:
       return Object.assign({}, initialState, {
-        concept: action.payload.concept,
+        concept: action.payload.source,
+        type: 'missing-relation',
+        value: {
+          concept: action.payload.target,
+          type: 'tnl:same',
+        },
+      });
+    case actions.UPDATE_RELATION_TYPE:
+      return Object.assign({}, state, {
+        value: Object.assign({}, state.value, {
+          type: action.payload.type,
+        }),
       });
     case actions.RESET_FLAG:
       return null;
-    case actions.EDIT_FLAG_TYPE:
-      return Object.assign({}, initialState, state, {
-        type: action.payload.type,
-        value: defaultValues[action.payload.type],
-      });
-    case actions.EDIT_FLAG_VALUE:
-      return Object.assign({}, initialState, state, {
-        value: action.payload.value,
-      });
     default:
       return state;
   }

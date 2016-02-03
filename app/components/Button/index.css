@@ -1,17 +1,23 @@
 .Button {
   font-family: inherit;
-  font-size: 14px;
+  font-size: 16px;
   background: none;
   cursor: pointer;
   padding: 5px 10px;
   display: inline-block;
-  text-transform: uppercase;
+  font-weight: 500;
   outline: none;
   position: relative;
-  border: 2px solid #ccc;
-  color: #999;
+  border: 1px solid rgba(0, 0, 0, 0.14);
+  color: #666;
   overflow: hidden;
-  border-radius: 50px;
+  border-radius: 3px;
+  background-color: #fafafa;
+}
+
+.Button-primary {
+  background-color: #2A9D8F;
+  color: #fff;
 }
 
 .Button-link {

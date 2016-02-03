@@ -102,24 +102,28 @@ app.get('/flags/pits.ndjson', auth.connect(basic), function (req, res) {
 
 app.post('/flags', auth.connect(basic), function (req, res) {
   var data = req.body;
+  var origin = data.concept;
+  var type = data.type;
+  var value = type === 'wrong-type' ? data.value : data.value.type;
+  var target = type === 'wrong-type' ? data.concept : data.value.concept;
 
   Concept
     .findOrCreate({
-      where: { id: data.origin.id },
-      defaults: data.origin,
+      where: { id: origin.id },
+      defaults: origin,
     })
     .then(function () {
       return Concept.findOrCreate({
-        where: { id: data.target.id },
-        defaults: data.target,
+        where: { id: target.id },
+        defaults: target,
       });
     })
     .then(function () {
       return Flag.create({
-        type: data.type,
-        value: data.value,
-        originId: data.origin.id,
-        targetId: data.target.id,
+        type: type,
+        value: value,
+        originId: origin.id,
+        targetId: target.id,
       });
     })
     .then(function (flag) {

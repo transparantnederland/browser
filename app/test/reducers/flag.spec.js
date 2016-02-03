@@ -9,18 +9,22 @@ describe('flag reducer', () => {
     ).toEqual(null);
   });
 
-  it('should handle INIT_FLAG', () => {
+  it('should handle ADD_RELATION', () => {
     expect(
       flag(undefined, {
-        type: types.INIT_FLAG,
+        type: types.ADD_RELATION,
         payload: {
-          concept: {},
+          source: {},
+          target: {},
         },
       })
     ).toEqual({
       concept: {},
-      type: null,
-      value: null,
+      type: 'missing-relation',
+      value: {
+        concept: {},
+        type: 'tnl:same',
+      },
     });
   });
 
@@ -35,50 +39,5 @@ describe('flag reducer', () => {
         payload: null,
       })
     ).toEqual(null);
-  });
-
-  it('should handle EDIT_FLAG_TYPE', () => {
-    expect(
-      flag(undefined, {
-        type: types.EDIT_FLAG_TYPE,
-        payload: {
-          type: 'missing-relation',
-        },
-      })
-    ).toEqual({
-      concept: null,
-      type: 'missing-relation',
-      value: {},
-    });
-
-    expect(
-      flag(undefined, {
-        type: types.EDIT_FLAG_TYPE,
-        payload: {
-          type: 'duplicate',
-        },
-      })
-    ).toEqual({
-      concept: null,
-      type: 'duplicate',
-      value: {
-        type: 'tnl:same',
-      },
-    });
-  });
-
-  it('should handle EDIT_FLAG_VALUE', () => {
-    expect(
-      flag(undefined, {
-        type: types.EDIT_FLAG_VALUE,
-        payload: {
-          value: {},
-        },
-      })
-    ).toEqual({
-      concept: null,
-      type: null,
-      value: {},
-    });
   });
 });

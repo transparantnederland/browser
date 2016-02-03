@@ -3,13 +3,16 @@ import React, { PropTypes } from 'react';
 
 import HashLink from './../HashLink';
 import ConceptTile from './../ConceptTile';
+import ConceptDragSource from '../ConceptDragSource';
 
-const ConceptList = ({ concepts }) =>
+const ConceptList = ({ concepts, dispatch }) =>
   <ul className="List">
     {concepts.map((concept) =>
       <li className="List-item" key={concept.id}>
         <HashLink hash={concept.id}>
-          <ConceptTile concept={concept}/>
+          <ConceptDragSource concept={concept} dispatch={dispatch}>
+            <ConceptTile concept={concept}/>
+          </ConceptDragSource>
         </HashLink>
       </li>
     )}
@@ -17,6 +20,7 @@ const ConceptList = ({ concepts }) =>
 
 ConceptList.propTypes = {
   concepts: PropTypes.array.isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
 
 export default ConceptList;

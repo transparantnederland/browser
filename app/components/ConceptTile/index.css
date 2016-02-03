@@ -1,5 +1,7 @@
 .ConceptTile {
+  padding: 1em;
   color: #333;
+  background-color: #fff;
 }
 
 .ConceptTile-heading {

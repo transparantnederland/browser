@@ -49,13 +49,13 @@ const ResultPanel = React.createClass({
   },
 
   render() {
-    const { concepts } = this.props;
+    const { concepts, dispatch } = this.props;
     const { q } = this.state;
 
     return (
       <StickyHeaderLayout>
         <Search onChange={this.onSearchChange} value={q} />
-        <Results concepts={concepts} query={q} />
+        <Results concepts={concepts} query={q} dispatch={dispatch} />
       </StickyHeaderLayout>
     );
   },
