@@ -10,7 +10,7 @@ const ConceptList = ({ concepts, concept, dispatch }) =>
   <ul className="List">
     {concepts.map((item) =>
       <li
-        className={['List-item', item.id === concept && concept.id ? 'List-item--active' : ''].join(' ')}
+        className={['List-item', item.id === (concept && concept.id) ? 'List-item--active' : ''].join(' ')}
         key={item.id}
       >
         <HashLink hash={item.id}>
