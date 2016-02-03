@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import api from '../utils/api';
 import admin from '../utils/admin';
 
-import ConceptDropTarget from '../components/ConceptDropTarget';
 import Detail from '../components/Detail';
 
 function loadData(props) {
@@ -48,15 +47,13 @@ const DetailPanel = React.createClass({
 
     return (
       <div style={{ display: 'flex', flex: 1 }}>
-        <ConceptDropTarget concept={concept}>
-          <Detail
-            concept={concept}
-            conceptRelations={conceptRelations}
-            conceptNetwork={conceptNetwork}
-            flags={flags}
-            dispatch={dispatch}
-          />
-      </ConceptDropTarget>
+        <Detail
+          concept={concept}
+          conceptRelations={conceptRelations}
+          conceptNetwork={conceptNetwork}
+          flags={flags}
+          dispatch={dispatch}
+        />
       </div>
     );
   },
