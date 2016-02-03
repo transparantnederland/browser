@@ -1,9 +1,13 @@
 import './index.css';
 import React, { PropTypes } from 'react';
 
+import Padding from '../Padding';
+
 const ModalBody = ({ children }) =>
   <div className="ModalBody">
-    {children}
+    <Padding>
+      {children}
+    </Padding>
   </div>;
 
 ModalBody.propTypes = {

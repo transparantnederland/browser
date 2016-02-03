@@ -1,5 +1,7 @@
 .ModalHeading {
-  padding: 0.5em 1em;
+  font-size: 18px;
+  line-height: 1em;
   font-weight: bold;
+  color: #666;
   background-color: #f5edf0;
 }

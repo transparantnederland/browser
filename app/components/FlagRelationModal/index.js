@@ -6,14 +6,19 @@ import ModalFooter from '../ModalFooter';
 import ConceptTile from '../ConceptTile';
 import Select from '../Select';
 import Button from '../Button';
+import Padding from '../Padding';
 
 const FlagRelationModal = ({ flag, relationTypes, onChange, onCancel, onSubmit }) =>
   <div>
     <ModalHeading>Create a relation?</ModalHeading>
     <ModalBody>
-      <ConceptTile concept={flag.concept} />
+      <Padding vertical>
+        <ConceptTile concept={flag.concept} />
+      </Padding>
       <Select options={relationTypes} value={flag.value.type} onChange={onChange} />
-      <ConceptTile concept={flag.value.concept} />
+      <Padding vertical>
+        <ConceptTile concept={flag.value.concept} />
+      </Padding>
     </ModalBody>
     <ModalFooter>
       <Button onClick={onCancel}>Cancel</Button>

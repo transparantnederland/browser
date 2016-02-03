@@ -4,6 +4,7 @@ import React, { PropTypes } from 'react';
 import HashLink from './../HashLink';
 import ConceptTile from './../ConceptTile';
 import ConceptDragSource from '../ConceptDragSource';
+import Padding from '../Padding';
 
 const ConceptList = ({ concepts, dispatch }) =>
   <ul className="List">
@@ -11,7 +12,9 @@ const ConceptList = ({ concepts, dispatch }) =>
       <li className="List-item" key={concept.id}>
         <HashLink hash={concept.id}>
           <ConceptDragSource concept={concept} dispatch={dispatch}>
-            <ConceptTile concept={concept}/>
+            <Padding>
+              <ConceptTile concept={concept}/>
+            </Padding>
           </ConceptDragSource>
         </HashLink>
       </li>
