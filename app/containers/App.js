@@ -1,7 +1,7 @@
 import React from 'react';
 
 import NavContainer from './NavContainer';
-import FlagModal from './FlagModal';
+import FlagModalContainer from './FlagModalContainer';
 
 import './app.css';
 
@@ -11,7 +11,7 @@ const App = React.createClass({
       <div className="App">
         <NavContainer />
         {this.props.children}
-        <FlagModal />
+        <FlagModalContainer />
       </div>
     );
   },
