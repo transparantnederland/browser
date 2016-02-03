@@ -1,37 +1,39 @@
-.FlagModal-header {
-  padding: 8px 16px;
-  background-color: #264653;
-  color: white;
-  border-radius: 4px 4px 0 0;
+.ReactModal__Overlay {
+  opacity: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background-color: rgba(38, 70, 83, 0.54) !important;
 }
 
-.FlagModal-content {
-  padding: 16px;
-  background-color: white;
+.ReactModal__Overlay--after-open {
+  opacity: 1;
+  transition: opacity 100ms ease-out;
 }
 
-.FlagModal-content label {
-  display: block;
-  margin-bottom: 8px;
+.ReactModal__Content {
+  transform: translate3d(0, -100%, 0);
+  overflow: hidden;
+  position: relative;
+  padding: 0 !important;
+  border: 0 !important;
+  bottom: auto !important;
+  margin-left: auto;
+  margin-right: auto;
+  width: 420px;
+  background-color: #fff;
+  border-radius: 3px;
 }
 
-.FlagModal-content label:last-child {
-  margin-bottom: 0;
+.ReactModal__Content--after-open {
+  transform: translate3d(0, 0, 0);
+  transition: transform 100ms ease-in;
 }
 
-.FlagModal-content select,
-.FlagModal-content input[type=text] {
-  width: 100%;
-  box-sizing: border-box;
-  border: 1px solid #ccc;
-  padding: 5px 10px;
-  border-radius: 0;
-  margin: 0;
+.ReactModal__Overlay--before-close {
+  opacity: 0;
+  transition: opacity 100ms ease-out;
 }
 
-.FlagModal-footer {
-  padding: 8px 16px;
-  background-color: #f5edf0;
-  text-align: right;
-  border-radius: 0 0 4px 4px;
+.ReactModal__Content--before-close {
+  transform: translate3d(0, -100%, 0);
 }

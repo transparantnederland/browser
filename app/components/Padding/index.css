@@ -1,0 +1,11 @@
+.Padding {
+  padding: 1em;
+}
+
+.Padding__horizontal {
+  padding: 0 1em;
+}
+
+.Padding__vertical {
+  padding: 1em 0;
+}

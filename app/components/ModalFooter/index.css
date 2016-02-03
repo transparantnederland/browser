@@ -1,0 +1,9 @@
+.ModalFooter {
+  background-color: #fff;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.ModalFooter .Button + .Button {
+  margin-left: 5px;
+}

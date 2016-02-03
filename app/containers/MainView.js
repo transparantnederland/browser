@@ -1,4 +1,6 @@
 import React from 'react';
+import { DragDropContext } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 
 import TwoColumnLayout from '../layouts/TwoColumnLayout';
 import ResultPanel from './ResultPanel';
@@ -20,4 +22,4 @@ const MainView = React.createClass({
   },
 });
 
-export default MainView;
+export default DragDropContext(HTML5Backend)(MainView);

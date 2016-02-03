@@ -13,6 +13,7 @@ Button.propTypes = {
   children: PropTypes.node.isRequired,
   onClick: PropTypes.func.isRequired,
   type: PropTypes.string,
+  primary: PropTypes.bool,
 };
 
 export default Button;

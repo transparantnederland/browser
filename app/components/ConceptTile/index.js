@@ -1,9 +1,9 @@
 import './index.css';
 import React, { PropTypes } from 'react';
 
-import Name from './../Name';
-import Type from './../Type';
-import Dataset from './../Dataset';
+import Name from '../Name';
+import Type from '../Type';
+import Dataset from '../Dataset';
 
 const ConceptTile = ({ concept }) =>
   <div className="ConceptTile">
