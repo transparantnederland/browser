@@ -53,7 +53,7 @@ export default connect(
     const { flag } = state;
 
     return {
-      flag,
+      flag: flag || {},
       isOpen: !!flag,
       relationTypes: state.data.relationTypes.data,
     };

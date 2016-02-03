@@ -25,7 +25,6 @@ FlagModal.propTypes = {
   flag: PropTypes.object.isRequired,
   relationTypes: PropTypes.array.isRequired,
   isOpen: PropTypes.bool.isRequired,
-  error: PropTypes.bool.isRequired,
   onCancel: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
