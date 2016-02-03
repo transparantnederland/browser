@@ -8,6 +8,7 @@
   border-bottom: 1px solid #f5edf0;
 }
 
-.List-item:hover {
+.List-item:hover,
+.List-item--active {
   background-color: #f5edf0;
 }

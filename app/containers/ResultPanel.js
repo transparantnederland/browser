@@ -49,13 +49,13 @@ const ResultPanel = React.createClass({
   },
 
   render() {
-    const { concepts, dispatch } = this.props;
+    const { concepts, concept, dispatch } = this.props;
     const { q } = this.state;
 
     return (
       <StickyHeaderLayout>
         <Search onChange={this.onSearchChange} value={q} />
-        <Results concepts={concepts} query={q} dispatch={dispatch} />
+        <Results concepts={concepts} concept={concept} query={q} dispatch={dispatch} />
       </StickyHeaderLayout>
     );
   },
@@ -66,7 +66,7 @@ export default connect(
   (state) => {
     const {
       router: { params: { type, dataset }, location },
-      data: { concepts },
+      data: { concepts, concept },
     } = state;
 
     const query = _.omit({ type, dataset }, _.isUndefined);
@@ -75,6 +75,7 @@ export default connect(
     return {
       q,
       query,
+      concept: concept.data,
       concepts: concepts.data,
     };
   }

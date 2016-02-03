@@ -6,14 +6,17 @@ import ConceptTile from './../ConceptTile';
 import ConceptDragSource from '../ConceptDragSource';
 import Padding from '../Padding';
 
-const ConceptList = ({ concepts, dispatch }) =>
+const ConceptList = ({ concepts, concept, dispatch }) =>
   <ul className="List">
-    {concepts.map((concept) =>
-      <li className="List-item" key={concept.id}>
-        <HashLink hash={concept.id}>
-          <ConceptDragSource concept={concept} dispatch={dispatch}>
+    {concepts.map((item) =>
+      <li
+        className={['List-item', item.id === concept.id ? 'List-item--active' : ''].join(' ')}
+        key={item.id}
+      >
+        <HashLink hash={item.id}>
+          <ConceptDragSource concept={item} dispatch={dispatch}>
             <Padding>
-              <ConceptTile concept={concept}/>
+              <ConceptTile concept={item} />
             </Padding>
           </ConceptDragSource>
         </HashLink>
@@ -23,6 +26,7 @@ const ConceptList = ({ concepts, dispatch }) =>
 
 ConceptList.propTypes = {
   concepts: PropTypes.array.isRequired,
+  concept: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired,
 };
 

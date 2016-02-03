@@ -4,13 +4,13 @@ import React, { PropTypes } from 'react';
 import ConceptList from '../ConceptList';
 import Message from '../Message';
 
-const Results = ({ concepts, dispatch, query }) => {
+const Results = ({ concepts, concept, dispatch, query }) => {
   const hasResults = concepts.length;
 
   return (
     <div className="Results">
       {hasResults ?
-        <ConceptList concepts={concepts} dispatch={dispatch} /> :
+        <ConceptList concepts={concepts} concept={concept} dispatch={dispatch} /> :
         <Message>
           {query === '' ?
             <span>Try searching for a politician, political party, or organization. For example: “hermans”, “pvda”, or “shell”.</span> :
