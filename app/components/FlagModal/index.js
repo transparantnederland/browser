@@ -4,7 +4,7 @@ import Modal from 'react-modal';
 
 import FlagRelationModal from '../FlagRelationModal';
 
-const FlagModal = ({ flag, isOpen, relationTypes, onCancel, onChange, onSubmit }) =>
+const FlagModal = ({ flag, isOpen, relationTypes, onCancel, onChange, onToggle, onSubmit }) =>
   <Modal
     isOpen={isOpen}
     closeTimeoutMS={150}
@@ -16,6 +16,7 @@ const FlagModal = ({ flag, isOpen, relationTypes, onCancel, onChange, onSubmit }
         relationTypes={relationTypes}
         onCancel={onCancel}
         onChange={onChange}
+        onToggle={onToggle}
         onSubmit={onSubmit}
       /> : null
     }
@@ -27,6 +28,7 @@ FlagModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onCancel: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
+  onToggle: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
 };
 

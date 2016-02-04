@@ -4,7 +4,7 @@ import FlagModal from '../components/FlagModal';
 
 import api from '../utils/api';
 import admin from '../utils/admin';
-import { updateRelationType, resetFlag } from '../actions/flag';
+import { updateRelationType, toggleRelationFromTo, resetFlag } from '../actions/flag';
 
 const FlagModalContainer = React.createClass({
   componentWillMount() {
@@ -18,6 +18,10 @@ const FlagModalContainer = React.createClass({
   handleChange(event) {
     const value = event.target.value;
     this.props.dispatch(updateRelationType(value));
+  },
+
+  handleToggle() {
+    this.props.dispatch(toggleRelationFromTo());
   },
 
   handleSubmit() {
@@ -44,6 +48,7 @@ const FlagModalContainer = React.createClass({
         isOpen={isOpen}
         onCancel={this.handleClose}
         onChange={this.handleChange}
+        onToggle={this.handleToggle}
         onSubmit={this.handleSubmit}
       />
     );

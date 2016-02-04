@@ -4,6 +4,7 @@
 
 export var ADD_FLAG = 'ADD_FLAG';
 export var UPDATE_FLAG = 'UPDATE_FLAG';
+export var TOGGLE_FLAG = 'TOGGLE_FLAG';
 export var RESET_FLAG = 'RESET_FLAG';
 
 const PERSON = 'tnl:Person';
@@ -29,6 +30,10 @@ export function addRelation(source, target) {
 
 export function updateRelationType(type) {
   return { type: UPDATE_FLAG, payload: { value: { type } } };
+}
+
+export function toggleRelationFromTo() {
+  return { type: TOGGLE_FLAG, payload: null };
 }
 
 export function resetFlag() {

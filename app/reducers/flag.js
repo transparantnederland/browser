@@ -8,6 +8,13 @@ function relations(state = null, action) {
       return Object.assign({}, state, {
         value: Object.assign({}, state.value, action.payload.value),
       });
+    case actions.TOGGLE_FLAG:
+      return Object.assign({}, state, {
+        concept: state.value.concept,
+        value: Object.assign({}, state.value, {
+          concept: state.concept,
+        }),
+      });
     case actions.RESET_FLAG:
       return null;
     default:
