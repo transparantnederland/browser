@@ -3,41 +3,74 @@ import flag from '../../reducers/flag';
 import * as types from '../../actions/flag';
 
 describe('flag reducer', () => {
-  it('should handle initial state', () => {
-    expect(
-      flag(undefined, {})
-    ).toEqual(null);
-  });
-
-  it('should handle ADD_RELATION', () => {
-    expect(
-      flag(undefined, {
-        type: types.ADD_RELATION,
-        payload: {
-          source: {},
-          target: {},
-        },
-      })
-    ).toEqual({
-      concept: {},
-      type: 'missing-relation',
-      value: {
-        concept: {},
-        type: 'tnl:same',
-      },
+  describe('INIT', () => {
+    it('should handle initial state', () => {
+      expect(
+        flag(undefined, {})
+      ).toEqual(null);
     });
   });
 
-  it('should handle RESET_FLAG', () => {
-    expect(
-      flag({
+  describe('ADD_FLAG', () => {
+    it('should handle ADD_FLAG', () => {
+      expect(
+        flag(undefined, {
+          type: types.ADD_FLAG,
+          payload: {
+            concept: {},
+            type: '',
+            value: {},
+          },
+        })
+      ).toEqual({
         concept: {},
-        type: 'duplicate',
+        type: '',
         value: {},
-      }, {
-        type: types.RESET_FLAG,
-        payload: null,
-      })
-    ).toEqual(null);
+      });
+    });
+  });
+
+  describe('UPDATE_FLAG', () => {
+    it('should handle UPDATE_FLAG value object update', () => {
+      expect(
+        flag({
+          concept: {},
+          type: '',
+          value: {
+            concept: {},
+            type: 'tnl:same',
+          },
+        }, {
+          type: types.UPDATE_FLAG,
+          payload: {
+            value: {
+              type: 'tnl:member',
+            },
+          },
+        })
+      ).toEqual({
+        concept: {},
+        type: '',
+        value: {
+          concept: {},
+          type: 'tnl:member',
+        },
+      });
+    });
+  });
+
+  describe('RESET_FLAG', () => {
+    it('should handle RESET_FLAG', () => {
+      expect(
+        flag({
+          concept: {},
+          type: 'duplicate',
+          value: {},
+        }, {
+          type: types.RESET_FLAG,
+          payload: null,
+        })
+      ).toEqual(null);
+    });
   });
 });

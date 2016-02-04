@@ -2,20 +2,33 @@
  * action types
  */
 
-export var ADD_RELATION = 'ADD_RELATION';
-export var UPDATE_RELATION_TYPE = 'UPDATE_RELATION_TYPE';
+export var ADD_FLAG = 'ADD_FLAG';
+export var UPDATE_FLAG = 'UPDATE_FLAG';
 export var RESET_FLAG = 'RESET_FLAG';
+
+const PERSON = 'tnl:Person';
 
 /*
  * action creators
  */
-
 export function addRelation(source, target) {
-  return { type: ADD_RELATION, payload: { source, target } };
+  const isSameType = (source.type === target.type) || (source.type !== PERSON && target.type !== PERSON);
+  const canMerge = isSameType || source.type === PERSON;
+  const concept = canMerge ? source : target;
+  const type = 'missing-relation';
+  const value = {
+    type: isSameType ? 'tnl:same' : 'tnl:member',
+    concept: canMerge ? target : source,
+  };
+
+  return {
+    type: ADD_FLAG,
+    payload: { concept, type, value },
+  };
 }
 
 export function updateRelationType(type) {
-  return { type: UPDATE_RELATION_TYPE, payload: { type } };
+  return { type: UPDATE_FLAG, payload: { value: { type } } };
 }
 
 export function resetFlag() {
