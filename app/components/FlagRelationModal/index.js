@@ -12,7 +12,7 @@ import FlexItem from '../FlexItem';
 
 
 const FlagRelationModal = ({ flag, relationTypes, onChange, onCancel, onToggle, onSubmit }) => {
-  const sameTypes = ['tnl:same', 'tnl:parent'];
+  const sameTypes = flag.concept.type === 'tnl:Person' ? ['tnl:same'] : ['tnl:same', 'tnl:parent'];
   const isSameType = (flag.concept.type === flag.value.concept.type) || (flag.concept.type !== 'tnl:Person' && flag.value.concept.type !== 'tnl:Person');
   const options = relationTypes.filter((type) => {
     return sameTypes.includes(type) === isSameType;
