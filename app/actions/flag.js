@@ -8,17 +8,21 @@ export var TOGGLE_FLAG = 'TOGGLE_FLAG';
 export var RESET_FLAG = 'RESET_FLAG';
 
 const PERSON = 'tnl:Person';
+const SECTOR = 'tnl:Sector';
 
 /*
  * action creators
  */
 export function addRelation(source, target) {
-  const isSameType = (source.type === target.type) || (source.type !== PERSON && target.type !== PERSON);
-  const canMerge = isSameType || source.type === PERSON;
+  const isSameType = (source.type === target.type) || ((source.type !== PERSON && target.type !== PERSON) && !(source.type === SECTOR || target.type === SECTOR));
+  const isSector = source.type === SECTOR || target.type === SECTOR;
+  const defaultRelation = isSector ? 'tnl:related' : 'tnl:member';
+  const defaultSameRelation = 'tnl:same';
+  const canMerge = isSameType || source.type === PERSON || target.type === SECTOR;
   const concept = canMerge ? source : target;
   const type = 'missing-relation';
   const value = {
-    type: isSameType ? 'tnl:same' : 'tnl:member',
+    type: isSameType ? defaultSameRelation : defaultRelation,
     concept: canMerge ? target : source,
   };
 

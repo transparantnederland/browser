@@ -3,6 +3,7 @@ import expect from 'expect';
 import person from '../fixtures/person.json';
 import organization from '../fixtures/organization.json';
 import publicOrganization from '../fixtures/organization-public.json';
+import sector from '../fixtures/sector.json';
 import * as actions from '../../actions/flag';
 
 describe('relations actions', () => {
@@ -72,6 +73,34 @@ describe('relations actions', () => {
           value: {
             concept: publicOrganization,
             type: 'tnl:same',
+          },
+        },
+      });
+    });
+
+    it('should create an organization to sector ADD_FLAG action', () => {
+      expect(actions.addRelation(organization, sector)).toEqual({
+        type: actions.ADD_FLAG,
+        payload: {
+          concept: organization,
+          type: 'missing-relation',
+          value: {
+            concept: sector,
+            type: 'tnl:related',
+          },
+        },
+      });
+    });
+
+    it('should create a sector to organization ADD_FLAG action', () => {
+      expect(actions.addRelation(sector, organization)).toEqual({
+        type: actions.ADD_FLAG,
+        payload: {
+          concept: organization,
+          type: 'missing-relation',
+          value: {
+            concept: sector,
+            type: 'tnl:related',
           },
         },
       });
