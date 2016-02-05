@@ -7,15 +7,23 @@ import ConceptTile from '../ConceptTile';
 import Select from '../Select';
 import Button from '../Button';
 import Padding from '../Padding';
+import Flex from '../Flex';
+import FlexItem from '../FlexItem';
 
-const FlagRelationModal = ({ flag, relationTypes, onChange, onCancel, onSubmit }) =>
+
+const FlagRelationModal = ({ flag, onChange, onCancel, onToggle, onSubmit }) =>
   <div>
     <ModalHeading>Create a relation?</ModalHeading>
     <ModalBody>
       <Padding vertical>
         <ConceptTile concept={flag.concept} />
       </Padding>
-      <Select options={relationTypes} value={flag.value.type} onChange={onChange} />
+      <Flex>
+        <FlexItem>
+          <Select options={flag.meta.relationOptions} value={flag.value.type} onChange={onChange} />
+        </FlexItem>
+        {flag.meta.canToggle ? <Button onClick={onToggle}>↑↓</Button> : null}
+      </Flex>
       <Padding vertical>
         <ConceptTile concept={flag.value.concept} />
       </Padding>
@@ -28,9 +36,9 @@ const FlagRelationModal = ({ flag, relationTypes, onChange, onCancel, onSubmit }
 
 FlagRelationModal.propTypes = {
   flag: PropTypes.object.isRequired,
-  relationTypes: PropTypes.array.isRequired,
   onChange: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
+  onToggle: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
 };
 

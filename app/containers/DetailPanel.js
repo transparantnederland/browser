@@ -23,10 +23,15 @@ const DetailPanel = React.createClass({
   },
 
   componentWillReceiveProps(nextProps) {
-    const { id, concept } = nextProps;
+    const { id, concept, flag } = nextProps;
 
     if (this.props.id !== id) {
       loadData(nextProps);
+    }
+
+    // Fetch flags again after flag state changed
+    if (this.props.flag !== null && flag === null) {
+      nextProps.dispatch(admin.actions.flags({ concept: this.props.id }));
     }
 
     if ((this.props.concept && this.props.concept.id) !== (concept && concept.id)) {
@@ -66,6 +71,7 @@ const DetailPanel = React.createClass({
 export default connect(
   (state) => {
     const {
+      flag,
       router: { location },
       data: { concept, orgsFromPerson, peopleFromOrg, peopleFromOrgsFromPerson, flags },
     } = state;
@@ -77,6 +83,7 @@ export default connect(
 
     return {
       id,
+      flag,
       flags: flags.data,
       concept: concept.data,
       conceptRelations: conceptRelations.data,

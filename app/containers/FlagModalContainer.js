@@ -4,7 +4,7 @@ import FlagModal from '../components/FlagModal';
 
 import api from '../utils/api';
 import admin from '../utils/admin';
-import { updateRelationType, resetFlag } from '../actions/flag';
+import { updateRelationType, toggleRelationFromTo, resetFlag } from '../actions/flag';
 
 const FlagModalContainer = React.createClass({
   componentWillMount() {
@@ -20,6 +20,10 @@ const FlagModalContainer = React.createClass({
     this.props.dispatch(updateRelationType(value));
   },
 
+  handleToggle() {
+    this.props.dispatch(toggleRelationFromTo());
+  },
+
   handleSubmit() {
     this.props.dispatch(admin.actions.flag({}, {
       body: JSON.stringify(this.props.flag),
@@ -27,23 +31,21 @@ const FlagModalContainer = React.createClass({
       if (err) {
         window.alert('Something went wrong');
       } else {
-        // FIXME this works, but is a hacky way to show new flags on concept
-        this.props.dispatch(admin.actions.flags({ concept: this.props.flag.value.concept.id }));
         this.handleClose();
       }
     }));
   },
 
   render() {
-    const { flag, relationTypes, isOpen } = this.props;
+    const { flag, isOpen } = this.props;
 
     return (
       <FlagModal
         flag={flag}
-        relationTypes={relationTypes}
         isOpen={isOpen}
         onCancel={this.handleClose}
         onChange={this.handleChange}
+        onToggle={this.handleToggle}
         onSubmit={this.handleSubmit}
       />
     );
@@ -57,7 +59,6 @@ export default connect(
     return {
       flag: flag || {},
       isOpen: !!flag,
-      relationTypes: state.data.relationTypes.data,
     };
   }
 )(FlagModalContainer);

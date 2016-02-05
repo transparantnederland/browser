@@ -20,6 +20,7 @@ const Nav = ({ datasets, types }) =>
           to="/"
           className="Nav-menuItemLink"
           activeClassName="Nav-menuItemLink--active"
+          hash={window.location.hash}
         >
           All
         </IndexLink>
@@ -32,6 +33,7 @@ const Nav = ({ datasets, types }) =>
             to={['/type', type].join('/')}
             className="Nav-menuItemLink"
             activeClassName="Nav-menuItemLink--active"
+            hash={window.location.hash}
           >
             <Type type={type}/>
           </Link>
@@ -45,6 +47,7 @@ const Nav = ({ datasets, types }) =>
             to={['/dataset', dataset.id].join('/')}
             className="Nav-menuItemLink"
             activeClassName="Nav-menuItemLink--active"
+            hash={window.location.hash}
           >
             {dataset.title}
             <div className="Nav-menuItemInfoButton">

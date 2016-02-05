@@ -1,26 +1,18 @@
 import * as actions from './../actions/flag';
 
-const initialState = {
-  concept: null,
-  type: null,
-  value: null,
-};
-
 function relations(state = null, action) {
   switch (action.type) {
-    case actions.ADD_RELATION:
-      return Object.assign({}, initialState, {
-        concept: action.payload.source,
-        type: 'missing-relation',
-        value: {
-          concept: action.payload.target,
-          type: 'tnl:same',
-        },
-      });
-    case actions.UPDATE_RELATION_TYPE:
+    case actions.ADD_FLAG:
+      return Object.assign({}, action.payload);
+    case actions.UPDATE_FLAG:
       return Object.assign({}, state, {
+        value: Object.assign({}, state.value, action.payload.value),
+      });
+    case actions.TOGGLE_FLAG:
+      return Object.assign({}, state, {
+        concept: state.value.concept,
         value: Object.assign({}, state.value, {
-          type: action.payload.type,
+          concept: state.concept,
         }),
       });
     case actions.RESET_FLAG:
