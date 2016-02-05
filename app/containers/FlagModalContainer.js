@@ -37,12 +37,11 @@ const FlagModalContainer = React.createClass({
   },
 
   render() {
-    const { flag, relationTypes, isOpen } = this.props;
+    const { flag, isOpen } = this.props;
 
     return (
       <FlagModal
         flag={flag}
-        relationTypes={relationTypes}
         isOpen={isOpen}
         onCancel={this.handleClose}
         onChange={this.handleChange}
@@ -60,7 +59,6 @@ export default connect(
     return {
       flag: flag || {},
       isOpen: !!flag,
-      relationTypes: state.data.relationTypes.data,
     };
   }
 )(FlagModalContainer);
