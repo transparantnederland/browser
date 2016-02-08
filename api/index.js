@@ -65,6 +65,21 @@ app.get('/flags', function (req, res) {
   });
 });
 
+app.delete('/flags', auth.connect(basic), function (req, res) {
+  var query = req.query;
+  var params = {};
+
+  if (query.id) {
+    params.id = query.id.split(',');
+  }
+
+  Flag.destroy({
+    where: params,
+  }).then(function () {
+    res.status(204).send();
+  });
+});
+
 app.get('/flags/relations.ndjson', auth.connect(basic), function (req, res) {
   Flag.findAll({
     where: {
