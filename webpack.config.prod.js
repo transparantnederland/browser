@@ -5,6 +5,7 @@ var config = require('config');
 module.exports = {
   devtool: 'source-map',
   entry: [
+    'babel-polyfill',
     'normalize-css',
     './app/index',
   ],
