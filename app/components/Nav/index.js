@@ -5,6 +5,8 @@ import { IndexLink, Link } from 'react-router';
 import InfoButton from '../InfoButton';
 import Logo from '../Logo';
 import Type from '../Type';
+import Flex from '../Flex';
+import FlexItem from '../FlexItem';
 
 const Nav = ({ datasets, types }) =>
   <div className="Nav">
@@ -49,10 +51,14 @@ const Nav = ({ datasets, types }) =>
             activeClassName="Nav-menuItemLink--active"
             hash={window.location.hash}
           >
-            {dataset.title}
-            <div className="Nav-menuItemInfoButton">
-              <InfoButton info={dataset.description} />
-            </div>
+            <Flex>
+              <FlexItem>
+                {dataset.title}
+              </FlexItem>
+              <div className="Nav-menuItemInfoButton">
+                <InfoButton info={dataset.description} />
+              </div>
+            </Flex>
           </Link>
         </li>
       )}
