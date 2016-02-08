@@ -1,6 +1,8 @@
 import './index.css';
 import React, { PropTypes } from 'react';
 
+import { addConceptFlag } from '../../actions/flag';
+
 import Name from '../Name';
 import Type from '../Type';
 import Dataset from '../Dataset';
@@ -34,8 +36,15 @@ const Detail = React.createClass({
           <Name name={concept.name}/>
         </div>
         <div className="Detail-subheading">
-          <Type type={concept.type}/>
-          <Dataset dataset={concept.datasets}/>
+          <div>
+            <Type type={concept.type}/>
+            &nbsp;
+            &nbsp;
+            <Button onClick={this.handleEditTypeClick} type="link">✎ Edit type</Button>
+          </div>
+          <div>
+            <Dataset dataset={concept.datasets}/>
+          </div>
           <Button
             onClick={this.handlePitsToggle}
             type="link"
@@ -91,6 +100,9 @@ const Detail = React.createClass({
         }
       </div>
     );
+  },
+  handleEditTypeClick() {
+    this.props.dispatch(addConceptFlag(this.props.concept));
   },
   handlePitsToggle() {
     this.setState({

@@ -25,6 +25,17 @@ const defaultState = {
         'tnl:lobbyist',
       ],
     },
+    types: {
+      data: [
+        'tnl:Person',
+        'tnl:Organization',
+        'tnl:Commercial',
+        'tnl:Public',
+        'tnl:NonProfit',
+        'tnl:PoliticalParty',
+        'tnl:Sector',
+      ],
+    },
   },
 };
 
@@ -220,9 +231,41 @@ describe('relations actions', () => {
     });
   });
 
-  describe('updateRelationType', () => {
+  describe('addConceptFlag', () => {
+    it('should create a wrong-type ADD_FLAG action', (done) => {
+      const getState = defaultState;
+      const action = {
+        type: actions.ADD_FLAG,
+        payload: {
+          concept: organization,
+          type: 'wrong-type',
+          value: {
+            concept: organization,
+            type: 'tnl:Organization',
+          },
+          meta: {
+            typeOptions: [
+              'tnl:Person',
+              'tnl:Organization',
+              'tnl:Commercial',
+              'tnl:Public',
+              'tnl:NonProfit',
+              'tnl:PoliticalParty',
+              'tnl:Sector',
+            ],
+          },
+        },
+      };
+      const expectedActions = [action];
+
+      const store = mockStore(getState, expectedActions, done);
+      store.dispatch(actions.addConceptFlag(organization));
+    });
+  });
+
+  describe('updateValue', () => {
     it('should create an UPDATE_FLAG action', () => {
-      expect(actions.updateRelationType('tnl:member')).toEqual({
+      expect(actions.updateValue('tnl:member')).toEqual({
         type: actions.UPDATE_FLAG,
         payload: {
           value: {

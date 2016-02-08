@@ -119,8 +119,8 @@ app.post('/flags', auth.connect(basic), function (req, res) {
   var data = req.body;
   var origin = data.concept;
   var type = data.type;
-  var value = type === 'wrong-type' ? data.value : data.value.type;
-  var target = type === 'wrong-type' ? data.concept : data.value.concept;
+  var value = data.value.type;
+  var target = data.value.concept;
 
   Concept
     .findOrCreate({

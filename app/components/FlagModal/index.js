@@ -3,6 +3,7 @@ import React, { PropTypes } from 'react';
 import Modal from 'react-modal';
 
 import FlagRelationModal from '../FlagRelationModal';
+import FlagConceptModal from '../FlagConceptModal';
 
 const FlagModal = ({ flag, isOpen, onCancel, onChange, onToggle, onSubmit }) =>
   <Modal
@@ -16,6 +17,14 @@ const FlagModal = ({ flag, isOpen, onCancel, onChange, onToggle, onSubmit }) =>
         onCancel={onCancel}
         onChange={onChange}
         onToggle={onToggle}
+        onSubmit={onSubmit}
+      /> : null
+    }
+    {flag && flag.type === 'wrong-type' ?
+      <FlagConceptModal
+        flag={flag}
+        onCancel={onCancel}
+        onChange={onChange}
         onSubmit={onSubmit}
       /> : null
     }

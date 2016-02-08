@@ -57,12 +57,33 @@ export function addRelation(source, target) {
   };
 }
 
-export function updateRelationType(type) {
-  return { type: UPDATE_FLAG, payload: { value: { type } } };
+export function updateValue(value) {
+  return { type: UPDATE_FLAG, payload: { value: { type: value } } };
 }
 
 export function toggleRelationFromTo() {
   return { type: TOGGLE_FLAG, payload: null };
+}
+
+export function addConceptFlag(source) {
+  return (dispatch, getState) => {
+    const { data } = getState();
+    const types = data.types && data.types.data;
+
+    const flag = {
+      concept: source,
+      type: 'wrong-type',
+      value: {
+        concept: source,
+        type: source.type,
+      },
+      meta: {
+        typeOptions: types,
+      },
+    };
+
+    return dispatch(addFlag(flag));
+  };
 }
 
 export function resetFlag() {
