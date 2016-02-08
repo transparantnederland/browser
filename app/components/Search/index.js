@@ -19,6 +19,10 @@ const Search = React.createClass({
           className="Search-input"
           onChange={(event) => onChange(event.target.value)}
           value={value}
+          autoComplete="off"
+          autoCorrect="off"
+          autoCapitalize="off"
+          spellCheck="false"
           autoFocus
         />
       </div>
