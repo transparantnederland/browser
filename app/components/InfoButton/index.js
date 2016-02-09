@@ -2,14 +2,14 @@ import './index.css';
 import React, { PropTypes } from 'react';
 import Tooltip from 'rc-tooltip';
 
-const InfoButton = ({ info }) =>
+const InfoButton = ({ children }) =>
   <div className="InfoButton">
     <Tooltip
       placement="right"
       trigger="click"
       animation="zoom"
       overlayClassName="InfoButton-bubble"
-      overlay={<span>{info}</span>}
+      overlay={children}
       destroyTooltipOnHide
     >
       <span className="InfoButton-info">?</span>
@@ -17,7 +17,7 @@ const InfoButton = ({ info }) =>
   </div>;
 
 InfoButton.propTypes = {
-  info: PropTypes.string.isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 export default InfoButton;

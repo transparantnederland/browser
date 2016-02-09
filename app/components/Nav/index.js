@@ -56,7 +56,12 @@ const Nav = ({ datasets, types }) =>
                 {dataset.title}
               </FlexItem>
               <div className="Nav-menuItemInfoButton">
-                <InfoButton info={dataset.description} />
+                <InfoButton>
+                  <p>{dataset.description}</p>
+                  Author: <a href={dataset.website} target="_blank">
+                    {dataset.author}
+                  </a>
+                </InfoButton>
               </div>
             </Flex>
           </Link>
