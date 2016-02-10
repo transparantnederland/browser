@@ -7,6 +7,7 @@
   "dependencies": {
     "body-parser": "1.14.2",
     "express": "4.13.3",
+    "histograph-config": "histograph/config#v0.5.1",
     "history": "1.17.0",
     "http-auth": "2.2.8",
     "js-yaml": "3.5.2",
@@ -29,6 +30,7 @@
     "redux-mock-store": "0.0.6",
     "redux-router": "1.0.0-beta5",
     "redux-thunk": "1.0.2",
+    "request": "2.69.0",
     "sequelize": "3.17.1",
     "sqlite3": "3.1.1",
     "whatwg-fetch": "0.10.1"

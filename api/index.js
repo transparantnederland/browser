@@ -3,6 +3,8 @@ var express = require('express');
 var Sequelize = require('sequelize');
 var bodyParser = require('body-parser');
 var auth = require('http-auth');
+var config = require('histograph-config');
+var request = require('request');
 
 var app = express();
 app.use(bodyParser.json());
@@ -20,6 +22,8 @@ var sequelize = new Sequelize('sqlite://database', {
 var Flag = sequelize.define('flag', {
   type: { type: Sequelize.STRING, allowNull: false },
   value: { type: Sequelize.STRING, allowNull: false },
+  synced: { type: Sequelize.BOOLEAN, defaultValue: false },
+  author: { type: Sequelize.STRING, allowNull: false },
 });
 
 var Concept = sequelize.define('concept', {
@@ -121,6 +125,7 @@ app.post('/flags', auth.connect(basic), function (req, res) {
   var type = data.type;
   var value = data.value.type;
   var target = data.value.concept;
+  var author = req.user;
 
   Concept
     .findOrCreate({
@@ -139,11 +144,45 @@ app.post('/flags', auth.connect(basic), function (req, res) {
         value: value,
         originId: origin.id,
         targetId: target.id,
+        author: author,
       });
     })
     .then(function (flag) {
       return res.status(201).json(flag);
     });
+});
+
+app.put('/flags/:id/sync', auth.connect(basic), function (req, res) {
+  Flag.find({
+    where: {
+      id: req.params.id,
+    },
+  }).then(function (row) {
+    if (row) {
+      var url = config.api.baseUrl + '/' + path.join('datasets', 'corrections', 'relations');
+      request(url, {
+        method: 'PUT',
+        auth: {
+          user: config.api.admin.name,
+          pass: config.api.admin.password,
+        },
+        json: {
+          from: row.originId,
+          type: row.value,
+          to: row.targetId,
+        },
+      }, function (error, response, body) {
+        if (error) {
+          return res.status(500).send(error);
+        }
+        return res.send(body);
+      });
+    } else {
+      res.status(404).send('Not found');
+    }
+  }).catch(function () {
+    res.status(500).send('Error');
+  });
 });
 
 module.exports = app;
