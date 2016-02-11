@@ -22,10 +22,7 @@ var sequelize = new Sequelize('sqlite://database', {
 var Flag = sequelize.define('flag', {
   type: { type: Sequelize.STRING, allowNull: false },
   value: { type: Sequelize.STRING, allowNull: false },
-<<<<<<< 368e4a68f473259f0b59c9164ff7815868641cdc
-=======
   synced: { type: Sequelize.BOOLEAN, defaultValue: false },
->>>>>>> Add option to sync flags with api
   author: { type: Sequelize.STRING, allowNull: false },
 });
 
@@ -54,7 +51,9 @@ sequelize.sync({ force: false }).then(function () {});
 
 app.get('/flags', function (req, res) {
   var query = req.query;
-  var params = {};
+  var params = {
+    synced: false,
+  };
 
   if (query.concept) {
     params.$or = [
@@ -128,11 +127,7 @@ app.post('/flags', auth.connect(basic), function (req, res) {
   var type = data.type;
   var value = data.value.type;
   var target = data.value.concept;
-<<<<<<< 368e4a68f473259f0b59c9164ff7815868641cdc
   var user = req.user;
-=======
-  var author = req.user;
->>>>>>> Add option to sync flags with api
 
   Concept
     .findOrCreate({
@@ -160,7 +155,7 @@ app.post('/flags', auth.connect(basic), function (req, res) {
     });
 });
 
-app.put('/flags/:id/sync', auth.connect(basic), function (req, res) {
+app.put('/flags/:id/approve', auth.connect(basic), function (req, res) {
   Flag.find({
     where: {
       id: req.params.id,
@@ -183,7 +178,13 @@ app.put('/flags/:id/sync', auth.connect(basic), function (req, res) {
         if (error) {
           return res.status(500).send(error);
         }
-        return res.send(body);
+        row.update({
+          synced: true,
+        }).then(function () {
+          res.send(body);
+        }).catch(function (err) {
+          res.status(500).send(err);
+        });
       });
     } else {
       res.status(404).send('Not found');

@@ -4,9 +4,6 @@ import adapterFetch from 'redux-api/lib/adapters/fetch';
 const admin = reduxApi({
   flag: {
     url: '/api/flags',
-    // validation: (data, callback) => {
-    //   debugger;
-    // },
     options: {
       method: 'POST',
       credentials: 'same-origin',
@@ -15,6 +12,23 @@ const admin = reduxApi({
         'Content-Type': 'application/json',
       },
     },
+    postfetch: [
+      function ({ actions, dispatch }) {
+        dispatch(actions.flags.sync());
+      },
+    ],
+  },
+  approveFlag: {
+    url: '/api/flags/:id/approve',
+    options: {
+      method: 'PUT',
+      credentials: 'same-origin',
+    },
+    postfetch: [
+      function ({ actions, dispatch }) {
+        dispatch(actions.flags.sync());
+      },
+    ],
   },
   flags: {
     url: '/api/flags',

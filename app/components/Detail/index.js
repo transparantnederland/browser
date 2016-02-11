@@ -27,7 +27,7 @@ const Detail = React.createClass({
   },
 
   render() {
-    const { concept, conceptRelations, conceptNetwork, flags } = this.props;
+    const { concept, conceptRelations, conceptNetwork, flags, dispatch } = this.props;
     const { showPits } = this.state;
 
     return (
@@ -66,7 +66,7 @@ const Detail = React.createClass({
         {flags.length ?
           <div>
             <div className="Detail-header">Flags</div>
-            <FlagList flags={flags} />
+            <FlagList flags={flags} dispatch={dispatch} />
           </div> : null
         }
 
