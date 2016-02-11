@@ -159,20 +159,31 @@ app.put('/flags/:id/approve', auth.connect(basic), function (req, res) {
     where: {
       id: req.params.id,
     },
+    include: [Origin, Target],
   }).then(function (row) {
     if (row) {
-      var url = config.api.baseUrl + '/' + path.join('datasets', 'corrections', 'relations');
+      var type = row.type === 'wrong-type' ? 'pits' : 'relations';
+      var url = config.api.baseUrl + '/' + path.join('datasets', 'corrections', type);
+      var data = {};
+
+      if (type === 'pits') {
+        data = row.origin;
+        data.type = row.value;
+      } else {
+        data = {
+          from: row.originId,
+          type: row.value,
+          to: row.targetId,
+        };
+      }
+
       request(url, {
         method: 'PUT',
         auth: {
           user: config.api.admin.name,
           pass: config.api.admin.password,
         },
-        json: {
-          from: row.originId,
-          type: row.value,
-          to: row.targetId,
-        },
+        json: data,
       }, function (error, response, body) {
         if (error) {
           return res.status(500).send(error);
