@@ -24,8 +24,11 @@ const target = {
     const item = monitor.getItem();
     const sourceConcept = item.concept;
     const targetConcept = props.concept;
+    // Don't allow person <-> organization relations until we find a way to
+    // decouple dates from PITs
+    const isSameType = (sourceConcept.type === targetConcept.type) || ((sourceConcept.type !== 'tnl:Person' && targetConcept.type !== 'tnl:Person'));
 
-    return sourceConcept.id !== targetConcept.id;
+    return isSameType && sourceConcept.id !== targetConcept.id;
   },
   drop(props) {
     return {
