@@ -20,6 +20,7 @@ var sequelize = new Sequelize('sqlite://database', {
 var Flag = sequelize.define('flag', {
   type: { type: Sequelize.STRING, allowNull: false },
   value: { type: Sequelize.STRING, allowNull: false },
+  author: { type: Sequelize.STRING, allowNull: false },
 });
 
 var Concept = sequelize.define('concept', {
@@ -121,6 +122,7 @@ app.post('/flags', auth.connect(basic), function (req, res) {
   var type = data.type;
   var value = data.value.type;
   var target = data.value.concept;
+  var user = req.user;
 
   Concept
     .findOrCreate({
@@ -137,6 +139,7 @@ app.post('/flags', auth.connect(basic), function (req, res) {
       return Flag.create({
         type: type,
         value: value,
+        author: user,
         originId: origin.id,
         targetId: target.id,
       });

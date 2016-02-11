@@ -9,7 +9,7 @@ const flagTypes = {
   'wrong-type': 'edit',
 };
 
-const FlagTile = ({ flag: { type, origin, value, target } }) => {
+const FlagTile = ({ flag: { type, value, author, origin, target } }) => {
   const isWrongType = type === 'wrong-type';
 
   return (
@@ -23,6 +23,8 @@ const FlagTile = ({ flag: { type, origin, value, target } }) => {
           <dd>{type}</dd>
           <dt>value</dt>
           <dd>{value}</dd>
+          <dt>author</dt>
+          <dd>{author}</dd>
         </dl>
       </div>
       <div className="FlagTile-to">
