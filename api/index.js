@@ -5,6 +5,7 @@ var bodyParser = require('body-parser');
 var auth = require('http-auth');
 var config = require('histograph-config');
 var request = require('request');
+var md5 = require('md5');
 
 var app = express();
 app.use(bodyParser.json());
@@ -147,7 +148,6 @@ app.post('/flags', auth.connect(basic), function (req, res) {
         author: user,
         originId: origin.id,
         targetId: target.id,
-        author: author,
       });
     })
     .then(function (flag) {
@@ -168,8 +168,11 @@ app.put('/flags/:id/approve', auth.connect(basic), function (req, res) {
       var data = {};
 
       if (type === 'pits') {
-        data = row.origin;
-        data.type = row.value;
+        data = {
+          id: row.originId,
+          type: row.value,
+          _correction_id: md5(row.createdAt),
+        };
       } else {
         data = {
           from: row.originId,
