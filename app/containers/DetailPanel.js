@@ -12,7 +12,7 @@ function loadData(props) {
 
   if (id) {
     props.dispatch(api.actions.concept({ id }));
-    props.dispatch(admin.actions.flags({ concept: id }));
+    props.dispatch(admin.actions.flags());
   }
 }
 
@@ -23,15 +23,10 @@ const DetailPanel = React.createClass({
   },
 
   componentWillReceiveProps(nextProps) {
-    const { id, concept, flag } = nextProps;
+    const { id, concept } = nextProps;
 
     if (this.props.id !== id) {
       loadData(nextProps);
-    }
-
-    // Fetch flags again after flag state changed
-    if (this.props.flag !== null && flag === null) {
-      nextProps.dispatch(admin.actions.flags({ concept: this.props.id }));
     }
 
     if ((this.props.concept && this.props.concept.id) !== (concept && concept.id)) {
@@ -71,7 +66,6 @@ const DetailPanel = React.createClass({
 export default connect(
   (state) => {
     const {
-      flag,
       router: { location },
       data: { concept, orgsFromPerson, peopleFromOrg, peopleFromOrgsFromPerson, flags },
     } = state;
@@ -81,10 +75,13 @@ export default connect(
     const conceptRelations = (concept.data && concept.data.type) === 'tnl:Person' ? orgsFromPerson : peopleFromOrg;
     const conceptNetwork = (concept.data && concept.data.type) === 'tnl:Person' ? peopleFromOrgsFromPerson.data : null;
 
+    const conceptFlags = flags.data.filter((item) => {
+      return item.originId === id || item.targetId === id;
+    });
+
     return {
       id,
-      flag,
-      flags: flags.data,
+      flags: conceptFlags,
       concept: concept.data,
       conceptRelations: conceptRelations.data,
       conceptNetwork,

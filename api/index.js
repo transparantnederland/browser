@@ -51,7 +51,9 @@ sequelize.sync({ force: false }).then(function () {});
 
 app.get('/flags', function (req, res) {
   var query = req.query;
-  var params = {};
+  var params = {
+    synced: false,
+  };
 
   if (query.concept) {
     params.$or = [
@@ -152,7 +154,7 @@ app.post('/flags', auth.connect(basic), function (req, res) {
     });
 });
 
-app.put('/flags/:id/sync', auth.connect(basic), function (req, res) {
+app.put('/flags/:id/approve', auth.connect(basic), function (req, res) {
   Flag.find({
     where: {
       id: req.params.id,
@@ -175,7 +177,13 @@ app.put('/flags/:id/sync', auth.connect(basic), function (req, res) {
         if (error) {
           return res.status(500).send(error);
         }
-        return res.send(body);
+        row.update({
+          synced: true,
+        }).then(function () {
+          res.send(body);
+        }).catch(function (err) {
+          res.status(500).send(err);
+        });
       });
     } else {
       res.status(404).send('Not found');
