@@ -19,6 +19,10 @@
   flex: 1;
 }
 
+.FlagTile-actions {
+
+}
+
 .FlagTile-from {
   text-align: right;
 }

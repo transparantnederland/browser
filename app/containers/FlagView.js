@@ -8,15 +8,15 @@ import FlagList from '../components/FlagList';
 
 const FlagView = React.createClass({
   componentWillMount() {
-    this.props.fetchFlags();
+    this.props.dispatch(admin.actions.flags());
   },
 
   render() {
-    const { flags } = this.props;
+    const { flags, dispatch } = this.props;
 
     return (
       <SingleColumnLayout>
-        <FlagList flags={flags} />
+        <FlagList flags={flags} dispatch={dispatch} />
       </SingleColumnLayout>
     );
   },
@@ -29,8 +29,5 @@ export default connect(
     return {
       flags: flags.data,
     };
-  },
-  {
-    fetchFlags: admin.actions.flags,
   }
 )(FlagView);

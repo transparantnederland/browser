@@ -3,6 +3,9 @@ var express = require('express');
 var Sequelize = require('sequelize');
 var bodyParser = require('body-parser');
 var auth = require('http-auth');
+var config = require('histograph-config');
+var request = require('request');
+var md5 = require('md5');
 
 var app = express();
 app.use(bodyParser.json());
@@ -20,6 +23,7 @@ var sequelize = new Sequelize('sqlite://database', {
 var Flag = sequelize.define('flag', {
   type: { type: Sequelize.STRING, allowNull: false },
   value: { type: Sequelize.STRING, allowNull: false },
+  synced: { type: Sequelize.BOOLEAN, defaultValue: false },
   author: { type: Sequelize.STRING, allowNull: false },
 });
 
@@ -48,7 +52,9 @@ sequelize.sync({ force: false }).then(function () {});
 
 app.get('/flags', function (req, res) {
   var query = req.query;
-  var params = {};
+  var params = {
+    synced: false,
+  };
 
   if (query.concept) {
     params.$or = [
@@ -147,6 +153,59 @@ app.post('/flags', auth.connect(basic), function (req, res) {
     .then(function (flag) {
       return res.status(201).json(flag);
     });
+});
+
+app.put('/flags/:id/approve', auth.connect(basic), function (req, res) {
+  Flag.find({
+    where: {
+      id: req.params.id,
+    },
+    include: [Origin, Target],
+  }).then(function (row) {
+    if (row) {
+      var type = row.type === 'wrong-type' ? 'pits' : 'relations';
+      var url = config.api.baseUrl + '/' + path.join('datasets', 'corrections', type);
+      var data = {};
+
+      if (type === 'pits') {
+        data = {
+          id: row.originId,
+          type: row.value,
+          _correction_id: md5(row.createdAt),
+        };
+      } else {
+        data = {
+          from: row.originId,
+          type: row.value,
+          to: row.targetId,
+        };
+      }
+
+      request(url, {
+        method: 'PUT',
+        auth: {
+          user: config.api.admin.name,
+          pass: config.api.admin.password,
+        },
+        json: data,
+      }, function (error, response, body) {
+        if (error) {
+          return res.status(500).send(error);
+        }
+        row.update({
+          synced: true,
+        }).then(function () {
+          res.send(body);
+        }).catch(function (err) {
+          res.status(500).send(err);
+        });
+      });
+    } else {
+      res.status(404).send('Not found');
+    }
+  }).catch(function () {
+    res.status(500).send('Error');
+  });
 });
 
 module.exports = app;

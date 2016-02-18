@@ -2,6 +2,7 @@ import './index.css';
 import React, { PropTypes } from 'react';
 
 import ConceptTile from '../ConceptTile';
+import Button from '../Button';
 
 const flagTypes = {
   'missing-relation': 'add',
@@ -9,7 +10,7 @@ const flagTypes = {
   'wrong-type': 'edit',
 };
 
-const FlagTile = ({ flag: { type, value, author, origin, target } }) => {
+const FlagTile = ({ flag: { id, author, type, origin, value, target }, onApprove }) => {
   const isWrongType = type === 'wrong-type';
 
   return (
@@ -33,12 +34,16 @@ const FlagTile = ({ flag: { type, value, author, origin, target } }) => {
         })}
         />
       </div>
+      <div className="FlagTile-actions">
+        <Button type="primary" onClick={() => onApprove(id)}>Approve</Button>
+      </div>
     </div>
   );
 };
 
 FlagTile.propTypes = {
   flag: PropTypes.object.isRequired,
+  onApprove: PropTypes.func.isRequired,
 };
 
 export default FlagTile;
