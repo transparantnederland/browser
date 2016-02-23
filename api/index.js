@@ -115,8 +115,7 @@ app.get('/flags/pits.ndjson', auth.connect(basic), function (req, res) {
       return JSON.stringify({
         id: row.origin.id,
         type: row.value,
-        name: row.origin.name,
-        dataset: row.origin.datasets.shift(),
+        _correction_id: md5(row.createdAt),
       });
     }).join('\n'));
   });
