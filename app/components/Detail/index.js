@@ -64,15 +64,13 @@ const Detail = React.createClass({
         {conceptRelations.length ?
           <ul>
             {conceptRelations.map((relation) => {
-              const pit = concept.pits.find((item) => {
-                return item.id === relation.relation.to;
-              }) || relation.concept.to;
-
-              console.log(relation.concept.pits);
+              const isPerson = concept.type === 'tnl:Person';
+              const pits = isPerson ? concept.pits : relation.concept.pits;
+              const pit = pits.find((item) => item.id === relation.relation.to);
 
               return (
                 <li key={relation.concept.id}>
-                  {concept.type === 'tnl:Person'
+                  {isPerson
                     ? <PersonRelationTile relation={relation} />
                     : <OrganizationRelationTile relation={relation} />
                   }

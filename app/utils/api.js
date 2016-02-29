@@ -37,7 +37,7 @@ const apiTransformers = {
       relation: concept
         .filter((relation) => relation.relation && relation.relation.type)
         .map((relation) => Object.assign(relation.relation, {
-          to: relation.relation_org || relation.relation.to,
+          to: relation.relation_org || relation.relation.to || relation.pit.id,
         }))
         .shift(),
       concept: {
@@ -50,9 +50,7 @@ const apiTransformers = {
         // Array of datasets
         datasets: _.uniq(concept.map((pit) => pit.pit.dataset)),
         // Array of pits
-        to: concept.filter((relation) => relation.relation && relation.relation.type)
-          .map((pit) => pit.pit)
-          .shift(),
+        pits: concept.map((pit) => pit.pit),
       },
     })
   )),
