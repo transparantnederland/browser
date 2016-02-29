@@ -8,8 +8,8 @@ const calendarFormat = {
 };
 
 const RelationPeriod = ({ since, until }) => {
-  const from = moment(since[0], 'YYYY-MM-DD');
-  const to = until ? moment(until[0], 'YYYY-MM-DD') : moment();
+  const from = moment(since, 'YYYY-MM-DD');
+  const to = until ? moment(until, 'YYYY-MM-DD') : moment();
   const fromDate = from.format(dateFormat);
   const toDate = to.calendar(null, calendarFormat);
   const duration = to.from(from, true);
@@ -22,8 +22,8 @@ const RelationPeriod = ({ since, until }) => {
 };
 
 RelationPeriod.propTypes = {
-  since: PropTypes.array.isRequired,
-  until: PropTypes.array,
+  since: PropTypes.string.isRequired,
+  until: PropTypes.string,
 };
 
 export default RelationPeriod;
