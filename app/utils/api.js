@@ -50,7 +50,9 @@ const apiTransformers = {
         // Array of datasets
         datasets: _.uniq(concept.map((pit) => pit.pit.dataset)),
         // Array of pits
-        pits: concept.map((pit) => pit.pit),
+        to: concept.filter((relation) => relation.relation && relation.relation.type)
+          .map((pit) => pit.pit)
+          .shift(),
       },
     })
   )),

@@ -66,7 +66,9 @@ const Detail = React.createClass({
             {conceptRelations.map((relation) => {
               const pit = concept.pits.find((item) => {
                 return item.id === relation.relation.to;
-              }) || (relation.concept.pits && relation.concept.pits[0]);
+              }) || relation.concept.to;
+
+              console.log(relation.concept.pits);
 
               return (
                 <li key={relation.concept.id}>
