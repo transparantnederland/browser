@@ -6,13 +6,13 @@ import Name from '../Name';
 import RelationPeriod from '../RelationPeriod';
 
 const RELATIONS = {
-  'tnl:parent': 'Parent Company',
-  'tnl:member': 'Member',
-  'tnl:related': 'Related',
-  'tnl:boardmember': 'Board member',
-  'tnl:commissioner': 'Commissioner',
-  'tnl:advisor': 'Advisor',
-  'tnl:employee': 'Employee',
+  'tnl:parent': 'Moederbedrijf',
+  'tnl:member': 'Lid',
+  'tnl:related': 'Gerelateerd',
+  'tnl:boardmember': 'Bestuurslid',
+  'tnl:commissioner': 'Commissaris',
+  'tnl:advisor': 'Adviseur',
+  'tnl:employee': 'Werknemer',
   'tnl:lobbyist': 'Lobbyist',
 };
 

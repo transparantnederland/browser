@@ -6,12 +6,12 @@ import Name from '../Name';
 import RelationPeriod from '../RelationPeriod';
 
 const RELATIONS = {
-  'tnl:member': 'Member of ',
-  'tnl:boardmember': 'Board member of ',
-  'tnl:commissioner': 'Commissioner of ',
-  'tnl:advisor': 'Advisor for ',
-  'tnl:employee': 'Employee of ',
-  'tnl:lobbyist': 'Lobbyist for ',
+  'tnl:member': 'Lid van ',
+  'tnl:boardmember': 'Bestuurslid van ',
+  'tnl:commissioner': 'Commissaris van ',
+  'tnl:advisor': 'Adviseur van ',
+  'tnl:employee': 'Werknemer van ',
+  'tnl:lobbyist': 'Lobbyist voor ',
 };
 
 const PersonRelationTile = ({ relation: { concept, relation: { type, since, until } } }) => {

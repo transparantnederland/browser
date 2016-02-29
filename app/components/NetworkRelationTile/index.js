@@ -5,14 +5,14 @@ import HashLink from '../HashLink';
 import Name from '../Name';
 
 const RELATIONS = {
-  'tnl:parent': 'Parent Company',
-  'tnl:member': 'Member',
-  'tnl:related': 'Related',
-  'tnl:boardmember': 'Board member',
-  'tnl:commissioner': 'Commissioner',
-  'tnl:advisor': 'Advisor',
-  'tnl:employee': 'Employee',
-  'tnl:lobbyist': 'Lobbyist',
+  'tnl:parent': 'Moederbedrijf van',
+  'tnl:member': 'Lid van',
+  'tnl:related': 'Gerelateerd aan',
+  'tnl:boardmember': 'Bestuurslid van',
+  'tnl:commissioner': 'Commissaris van',
+  'tnl:advisor': 'Adviseur voor',
+  'tnl:employee': 'Werknemer van',
+  'tnl:lobbyist': 'Lobbyist voor',
 };
 
 const NetworkRelationTile = ({ relation: { concept, relation: { type, to } } }) => {
@@ -22,7 +22,7 @@ const NetworkRelationTile = ({ relation: { concept, relation: { type, to } } }) 
         <Name name={concept.name}/>
       </HashLink>
       <div className="NetworkRelationTile-body">
-        {RELATIONS[type]} of <Name name={to.name}/>
+        {RELATIONS[type]} <Name name={to.name}/>
       </div>
     </div>
   );
