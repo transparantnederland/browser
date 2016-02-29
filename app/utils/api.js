@@ -15,14 +15,7 @@ const apiTransformers = {
       datasets: _.uniq(concept.map((pit) => pit.pit.dataset)),
       // NOTE: This logic should probably happen on the API
       // Array of pits | filtered by one per dataset
-      pits: _.uniq(concept.map((pit) =>
-              pit.pit.dataset
-            )).map((dataset) =>
-              concept.map((item) =>
-                item.pit
-              ).find((pit) =>
-                pit.dataset === dataset)
-              ),
+      pits: concept.map((pit) => pit.pit),
     })).shift() || null
   ),
   conceptArray: (data) => (
@@ -44,7 +37,7 @@ const apiTransformers = {
       relation: concept
         .filter((relation) => relation.relation && relation.relation.type)
         .map((relation) => Object.assign(relation.relation, {
-          to: relation.relation_org,
+          to: relation.relation_org || relation.relation.to,
         }))
         .shift(),
       concept: {
@@ -56,6 +49,8 @@ const apiTransformers = {
         name: _.uniq(concept.map((pit) => pit.pit.name)).shift(),
         // Array of datasets
         datasets: _.uniq(concept.map((pit) => pit.pit.dataset)),
+        // Array of pits
+        pits: concept.map((pit) => pit.pit),
       },
     })
   )),

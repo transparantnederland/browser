@@ -5,20 +5,10 @@ import HashLink from '../HashLink';
 import Name from '../Name';
 import RelationPeriod from '../RelationPeriod';
 
-const RELATIONS = {
-  'tnl:member': 'Lid van ',
-  'tnl:boardmember': 'Bestuurslid van ',
-  'tnl:commissioner': 'Commissaris van ',
-  'tnl:advisor': 'Adviseur van ',
-  'tnl:employee': 'Werknemer van ',
-  'tnl:lobbyist': 'Lobbyist voor ',
-};
-
-const PersonRelationTile = ({ relation: { concept, relation: { type, since, until } } }) => {
+const PersonRelationTile = ({ relation: { concept, relation: { since, until } } }) => {
   return (
     <div className="PersonRelationTile">
       <div className="PersonRelationTile-heading">
-        {RELATIONS[type]}
         <HashLink hash={concept.id}>
           <Name name={concept.name}/>
         </HashLink>

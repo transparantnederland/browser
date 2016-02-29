@@ -53,16 +53,6 @@ const Detail = React.createClass({
           </Button>
         </div>
 
-        {showPits ?
-          <div>
-            {concept.pits.map((pit) =>
-              <div key={pit.id}>
-                <Pit pit={pit}/>
-              </div>
-            )}
-          </div> : null
-        }
-
         {flags.length ?
           <div>
             <div className="Detail-header">Flags</div>
@@ -73,14 +63,23 @@ const Detail = React.createClass({
         <div className="Detail-header">Relations</div>
         {conceptRelations.length ?
           <ul>
-            {conceptRelations.map((relation) =>
-              <li key={relation.concept.id}>
-                {concept.type === 'tnl:Person'
-                  ? <PersonRelationTile relation={relation} />
-                  : <OrganizationRelationTile relation={relation} />
-                }
-              </li>
-            )}
+            {conceptRelations.map((relation) => {
+              const pit = concept.pits.find((item) => {
+                return item.id === relation.relation.to;
+              }) || (relation.concept.pits && relation.concept.pits[0]);
+
+              return (
+                <li key={relation.concept.id}>
+                  {concept.type === 'tnl:Person'
+                    ? <PersonRelationTile relation={relation} />
+                    : <OrganizationRelationTile relation={relation} />
+                  }
+                  <div>
+                    {showPits && pit ? <Pit pit={pit} /> : null}
+                  </div>
+                </li>
+              );
+            })}
           </ul> : <span>No relations found</span>
         }
 
