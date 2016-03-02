@@ -89,16 +89,18 @@ app.delete('/flags', auth.connect(basic), function (req, res) {
 
 app.get('/flags/relations.ndjson', auth.connect(basic), function (req, res) {
   Flag.findAll({
-    where: {
-      $or: [{ type: 'duplicate' }, { type: 'missing-relation' }],
-    },
     include: [Origin, Target],
   }).then(function (rows) {
     res.send(rows.map(function (row) {
+      var isWrongType = row.type === 'wrong-type';
+      var from = isWrongType ? ('urn:hgid:z_corrections_/' + md5(row.createdAt)) : row.originId;
+      var type = row.value;
+      var to = isWrongType ? row.originId : row.targetId;
+
       return JSON.stringify({
-        from: row.originId,
-        type: row.value,
-        to: row.targetId,
+        from: from,
+        type: type,
+        to: to,
       });
     }).join('\n'));
   });
@@ -113,9 +115,8 @@ app.get('/flags/pits.ndjson', auth.connect(basic), function (req, res) {
   }).then(function (rows) {
     res.send(rows.map(function (row) {
       return JSON.stringify({
-        id: row.origin.id,
+        id: ('urn:hgid:z_corrections_/' + md5(row.createdAt)),
         type: row.value,
-        _correction_id: md5(row.createdAt),
       });
     }).join('\n'));
   });
