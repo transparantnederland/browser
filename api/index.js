@@ -94,7 +94,7 @@ app.get('/flags/relations.ndjson', auth.connect(basic), function (req, res) {
     res.send(rows.map(function (row) {
       var isWrongType = row.type === 'wrong-type';
       var from = isWrongType ? ('urn:hgid:z_corrections_/' + md5(row.createdAt)) : row.originId;
-      var type = row.value;
+      var type = isWrongType ? 'tnl:same' : row.value;
       var to = isWrongType ? row.originId : row.targetId;
 
       return JSON.stringify({
