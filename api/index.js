@@ -115,7 +115,7 @@ app.get('/flags/pits.ndjson', auth.connect(basic), function (req, res) {
   }).then(function (rows) {
     res.send(rows.map(function (row) {
       return JSON.stringify({
-        id: ('urn:hgid:z_corrections_/' + md5(row.createdAt)),
+        id: md5(row.createdAt),
         type: row.value,
       });
     }).join('\n'));
