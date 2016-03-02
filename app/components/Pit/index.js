@@ -13,7 +13,6 @@ const PitCard = ({ pit }) =>
     <div className="PitCard-body">
       <Type type={pit.type}/>
       <Dataset dataset={pit.dataset}/>
-
       {pit.data ?
         <table className="PitCard-data">
           <tbody>

@@ -53,7 +53,20 @@ const apiTransformers = {
         pits: concept.map((pit) => pit.pit),
       },
     })
-  )),
+  ).sort((a, b) => {
+    const FUTURE = '2099-12-12';
+    const aSince = a.relation.since;
+    const aUntil = aSince !== '' ? (a.relation.until || FUTURE) : a.relation.until;
+    const bSince = b.relation.since;
+    const bUntil = bSince !== '' ? (b.relation.until || FUTURE) : b.relation.until;
+
+    if (aUntil === '' || aUntil < bUntil) {
+      return 1;
+    } else if (aUntil === FUTURE || aUntil > bUntil) {
+      return -1;
+    }
+    return 0;
+  })),
 };
 
 const api = reduxApi({
