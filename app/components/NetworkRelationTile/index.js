@@ -15,14 +15,14 @@ const RELATIONS = {
   'tnl:lobbyist': 'Lobbyist voor',
 };
 
-const NetworkRelationTile = ({ relation: { concept, relation: { type, to } } }) => {
+const NetworkRelationTile = ({ relation: { pit, relation: { type, to_name } } }) => {
   return (
     <div className="NetworkRelationTile">
-      <HashLink hash={concept.id}>
-        <Name name={concept.name}/>
+      <HashLink hash={pit.id}>
+        <Name name={pit.name}/>
       </HashLink>
       <div className="NetworkRelationTile-body">
-        {RELATIONS[type]} <Name name={to.name}/>
+        {RELATIONS[type]} <Name name={to_name}/>
       </div>
     </div>
   );

@@ -5,12 +5,12 @@ import HashLink from '../HashLink';
 import Name from '../Name';
 import RelationPeriod from '../RelationPeriod';
 
-const PersonRelationTile = ({ relation: { concept, relation: { since, until } } }) => {
+const PersonRelationTile = ({ relation: { pit, relation: { since, until } } }) => {
   return (
     <div className="PersonRelationTile">
       <div className="PersonRelationTile-heading">
-        <HashLink hash={concept.id}>
-          <Name name={concept.name}/>
+        <HashLink hash={pit.id}>
+          <Name name={pit.name}/>
         </HashLink>
       </div>
       <div className="PersonRelationTile-body">

@@ -16,11 +16,11 @@ const RELATIONS = {
   'tnl:lobbyist': 'Lobbyist',
 };
 
-const OrganizationRelationTile = ({ relation: { concept, relation: { type, since, until } } }) => {
+const OrganizationRelationTile = ({ relation: { pit, relation: { type, since, until } } }) => {
   return (
     <div className="OrganizationRelationTile">
-      <HashLink hash={concept.id}>
-        <Name name={concept.name}/>
+      <HashLink hash={pit.id}>
+        <Name name={pit.name}/>
       </HashLink> ({RELATIONS[type]})
       <div className="OrganizationRelationTile-body">
         {since ? <RelationPeriod since={since} until={until} /> : null}

@@ -65,11 +65,11 @@ const Detail = React.createClass({
           <ul>
             {conceptRelations.map((relation) => {
               const isPerson = concept.type === 'tnl:Person';
-              const pits = isPerson ? concept.pits : relation.concept.pits;
-              const pit = pits.find((item) => item.id === relation.relation.to);
+              const pit = isPerson ? concept.pits.find((item) => item.id === relation.relation.to) : relation.pit;
+              const key = [relation.pit.id, relation.relation.since, relation.relation.until].join('-');
 
               return (
-                <li key={relation.concept.id}>
+                <li key={key}>
                   {isPerson
                     ? <PersonRelationTile relation={relation} />
                     : <OrganizationRelationTile relation={relation} />
@@ -89,7 +89,7 @@ const Detail = React.createClass({
             {conceptNetwork.length ?
               <ul>
                 {conceptNetwork.map((relation) =>
-                  <li key={relation.concept.id}>
+                  <li key={[relation.pit.id, relation.relation.to].join('-')}>
                     <NetworkRelationTile relation={relation} />
                   </li>
                 )}
