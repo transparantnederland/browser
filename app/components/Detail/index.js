@@ -5,6 +5,7 @@ import { addConceptFlag } from '../../actions/flag';
 
 import Name from '../Name';
 import Type from '../Type';
+import LynksLink from '../LynksLink';
 import Dataset from '../Dataset';
 import Button from '../Button';
 import OrganizationRelationTile from '../OrganizationRelationTile';
@@ -32,6 +33,11 @@ const Detail = React.createClass({
 
     return (
       <div className="Detail">
+        <div style={{ float: 'right' }}>
+          <LynksLink id={concept.id}>
+            Explore in Lynksoft
+          </LynksLink>
+        </div>
         <div className="Detail-heading">
           <Name name={concept.name}/>
         </div>
