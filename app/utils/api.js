@@ -31,32 +31,10 @@ const apiTransformers = {
     })
   )),
   relationArray: (data) => (
-    transformers.array(data).map((concept) => concept[0])
+    transformers.array(data).map((concept) => {
+      return _.isArray(concept) ? concept[0] : concept;
+    })
   ),
-
-    // ({
-      // Type of first valid relation
-      // TODO: see if we can move this sanity check to the API
-      // relation: concept
-      //   .filter((relation) => relation.relation && relation.relation.type)
-      //   .map((relation) => Object.assign(relation.relation, {
-      //     to: relation.relation_org || relation.relation.to || relation.pit.id,
-      //   }))
-      //   .shift(),
-      // concept: {
-      //   // Id of first pit
-      //   id: concept[0].pit.id,
-      //   // Type of first pit
-      //   type: concept[0].pit.type,
-      //   // Name of first valid pit
-      //   name: _.uniq(concept.map((pit) => pit.pit.name)).shift(),
-      //   // Array of datasets
-      //   datasets: _.uniq(concept.map((pit) => pit.pit.dataset)),
-      //   // Array of pits
-      //   pits: concept.map((pit) => pit.pit),
-      // },
-    // })
-  // )),
 };
 
 const api = reduxApi({
@@ -73,11 +51,11 @@ const api = reduxApi({
     transformer: apiTransformers.conceptArray,
   },
   orgsFromPerson: {
-    url: '/orgsFromPerson',
+    url: '/relations',
     transformer: apiTransformers.relationArray,
   },
   peopleFromOrg: {
-    url: '/peopleFromOrg',
+    url: '/relations',
     transformer: apiTransformers.relationArray,
   },
   peopleFromOrgsFromPerson: {

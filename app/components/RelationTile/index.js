@@ -1,20 +1,29 @@
+import './index.css';
 import React, { PropTypes } from 'react';
 
 import HashLink from '../HashLink';
 import Name from '../Name';
+import Type from '../Type';
+import RelationPeriod from '../RelationPeriod';
 
-const OrganizationRelationTile = ({ relation: { concept, type } }) =>
-  <div>
-    <HashLink hash={concept.id}>
-      <Name name={concept.name}/>
-    </HashLink>
-    <div>
-      {type}
+const RelationTile = ({ relation: { pit, relation: { since, until } } }) => {
+  return (
+    <div className="RelationTile">
+      <div className="RelationTile-heading">
+        <HashLink hash={pit.id}>
+          <Name name={pit.name}/>
+        </HashLink>
+      </div>
+      <div className="RelationTile-body">
+        <Type type={pit.type}/><br/>
+        {since ? <RelationPeriod since={since} until={until}/> : null}
+      </div>
     </div>
-  </div>;
+  );
+};
 
-OrganizationRelationTile.propTypes = {
+RelationTile.propTypes = {
   relation: PropTypes.object.isRequired,
 };
 
-export default OrganizationRelationTile;
+export default RelationTile;

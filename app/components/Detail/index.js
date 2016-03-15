@@ -8,8 +8,7 @@ import Type from '../Type';
 import LynksLink from '../LynksLink';
 import Dataset from '../Dataset';
 import Button from '../Button';
-import OrganizationRelationTile from '../OrganizationRelationTile';
-import PersonRelationTile from '../PersonRelationTile';
+import RelationTile from '../RelationTile';
 import NetworkRelationTile from '../NetworkRelationTile';
 import FlagList from '../FlagList';
 import Pit from '../Pit';
@@ -76,10 +75,7 @@ const Detail = React.createClass({
 
               return (
                 <li key={key}>
-                  {isPerson
-                    ? <PersonRelationTile relation={relation} />
-                    : <OrganizationRelationTile relation={relation} />
-                  }
+                  <RelationTile relation={relation} />
                   <div>
                     {showPits && pit ? <Pit pit={pit} /> : null}
                   </div>
