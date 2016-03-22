@@ -34,7 +34,7 @@ const Detail = React.createClass({
       <div className="Detail">
         <div style={{ float: 'right' }}>
           <LynksLink id={concept.id}>
-            Explore in Lynksoft
+            Explore in Lynks
           </LynksLink>
         </div>
         <div className="Detail-heading">
