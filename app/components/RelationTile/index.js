@@ -6,13 +6,13 @@ import Name from '../Name';
 import Type from '../Type';
 import RelationPeriod from '../RelationPeriod';
 
-const RelationTile = ({ relation: { pit, relation: { since, until } } }) => {
+const RelationTile = ({ relation: { pit, relation: { type, since, until } }, showType }) => {
   return (
     <div className="RelationTile">
       <div className="RelationTile-heading">
         <HashLink hash={pit.id}>
           <Name name={pit.name}/>
-        </HashLink>
+        </HashLink> {showType ? <span className="RelationTile-type">(<Type type={type}/>)</span> : null}
       </div>
       <div className="RelationTile-body">
         <Type type={pit.type}/><br/>
@@ -24,6 +24,7 @@ const RelationTile = ({ relation: { pit, relation: { since, until } } }) => {
 
 RelationTile.propTypes = {
   relation: PropTypes.object.isRequired,
+  showType: PropTypes.boolean,
 };
 
 export default RelationTile;

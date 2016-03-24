@@ -22,13 +22,13 @@ const Detail = React.createClass({
 
   getInitialState() {
     return {
-      showPits: false,
+      showDetails: false,
     };
   },
 
   render() {
     const { concept, conceptRelations, conceptNetwork, flags, dispatch } = this.props;
-    const { showPits } = this.state;
+    const { showDetails } = this.state;
 
     return (
       <div className="Detail">
@@ -54,7 +54,7 @@ const Detail = React.createClass({
             onClick={this.handlePitsToggle}
             type="link"
           >
-            {showPits ? 'Hide details ▴' : 'Show details ▾'}
+            {showDetails ? 'Hide details ▴' : 'Show details ▾'}
           </Button>
         </div>
 
@@ -75,9 +75,9 @@ const Detail = React.createClass({
 
               return (
                 <li key={key}>
-                  <RelationTile relation={relation} />
+                  <RelationTile relation={relation} showType={showDetails}/>
                   <div>
-                    {showPits && pit ? <Pit pit={pit} /> : null}
+                    {showDetails && pit ? <Pit pit={pit}/> : null}
                   </div>
                 </li>
               );
@@ -107,7 +107,7 @@ const Detail = React.createClass({
   },
   handlePitsToggle() {
     this.setState({
-      showPits: !this.state.showPits,
+      showDetails: !this.state.showDetails,
     });
   },
 });
