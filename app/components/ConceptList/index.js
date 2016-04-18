@@ -13,13 +13,13 @@ const ConceptList = ({ concepts, concept, dispatch }) =>
         className={['List-item', item.id === (concept && concept.id) ? 'List-item--active' : ''].join(' ')}
         key={item.id}
       >
-        <HashLink hash={item.id}>
-          <ConceptDragSource concept={item} dispatch={dispatch}>
+        <ConceptDragSource concept={item} dispatch={dispatch}>
+          <HashLink hash={item.id}>
             <Padding>
               <ConceptTile concept={item} />
             </Padding>
-          </ConceptDragSource>
-        </HashLink>
+          </HashLink>
+        </ConceptDragSource>
       </li>
     )}
   </ul>;
