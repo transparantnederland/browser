@@ -2,6 +2,8 @@
 
 A browser for [Transparant Nederland](https://transparantnederland.nl/) data. Option to flag wrong or incomplete data.
 
+![](docs/flag.gif)
+
 ## Install
 
 ```shell
