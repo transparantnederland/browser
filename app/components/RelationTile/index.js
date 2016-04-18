@@ -24,7 +24,7 @@ const RelationTile = ({ relation: { pit, relation: { type, since, until } }, sho
 
 RelationTile.propTypes = {
   relation: PropTypes.object.isRequired,
-  showType: PropTypes.boolean,
+  showType: PropTypes.bool,
 };
 
 export default RelationTile;
