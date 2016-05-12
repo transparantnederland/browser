@@ -29,4 +29,27 @@ npm run test:watch
 ```
 Run a handful of unit tests.
 
+## Flags API
+
+```
+GET /api/flags/pits.ndjson
+GET /api/flags/relations.ndjson
+DELETE /api/flags
+```
+
+Example workflow to backup to corrections dataset:
+
+1. Back up relation flags
+```
+curl -u tim 'https://browse.transparantnederland.nl/api/flags/relations.ndjson' >> /var/tnl/transparantnederland-data/_z_corrections/relations.ndjson
+```
+2. Back up pit flags
+```
+curl -u tim 'https://browse.transparantnederland.nl/api/flags/pits.ndjson' >> /var/tnl/transparantnederland-data/_z_corrections/pits.ndjson
+```
+3. Delete all flags
+```
+curl -u <user> -XDELETE 'https://browse.transparantnederland.nl/api/flags'
+```
+
 Copyright (C) 2016 [Waag Society](http://waag.org).
