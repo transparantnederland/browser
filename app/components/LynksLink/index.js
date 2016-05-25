@@ -4,7 +4,7 @@ import React, { PropTypes } from 'react';
 const LynksLink = ({ id, children }) =>
   <a
     className="LynksLink"
-    href={'http://lynksoft.com:8080/external?type=tnl&term=' + id}
+    href={'http://lynksoft.com/external?type=tnl&term=' + id}
     target="_blank"
   >
     {children}
